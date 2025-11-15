@@ -4,11 +4,8 @@
 
 #show: manual.with(
   title: "Minimal Books",
-  description: "Simple and complete books without introducing new syntax.",
-  authors: "Maycon F. Melo <@mayconfmelo>",
-  package: "min-book:1.3.0",
-  license: "MIT",
   logo: image("docs/assets/manual-logo.png"),
+  manifest: toml("typst.toml"),
   from-comments:
     read("src/lib.typ") +
     read("src/additional/notes.typ") +

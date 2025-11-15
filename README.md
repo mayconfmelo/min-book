@@ -3,7 +3,7 @@
 <div align="center">
 
 <p class="hidden">
-Simple and complete books without introducing new syntax  
+  Simple and complete books without introducing new syntax  
 </p>
 
 <p class="hidden">
@@ -35,7 +35,7 @@ Simple and complete books without introducing new syntax
 #import "@preview/min-book:1.3.0": book
 #show: book.with(
   title: "Book Title",
-  subtitle: "Book subtitle, not more than two lines long",
+  subtitle: "Book subtitle",
   authors: "Book Author",
 )
 ```
