@@ -27,8 +27,8 @@
       }
     
     volume = if volume > 0 {
-        import "@preview/transl:0.1.0": transl
-        transl("volume", args: (n: volume)) + "\n"
+        import "@preview/transl:0.2.0": transl
+        transl("volume", n: volume) + "\n"
       } else {""}
     
     set text(

@@ -14,21 +14,23 @@ current section, right before the next heading.
     /// The content of the end note. |
 ) = context {
   import "../utils.typ"
+  import "../orig.typ"
+  import "@preview/toolbox:0.1.0": storage
   
   // Find the level (numbering) of current section heading:
   let selector = selector(heading).before(here())
-  let level = counter(selector).display().replace(".","-")
-  
+  let level = counter(selector).display()
+  let count = counter("min-book-notes")
   let numbering = numbering
+  
   if numbering == auto {
-    numbering = utils.storage(get: "note.numbering", "1")
+    numbering = storage.get("note.numbering", "1", namespace: "min-book")
   }
   else {
-    utils.storage(add: "note", (numbering: numbering))
+    storage.add("note", (numbering: numbering), namespace: "min-book")
   }
   
-  let count = counter("min-book-note-count")
-  counter("min-book-note-count").step()
+  count.step()
   
   let this-note = (
     number: count.get().at(0),
@@ -36,21 +38,34 @@ current section, right before the next heading.
     numbering: numbering
   )
   
-  // Push a new value to note.level array
-  utils.storage(add: "note." + level + "+", this-note)
+  // Push the note data to storage
+  storage.this.update(curr => {
+    if curr.at("min-book").at("note", default: (:)) == (:) {
+      curr.at("min-book").insert("note", (:))
+    }
+    if curr.at("min-book").note.at(level, default: ()) == () {
+      curr.at("min-book").note.insert(level, ())
+    }
+    
+    //let this = (:).insert(level, this-number)
+    
+    curr.at("min-book").note.at(level).push(this-note)
+    curr
+  })
   
-  let note-number = utils.numbering-std(numbering, ..count.get())
-  let note-label = level + "_" + utils.numbering-std("1", ..count.get())
+  let this-number = orig.numbering(numbering, ..count.get())
+  let this-label = level + "-" + count.display()
 
   // Set note as #super[NUMBER ::LABEL::] to be managed later
-  [#super(note-number + " ::" + note-label + "::")#label(note-label)]
+  [#super(this-number + " ::" + this-label + "::")#label(this-label)]
 }
 
 
 // INTERNAL: notes.insert() inserts notes in the document at the right place.
 #let insert(body) = {
+  import "@preview/toolbox:0.1.0": storage, its
   import "../utils.typ"
-  
+
   let new-body = body.at("children", default: ())
   let h-index = ()
   
@@ -75,22 +90,25 @@ current section, right before the next heading.
   body = new-body.join()
 
   // Make the first note be note 1, instead of note 0.
-  counter("min-book-note-count").step()
+  counter("min-book-notes").step()
 
   // Swap the <note> for the actual notes in the current section, if any.
-  show <note>: it => {
-    context if utils.storage().final().at("note", default: (:)) != (:) {
+  show <note>: it => context {
+    let stored = storage.final("note", (), namespace: "min-book")
+    
+    if not its.empty(stored) {
       // Find the level (numbering) of current section heading:
       let selector = selector(heading).before(here())
-      let level = counter(selector).display().replace(".", "-")
+      let level = counter(selector).display()
+      
+      stored = stored.at(level, default: ())
 
       // Show notes only if there are any in this section
-      let notes = utils.storage(get: "note." + level)
-      if notes != none {
+      if not its.empty(stored) {
         pagebreak(weak: true)
 
         // Insert the notes:
-        for note in notes {
+        for note in stored {
           par(
             first-line-indent: 0pt,
             spacing: 0.75em,
@@ -98,11 +116,11 @@ current section, right before the next heading.
           )[
             // Link to the note marker in the text:
             #link(
-              label(level + "_" + str(note.number)),
+              label(level + "-" + str(note.number)),
               strong(utils.numbering-std(note.numbering, note.number) + ":")
             )
             // Insert <LEVEl_NUMBER_content> for cross-reference
-            #label(level + "_" + str(note.number) + "_content")
+            #label(level + "-" + str(note.number) + "-content")
             #note.data
           ]
         }
@@ -111,7 +129,7 @@ current section, right before the next heading.
       }
 
       // Make every section notes start at note 1
-      counter("min-book-note-count").update(1)
+      counter("min-book-notes").update(1)
     }
   }
   
@@ -121,7 +139,7 @@ current section, right before the next heading.
     
     // #note: Parses #super("NUMBER ::LABEL::") -> #link(<LABEL>)[#super("NUMBER")]
     if it.body.text.ends-with(note-regex) {
-      let note-label = it.body.text.find(note-regex).trim(":") + "_content"
+      let note-label = it.body.text.find(note-regex).trim(":") + "-content"
       let note-number = it.body.text.replace(note-regex, "").trim()
       
       // Link to the actual note content:

@@ -1,9 +1,17 @@
 #import "/src/lib.typ": note, book
-#import "/src/utils.typ": storage-repr
+#import "@preview/toolbox:0.1.0": storage
 #set page(height: auto)
 
-// Show storage representation on the last page
-#show: storage-repr.with(path: "note")
+// Show storage representation
+#page(
+  width: auto,
+  height: auto,
+  margin: 1em,
+  context raw(
+    lang: "yaml",
+    yaml.encode( storage.final("note", namespace: "min-book") )
+  )
+)
 
 // Additional book data
 #show: book.with(

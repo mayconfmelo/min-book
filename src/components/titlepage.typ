@@ -9,13 +9,13 @@
     if type(authors) == array {authors = authors.join(", ")}
   
     volume = if volume > 0 {
-        import "@preview/transl:0.1.0": transl
-        transl("volume", args: (n: volume)) + "\n"
+        import "@preview/transl:0.2.0": transl
+        transl("volume", n: volume) + "\n"
       } else {""}
       
     edition = if edition > 0 {
-        import "@preview/transl:0.1.0": transl
-        transl("edition", args: (n: edition)) + "\n"
+        import "@preview/transl:0.2.0": transl
+        transl("edition", n: edition) + "\n"
       } else {""}
   
     align(center + horizon)[

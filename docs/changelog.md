@@ -109,6 +109,7 @@ the help testing some features.
 
 - Fixed: Removed red background from `src/assets/frame.svg`
 
+
 ## 1.3.0
 
 - Added: `#book(cover)` can be a function
@@ -118,3 +119,8 @@ the help testing some features.
   - Fallback to default Typst math font
 - Fixed: Unnumbered headings were also counted in special continuous chapter numbering
   - Unnumbered headings ignored
+
+
+## 1.3.1
+
+- Internal re-design

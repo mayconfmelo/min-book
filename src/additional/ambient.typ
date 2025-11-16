@@ -28,11 +28,12 @@ all level 1 heading is a new appendix.
     /// The appendices content. |
 ) = context {
   import "../utils.typ"
-  import "@preview/transl:0.1.0": transl
+  import "@preview/transl:0.2.0": transl
+  import "@preview/toolbox:0.1.0": storage
   
-  let singular-title = transl(type, args: (number: "sing"), mode: str)
-  let plural-title = transl(type, args: (number: "plur"), mode: str)
-  let break-to = utils.storage(get: "break-to")
+  let singular-title = transl(type, number: "sing", mode: str)
+  let plural-title = transl(type, number: "plur", mode: str)
+  let break-to = storage.get("break-to", namespace: "min-book")
   
   set heading(
     offset: 1,

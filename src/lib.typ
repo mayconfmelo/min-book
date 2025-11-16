@@ -93,14 +93,15 @@ These are all the options and its defaults used by _min-book_:
   body /// <- content
     /// The book content. |
 ) = context {
-  import "@preview/transl:0.1.0": transl, fluent
+  import "@preview/transl:0.2.0": transl
+  import "@preview/toolbox:0.1.0": storage, get
   import "utils.typ"
   
   // Required arguments
   assert.ne(title, none)
   assert.ne(authors, none)
   
-  let cfg = if cfg == auto {(:)} else {cfg}
+  let cfg = get.auto-val(cfg, (:))
   let new-cfg = cfg
   
   cfg.insert("lang", cfg.at("lang", default: text.lang))
@@ -183,10 +184,9 @@ These are all the options and its defaults used by _min-book_:
   
   // Convert cfg.two-sided into a #pagebreak(to) value
   let break-to = if cfg.two-sided {"odd"} else {none}
-  utils.storage(add: "break-to", break-to)
+  storage.add("break-to", break-to, namespace: "min-book")
   
-  cfg.transl = fluent( "file!" + cfg.transl, lang: cfg.lang )
-  transl(data: cfg.transl)
+  transl(data: cfg.transl, lang: cfg.lang)
   
   let font-size = text.size
   let date = utils.date(date)

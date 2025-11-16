@@ -1,6 +1,6 @@
 #import "@preview/min-book:1.3.1": book, annexes
 
-#set text(lang: "pt", region: "BR")
+#set text(lang: "pt")//, region: "BR")
 
 #show: book.with(
   title: "Memórias Póstumas\nde\nBrás Cubas",
