@@ -64,7 +64,7 @@ current section, right before the next heading.
 // INTERNAL: notes.insert() inserts notes in the document at the right place.
 #let insert(body) = {
   import "@preview/toolbox:0.1.0": storage, its
-  import "../utils.typ"
+  import "../orig.typ"
 
   let new-body = body.at("children", default: ())
   let h-index = ()
@@ -117,7 +117,7 @@ current section, right before the next heading.
             // Link to the note marker in the text:
             #link(
               label(level + "-" + str(note.number)),
-              strong(utils.numbering-std(note.numbering, note.number) + ":")
+              strong(orig.numbering(note.numbering, note.number) + ":")
             )
             // Insert <LEVEl_NUMBER_content> for cross-reference
             #label(level + "-" + str(note.number) + "-content")

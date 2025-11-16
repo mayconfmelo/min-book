@@ -1,5 +1,4 @@
 // NAME: Minimal Books
-// REQ: numbly, transl
 // TODO: Implement ePub output when available
 
 #import "additional/notes.typ": note
@@ -98,8 +97,8 @@ These are all the options and its defaults used by _min-book_:
   import "utils.typ"
   
   // Required arguments
-  assert.ne(title, none)
-  assert.ne(authors, none)
+  assert.ne(title, none, message: "#book(title) required")
+  assert.ne(authors, none, message: "#book(authors) required")
   
   let cfg = get.auto-val(cfg, (:))
   let new-cfg = cfg
@@ -189,7 +188,7 @@ These are all the options and its defaults used by _min-book_:
   transl(data: cfg.transl, lang: cfg.lang)
   
   let font-size = text.size
-  let date = utils.date(date)
+  let date = get.date(date)
   let part = part
   let chapter = chapter
   
