@@ -100,15 +100,14 @@ These are all the options and its defaults used by _min-book_:
   assert.ne(title, none, message: "#book(title) required")
   assert.ne(authors, none, message: "#book(authors) required")
   
+  let lang-id = text.lang + if text.region != none {"-" + text.region}
   let cfg = get.auto-val(cfg, (:))
   let new-cfg = cfg
   
-  cfg.insert("lang", cfg.at("lang", default: text.lang))
-  if not utils.std-langs.contains(cfg.lang) {
+  if not utils.std-langs.contains(lang-id) {
     if cfg.at("transl", default: "") == "" {
-      panic("No translation found for '" + cfg.lang + "', set #book(cfg.transl)")
+      panic("No translation for '" + lang-id + "', set #book(cfg.transl)")
     }
-    else {cfg.lang = "en"}
   }
   
   /**
@@ -127,9 +126,7 @@ These are all the options and its defaults used by _min-book_:
     page: "a5", /// <- dictionary | string
        /** Page configuration — directly set `#page(..cfg.page)` arguments or
        only `#page(paper: cfg.page)` when string. |**/
-    lang: text.lang, /// <- string
-       /// Book language. |
-    transl: read("l10n/" + cfg.lang + ".ftl"), /// <- string | read
+    transl: read("l10n/" + lang-id + ".ftl"), /// <- string | read
        /** Fluent translation file — defaults to the standard translation file
        for book language, if supported (see files inside `/src/l10n/` directory),
        or `#panic`. |**/
@@ -154,21 +151,21 @@ These are all the options and its defaults used by _min-book_:
     cover-txtcolor: luma(200), /// <- color
        /// Cover text color when `#book(cover: auto)`. |
     cover-fonts: ("Cinzel", "Alice"), /// <- array of strings
-       /** `(title, text)`\
-       Cover font for main title and other texts when `#book(cover: auto)`. |**/
+      /** `(title, text)`\
+          Cover font for main title and other texts when `#book(cover: auto)`. |**/
     cover-back: true, /// <- boolean
        /// Generate a back cover at the end of the document when `#book(cover: auto)` |
     toc-stdindent: true, /// <- boolean
-       /** Use min-book standard indentation: 1.5em for level 1 and 0em for
-       levels 2+. |**/
+      /** Use min-book standard indentation: 1.5em for level 1 and 0em for
+          levels 2+. |**/
     toc-bold: true, /// <- boolean
-       /// Allows bold fonts in table of contents entries. |
+      /// Allows bold fonts in table of contents entries. |
     chapter-numrestart: false, /// <- boolean
-       /// Make chapter numbering restart after each book part. |
+      /// Make chapter numbering restart after each book part. |
     two-sided: true, /// <- boolean
-       /** Optimizes the content to be printed on both sides of the page (front
-       and back), with important elements always starting at the next front
-       side (oddly numbered) — inserts blank pages in between, if needed. |**/
+      /** Optimizes the content to be printed on both sides of the page (front
+          and back), with important elements always starting at the next front
+          side (oddly numbered) — inserts blank pages in between, if needed. |**/
     paper-links: true, /// <- boolean
        /** Enable paper-readable links, which inserts the clickable link alongside
        a footnote to its URL. |**/
@@ -185,15 +182,15 @@ These are all the options and its defaults used by _min-book_:
   let break-to = if cfg.two-sided {"odd"} else {none}
   storage.add("break-to", break-to, namespace: "min-book")
   
-  transl(data: cfg.transl, lang: cfg.lang)
+  transl(data: cfg.transl, lang: lang-id)
   
   let font-size = text.size
   let date = get.date(date)
   let part = part
   let chapter = chapter
   
-  if part == auto {part = transl("part", to: cfg.lang, data: cfg.transl)}
-  if chapter == auto {chapter = transl("chapter", to: cfg.lang, data: cfg.transl)}
+  if part == auto {part = transl("part", to: lang-id, data: cfg.transl)}
+  if chapter == auto {chapter = transl("chapter", to: lang-id, data: cfg.transl)}
   if type(cfg.page) == str {cfg.page = (paper: cfg.page)}
   
   /**
@@ -247,10 +244,7 @@ These are all the options and its defaults used by _min-book_:
     spacing: cfg.par-margin, 
     first-line-indent: cfg.line-indentfirst
   )
-  set text(
-    lang: cfg.lang,
-    ..font
-  )
+  set text(..font)
   set terms(
     separator: [: ],
     tight: true,
