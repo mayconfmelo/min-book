@@ -1,14 +1,15 @@
 // NAME: Minimal Books
 // TODO: Implement ePub output when available
+// TODO: Implement themes
+// TODO: Implement #toolbox
+// TODO: Implement #toolbox.default
 
 #import "additional/notes.typ": note
 #import "additional/ambient.typ": appendices, annexes
 #import "additional/horizontalrule.typ": horizontalrule, hr
 #import "additional/blockquote.typ": blockquote
 
-/**#v(1fr)#outline()#v(1.2fr)
-#pagebreak()
-
+/**#v(1fr)#outline()#v(1.2fr)#pagebreak()
 = Quick Start
 
 ```typ
@@ -48,52 +49,41 @@ These are all the options and its defaults used by _min-book_:
     /// Main title. |
   subtitle: none, /// <- string | content | none
     /// Subtitle, generally two lines long or less. |
-  edition: 0, /// <- int
-    /** Publication number, used when the content is changed or updated in a new
-        release after the original publication. |**/
-  volume: 0, /// <- int
-    /** Series volume number, used when one extensive story is told through
-        multiple books, in order. |**/
+  edition: 0, /// <- integer
+    /// Edition number (counts changes and updates between book releases). |
+  volume: 0, /// <- integer
+    /// Series volume number (situates the book in a book collection). |
   authors: none, /// <- string | array of strings <required>
     /// Author or authors. |
   date: datetime.today(), /// <- datetime | array | dictionary
-    /** `(year, month, day)`\
-        Publication date — if a index/key is omitted, fallback to the current one. |**/
-  cover: auto, /// <- auto | function | content | image | none
-    /** Cover — generated automatically when `auto`. If function, receives two 
-        dictionary arguments. |**/
+    /// `(year, month, day)`\ Publication date. |
+  cover: auto, /// <- auto | function | image | content | none
+    /// Cover; when using function, takes two arguments (`meta, cfg`). |
   titlepage: auto, /// <- auto | content | none
-    /// Title page, shown after cover — generated automatically when `auto`. |
+    /// Title page (shown after cover). |
   catalog: none, /// <- dictionary | yaml | toml
     /// Cataloging-in-publication board, used for library data (see "@catalog"). |
   errata: none, /// <- content | string
-    /// A text that corrects errors from previous book editions. |
+    /// Correction of errors from previous book editions. |
   dedication: none, /// <- content | string
-    /** A brief text that dedicates the book in honor or in memorian of someone
-        important; can accompany a small message directed to the person. |**/
+    /// Tribute or words addressed to someone imprtant. |
   acknowledgements: none, /// <- content | string
-    /** A brief text to recognize everyone who helped directly or indirectly in
-        the process of book creation and their importance in the project. |**/
+    /// Expression of gratitude to those who contributed to the work. |
   epigraph: none, /// <- quote | content
-    /** A short citation or excerpt from other works used to introduce the main
-        theme of the book; can suggest a reflection, a mood, or idea related to
-        the text. |**/
-  toc: true, /// <- boolean | content
-    /// Generate a table of contents on the right place. |
+    /// Brief quotation that foreshadows the book’s theme, tone, or central reflection. |
+  toc: true, /// <- boolean
+    /// Table of contents. |
   part: auto, /// <- string | none | auto
-    /** Name of the main divisions of the book — if not set, fallback to the word
-        "Part" in book language. |**/
+    /// Custom name of the book's main divisions (parts). |
   chapter: auto, /// <- string | none
-    /** The name of the sections of the book — if not set, fallback to the word
-        "Chapter" in book language. |**/
+    /// Custom name of sections of the book (chapters). |
   cfg: auto, /// <- dictionary
-    /** Custom advanced configurations, used to fine-tune some aspects of the
-        book (see "@adv-config"). |**/
+    /// Set advanced configurations (see "@adv-config"). |
   body /// <- content
     /// The book content. |
 ) = context {
+  import "@preview/toolbox:0.1.0": storage, get, default
   import "@preview/transl:0.2.0": transl
-  import "@preview/toolbox:0.1.0": storage, get
   import "utils.typ"
   
   // Required arguments
@@ -101,98 +91,16 @@ These are all the options and its defaults used by _min-book_:
   assert.ne(authors, none, message: "#book(authors) required")
   
   let lang-id = text.lang + if text.region != none {"-" + text.region}
+  let h2-count = counter("min-book-h2-count")
   let cfg = get.auto-val(cfg, (:))
-  let new-cfg = cfg
-  
-  if not utils.std-langs.contains(lang-id) {
-    if cfg.at("transl", default: "") == "" {
-      panic("No translation for '" + lang-id + "', set #book(cfg.transl)")
-    }
-  }
-  
-  /**
-  = Advanced Configurations <adv-config>
-  :arg cfg: "let"
-  
-  These `#book(cfg)` configurations allows to modify certain aspects of the
-  book and manage its appearance and structure. Built with some thoughful
-  ready-to-use defaults that make its use optional, so that beginners and
-  casual writers can safely ignore it and _just write_.
-  **/
-  let cfg = (
-    numbering: auto, /// <- string | array of strings | none
-       /** Custom heading numbering — a standard numbering or a #univ("numbly")
-       numbering. |**/
-    page: "a5", /// <- dictionary | string
-       /** Page configuration — directly set `#page(..cfg.page)` arguments or
-       only `#page(paper: cfg.page)` when string. |**/
-    transl: read("l10n/" + lang-id + ".ftl"), /// <- string | read
-       /** Fluent translation file — defaults to the standard translation file
-       for book language, if supported (see files inside `/src/l10n/` directory),
-       or `#panic`. |**/
-    justify: true, /// <- boolean
-       /// Text justification. |
-    line-space: 0.5em, /// <- length
-       /// Space between each line in a paragraph. |
-    line-indentfirst: 1em, /// <- length
-       /** indentation of the first line of each paragraph in a sequence, except
-       the first one. |**/
-    par-margin: 0.65em, /// <- length
-       /// Space after each paragraph. |
-    margin: (x: 15%, y: 14%), /// <- length
-       /// Page margin. |
-    font-usedefaults: false, /// <- boolean
-       /// Use default Typst fonts when no custom font is set. |
-    heading-weight: auto, /// <- "regular" | "bold" | auto
-       /** Heading font weight (thickness) — defaults to regular only in levels
-       1–5, and then bold headings. |**/
-    cover-bgcolor: rgb("#3E210B"), /// <- color
-       /// Cover background color when `#book(cover: auto)`. |
-    cover-txtcolor: luma(200), /// <- color
-       /// Cover text color when `#book(cover: auto)`. |
-    cover-fonts: ("Cinzel", "Alice"), /// <- array of strings
-      /** `(title, text)`\
-          Cover font for main title and other texts when `#book(cover: auto)`. |**/
-    cover-back: true, /// <- boolean
-       /// Generate a back cover at the end of the document when `#book(cover: auto)` |
-    toc-stdindent: true, /// <- boolean
-      /** Use min-book standard indentation: 1.5em for level 1 and 0em for
-          levels 2+. |**/
-    toc-bold: true, /// <- boolean
-      /// Allows bold fonts in table of contents entries. |
-    chapter-numrestart: false, /// <- boolean
-      /// Make chapter numbering restart after each book part. |
-    two-sided: true, /// <- boolean
-      /** Optimizes the content to be printed on both sides of the page (front
-          and back), with important elements always starting at the next front
-          side (oddly numbered) — inserts blank pages in between, if needed. |**/
-    paper-links: true, /// <- boolean
-       /** Enable paper-readable links, which inserts the clickable link alongside
-       a footnote to its URL. |**/
-  )
-  // Check if the cfg options received are valid
-  for key in new-cfg.keys() {
-    if not cfg.keys().contains(key) {
-      panic("Invalid cfg." + key + ", can be: " + cfg.keys().join(", "))
-    }
-  }
-  cfg += new-cfg
-  
-  // Convert cfg.two-sided into a #pagebreak(to) value
-  let break-to = if cfg.two-sided {"odd"} else {none}
-  storage.add("break-to", break-to, namespace: "min-book")
-  
-  transl(data: cfg.transl, lang: lang-id)
-  
   let font-size = text.size
+  let transl-db = utils.std-langs()
   let date = get.date(date)
-  let part = part
   let chapter = chapter
-  
-  if part == auto {part = transl("part", to: lang-id, data: cfg.transl)}
-  if chapter == auto {chapter = transl("chapter", to: lang-id, data: cfg.transl)}
-  if type(cfg.page) == str {cfg.page = (paper: cfg.page)}
-  
+  let part = part
+  let break-to
+  let std-cfg
+  let indent
   /**
   = Advanced Numbering
   
@@ -223,34 +131,129 @@ These are all the options and its defaults used by _min-book_:
     "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.\n",
     "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.{6:a}. ",
   )
+  /**
+  = Advanced Configuration <adv-config>
+  :std-cfg: "let" => cfg: <capt>
   
-  let font = (:)
-  if text.font == "libertinus serif" and not cfg.font-usedefaults {
-    font = ( font: ("TeX Gyre Pagella", "Book Antiqua") )
+  These `#book(cfg)` configurations allows to modify certain aspects of the
+  book and manage its appearance and structure. Built with some thoughful
+  ready-to-use defaults that make its use optional, so that beginners and
+  casual writers can safely ignore it and _just write_.
+  **/
+  let std-cfg = (
+    numbering: auto, /// <- string | array of strings | none
+      /// Heading numbering (uses #univ("numbly") package). |
+    transl: auto, /// <- string | dictionary
+      /// `"file"  (lang: "file")`\ Set #univ("transl") Fluent database. |
+    typst-defaults: false, /// <- boolean
+       /// Use Typst defaults instead of min-book defaults. |
+    cover-bgcolor: rgb("#3E210B"), /// <- color
+       /// Cover background color when `#book(cover: auto)`. |
+    cover-txtcolor: luma(200), /// <- color
+       /// Cover text color when `#book(cover: auto)`. |
+    cover-fonts: ("Cinzel", "Alice"), /// <- array of strings
+      /** `(title, text)`\
+          Cover font for main title and other texts when `#book(cover: auto)`. |**/
+    cover-back: true, /// <- boolean
+       /// Generate a back cover at the end of the document when `#book(cover: auto)` |
+    std-toc: false, /// <- boolean
+      /// Clean special TOC formatting (restore default `#outline` visual). |
+    chapter-continuous: true, /// <- boolean
+      /// Continue chapter (level 2) numbering even after a book part (level 1). |
+    two-sided: true, /// <- boolean
+      /// Optimizes to print content on both sides of the paper. |
+    paper-friendly: true, /// <- boolean
+      /// Use links attached to URL footnotes. |
+  )
+  let additional = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
+  
+  // Check if the cfg options received are valid
+  if additional != () {
+    panic(repr(additional) + " does not exist as #book(cfg)")
   }
+  cfg = std-cfg + cfg
+  
+  indent = default(
+    when: par.first-line-indent == (amount: 0pt, all: false),
+    value: 1em,
+    otherwise: par.first-line-indent.amount,
+    cfg.typst-defaults,
+  )
+  break-to = if cfg.two-sided {"odd"} else {none}
+  
+  storage.add("break-to", break-to, namespace: "min-book")
+  
+  // Insert #cfg.transl into #transl-db
+  if type(cfg.transl) == str {transl-db.insert(lang-id, cfg.transl)}
+  else {transl-db += get.auto-val(cfg.transl, (:))}
+  
+  transl(data: transl-db, lang: lang-id)
+  
+  transl = transl.with(data: transl-db, to: lang-id)
+  chapter = get.auto-val(chapter, transl("chapter"))
+  part = get.auto-val(part, transl("part"))
   
   set document(
-    title: if subtitle != none {title + " - " + subtitle} else {title},
+    title: title + if subtitle != none {" - " + subtitle},
     author: authors,
-    date: date
+    date: date,
   )
   set page(
-    margin: cfg.margin,
-    ..cfg.page
+    ..default(
+      when: page.margin == auto,
+      value: (margin: (x: 15%, y: 14%)),
+      cfg.typst-defaults,
+    ),
+    ..default(
+      when: repr(page.width) == "595.28pt" and repr(page.height) == "841.89pt",
+      value: (paper: "a5"),
+      cfg.typst-defaults,
+    ),
   )
   set par(
-    justify: cfg.justify,
-    leading: cfg.line-space,
-    spacing: cfg.par-margin, 
-    first-line-indent: cfg.line-indentfirst
+    ..default(
+      when: par.justify == false,
+      value: (justify: true),
+      cfg.typst-defaults,
+    ),
+    ..default(
+      when: par.leading == 0.65em,
+      value: (leading: 0.5em),
+      cfg.typst-defaults,
+    ),
+    ..default(
+      when: par.spacing == 1.2em,
+      value: (spacing: 0.65em),
+      cfg.typst-defaults,
+    ),
+    first-line-indent: indent,
   )
-  set text(..font)
+  set text(
+    ..default(
+      when: text.font == "libertinus serif",
+      value: ( font: ("TeX Gyre Pagella", "Book Antiqua") ),
+      cfg.typst-defaults,
+    ),
+  )
   set terms(
-    separator: [: ],
-    tight: true,
-    hanging-indent: 1em,
+    ..default(
+      when: terms.separator == h(0.6em, weak: true),
+      value: (separator: ": "),
+      cfg.typst-defaults,
+    ),
+    ..default(
+      when: terms.hanging-indent == 2em,
+      value: (hanging-indent: 1em),
+      cfg.typst-defaults,
+    ),
   )
-  set list(marker: ([•], [–]))
+  set list(
+    ..default(
+      when: list.marker == ([•], [‣], [–]),
+      value: ( marker: ([•], [–]) ),
+      cfg.typst-defaults,
+    ),
+  )
   /**
   = Book Parts
   
@@ -304,43 +307,35 @@ These are all the options and its defaults used by _min-book_:
   — since the level 1 ones are parts.
   **/
   set heading(
-    // #utils.numbering set #book(part) and #book(chapter)
     numbering: utils.numbering(
-        patterns: (
-          cfg.numbering,
-          part-pattern,
-          no-part-pattern,
-        ),
-        scope: (
-          h1: part,
-          h2: chapter
-        )
+      patterns: (
+        cfg.numbering,
+        part-pattern,
+        no-part-pattern,
       ),
+      scope: (
+        h1: part,
+        h2: chapter
+      )
+    ),
     hanging-indent: 0pt,
     supplement: it => context {
-        if part != none and it.depth == 1 {part}
-        else if chapter != none {chapter}
-        else {auto}
-      }
+      if part != none and it.depth == 1 {part}
+      else if chapter != none {chapter}
+      else {auto}
+    }
   )
-
-  // Count every level 2 heading:
-  let book-h2-counter = counter("book-h2")
   
   show heading: it => {
-    let weight
-    if cfg.heading-weight == auto {
-      weight = if it.level < 6 {"regular"} else {"bold"}
-    }
-    else {
-      weight = cfg.heading-weight
-    }
-  
     set align(center)
     set par(justify: false)
     set text(
       hyphenate: false,
-      weight: weight,
+      ..default(
+        when: text.weight == "bold" and it.level < 6,
+        value: (weight: "regular"),
+        cfg.typst-defaults
+      )
     )
     
     it
@@ -350,31 +345,28 @@ These are all the options and its defaults used by _min-book_:
     if part != none {
       // Set page background
       let part-bg = if cover == auto {
-          let m = page.margin
-          let frame = image(
-              width: 93%,
-              "assets/frame-gray.svg"
-            )
-            
-          if type(m) != dictionary {
-            m = (
-              top: m,
-              bottom: m,
-              left: m,
-              right: m
-            )
-          }
+        let m = page.margin
+        let frame = image("assets/frame-gray.svg", width: 93%)
           
-          v(m.top * 0.25)
-          align(center + top, frame)
-          
-          align(center + bottom,
-            rotate(180deg, frame)
+        if type(m) != dictionary {
+          m = (
+            top: m,
+            bottom: m,
+            left: m,
+            right: m
           )
-          v(m.bottom * 0.25)
-        } else {
-          none
         }
+        
+        v(m.top * 0.25)
+        align(center + top, frame)
+        
+        align(center + bottom,
+          rotate(180deg, frame)
+        )
+        v(m.bottom * 0.25)
+      } else {
+        none
+      }
         
       if counter(page).get().at(0) != 1 {pagebreak(to: break-to)}
       
@@ -386,17 +378,18 @@ These are all the options and its defaults used by _min-book_:
       set page(background: none)
       pagebreak(to: break-to, weak: true)
       
-      if cfg.chapter-numrestart == false {
-        // Get the current level 2 heading count:
-        let current-h2-count = book-h2-counter.get()
-        // Level 2 heading numbering will not restart after level 1 headings now:
-        counter(heading).update((h1, ..n) => (h1, ..current-h2-count))
+      // Continue numbering of chapters (level 2) even after parts (level 1)
+      if cfg.chapter-continuous == true {
+        let h = h2-count.get() // level 2 heading count
+        
+        counter(heading).update((h1, ..n) => (h1, ..h))
       }
     }
     else {it}
   }
   show heading.where(level: 2): it => {
-    if it.numbering != none {book-h2-counter.step()}
+    if it.numbering != none {h2-count.step()} // count level 2 headings
+    
     it
   }
   show heading.where(level: 1): set text(size: font-size * 2)
@@ -405,27 +398,29 @@ These are all the options and its defaults used by _min-book_:
   show heading.where(level: 4): set text(size: font-size * 1.3)
   show heading.where(level: 5): set text(size: font-size * 1.2)
   show heading.where(level: 6): set text(size: font-size * 1.1)
-  show quote.where(block: true): set pad(x: 1em)
+  show quote.where(block: true): set pad(x: indent)
   show raw: it => {
-    let font = (:)
-    if text.font == "dejavu sans mono" and not cfg.font-usedefaults {
-      font = (font: "Inconsolata")
-    }
-  
     set text(
       size: font-size,
-      ..font
+      ..default(
+        when: text.font == "dejavu sans mono",
+        value: (font: "Inconsolata"),
+        cfg.typst-defaults
+      ),
     )
+    
     it
   }
-  show raw.where(block: true): it => pad(left: cfg.line-indentfirst, it)
+  show raw.where(block: true): it => pad(left: indent, it)
   show math.equation: it => {
-    let font = (:)
-    if text.font == "new computer modern math" and not cfg.font-usedefaults {
-      font = (font: ("Asana Math", "New Computer Modern Math"))
-    }
-  
-    set text(..font)
+    set text(
+      ..default(
+        when: text.font == "new computer modern math",
+        value: ( font: ("Asana Math", "New Computer Modern Math") ),
+        cfg.typst-defaults
+      )
+    )
+    
     it
   }
   show selector.or(
@@ -437,19 +432,18 @@ These are all the options and its defaults used by _min-book_:
     
     // When referencing headings in "normal" form
     if el != none and el.func() == heading and it.form == "normal" {
-      let patterns = if cfg.numbering != auto {cfg.numbering}
-        else if part != none {part-pattern}
-        else {no-part-pattern}
+      let number
+      let patterns = get.auto-val(
+        cfg.numbering,
+        if part != none {part-pattern} else {no-part-pattern}
+      )
       
       // Remove \n and trim full stops
       if patterns != none and part != "" {
         import "@preview/numbly:0.1.0": numbly
 
-        patterns = patterns.map(
-          item => item.replace("\n", "").trim(regex("[.:]"))
-        )
-        
-        let number = numbly(..patterns)(..counter(heading).at(el.location()))
+        patterns = patterns.map( i => i.replace("\n", "").trim(regex("[.:]")) )
+        number = numbly(..patterns)(..counter(heading).at(el.location()))
         
         // New reference without \n
         link(el.location())[#el.supplement #number]
@@ -460,7 +454,7 @@ These are all the options and its defaults used by _min-book_:
   }
   show link: it => {
     // FIXME: Accept content it.body
-    if cfg.paper-links and type(it.dest) == str and it.dest != it.body.text {
+    if cfg.paper-friendly and type(it.dest) == str and it.dest != it.body.text {
       it
       footnote(it.dest)
     }
@@ -603,22 +597,26 @@ These are all the options and its defaults used by _min-book_:
       let entry = it.indented(it.prefix(), it.inner(), gap: 0em)
       
       // Emphasize parts in TOC:
-      if it.level == 1 and part != none and cfg.toc-bold == true {
+      if cfg.std-toc == false and it.level == 1 and part != none {
         v(font-size, weak: true)
         strong(entry)
       }
       else {entry}
     }
     
-    let args = (:)
-    
-    if cfg.numbering == none {args.insert("depth", 2)}
-    if cfg.toc-stdindent == true {
-      args.insert("indent", lvl => { if lvl > 0 {1.5em} else {0em} })
-    }
-    
     pagebreak(to: break-to, weak: true)
-    outline(..args)
+    outline(
+      ..default(
+        when: outline.indent == auto,
+        value: (indent: lvl => { if lvl > 0 {1.5em} else {0em} }),
+        cfg.typst-defaults
+      ),
+      ..default(
+        when: cfg.numbering == none,
+        value: (depth: 2),
+        cfg.typst-defaults
+      ),
+    )
     pagebreak(weak: true)
   }
   else if type(toc) == content {toc}
@@ -630,7 +628,7 @@ These are all the options and its defaults used by _min-book_:
   if part != none {pagebreak(weak: true, to: break-to)}
   set page(numbering: "1")
   counter(page).update(1)
-
+  
   body
   
   if cover == auto and cfg.cover-back {
