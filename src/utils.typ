@@ -94,7 +94,16 @@
 }
 
 // Languages with support for automatic translation
-#let std-langs = (
-  "en", "pt", "la", "zh", "hi", "es", "ar", "fr", 
-  "bn", "ru", "ur", "id", "de", "ja", "it",
-)
+
+#let std-langs() = {
+  let database = (l10n: "ftl")
+  let langs = (
+    "en", "pt", "la", "zh", "hi", "es", "ar", "fr", 
+    "bn", "ru", "ur", "id", "de", "ja", "it",
+  )
+  
+  for lang in langs {
+    database.insert(lang, read("l10n/" + lang + ".ftl"))
+  }
+  return database
+}
