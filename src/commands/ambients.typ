@@ -1,19 +1,16 @@
 /**
-== Appendices Command
-
+== Appendices
 :appendices:
-
 Creates an special ambient to write or include multiple appendices. An
 appendix is any important additional data left out of the main document for
 some reason, but directly referenced or needed by it. Inside this ambient,
 all level 1 heading is a new appendix.
 **/
 #let appendices(
-  type: "appendix",
+  body, /// <- content
+    /// The appendices ambient. |
   title: auto, /// <- array of strings | auto
-    /** `(singular, plural)`
-    Appendix singular and plural names — if not set, fallback to "Appendix" and
-    "Appendices" in book language. |**/
+    /// `(singular, plural)`\ Title for each appendix and for Appendices section. |
   numbering: ( /// <- array of strings | string
     "",
     "{2:A}.\n",
@@ -22,10 +19,8 @@ all level 1 heading is a new appendix.
     "{2:A}.{3:1}.{4:1}.{5:1}. ",
     "{2:A}.{3:1}.{4:1}.{5:1}.{6:a}. ",
   ),
-    /** Custom appendices numbering — a standard numbering or a #univ("numbly")
-    numbering. |**/
-  body /// <- content
-    /// The appendices content. |
+    /// Custom appendices numbering (uses #univ("numbly") package). |
+  type: "appendix",
 ) = context {
   import "../utils.typ"
   import "@preview/transl:0.2.0": transl
@@ -37,15 +32,15 @@ all level 1 heading is a new appendix.
   
   set heading(
     offset: 1,
+    supplement: singular-title,
     numbering: utils.numbering(
-        patterns: (numbering,),
-        scope: (
-          h1: "",
-          h2: singular-title,
-          n: 1
-        )
-      ),
-    supplement: singular-title
+      patterns: (numbering,),
+      scope: (
+        h1: "",
+        h2: singular-title,
+        n: 1
+      )
+    ),
   )
   
   show heading.where(level: 2): it => {
@@ -53,10 +48,9 @@ all level 1 heading is a new appendix.
     it
   }
   
-  
   pagebreak(weak: true, to: break-to)
   
-  // Main title (plural)
+  // Appendices title
   heading(
     plural-title,
     level: 1,
@@ -71,18 +65,16 @@ all level 1 heading is a new appendix.
 
 /** 
 == Annexes Command
-
 :annexes:
-
 Creates an special ambient to write or include multiple annexes. An annex is
 any important third-party data directly cited or referenced in the main
 document. Inside this ambient, all level 1 heading is a new annex.
 **/
 #let annexes(
-  type: "annex",
-  title: auto, /// <- auto | array
-    /** Annex singular and plural names — if not set, fallback to "Annex" and
-    "Annexes" in book language. |**/
+  body, /// <- content
+    /// The annexes ambient. |
+  title: auto, /// <- array of strings | auto
+    /// `(singular, plural)`\ Title for each annex and for Annexes section. |
   numbering: ( /// <- array of strings | string
     "",
     "{2:A}.\n",
@@ -91,12 +83,9 @@ document. Inside this ambient, all level 1 heading is a new annex.
     "{2:A}.{3:1}.{4:1}.{5:1}. ",
     "{2:A}.{3:1}.{4:1}.{5:1}.{6:a}. ",
   ),
-    /** Custom annexes numbering — a standard numbering, or a #univ("numbly")
-    numbering. |**/
-  body /// <- contents
-    /// The annexes content. |
+    /// Custom annexes numbering (uses #univ("numbly") package). |
 ) = appendices(
-  type: type,
+  type: "annex",
   title: title,
   numbering: numbering,
   body
