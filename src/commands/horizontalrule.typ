@@ -1,11 +1,10 @@
 /**
 == Horizontal Rule Command
-
 :horizontalrule:
-
 Adds a horizontal rule, visual separators used to distinguish subtle changes
 of subject in extensive texts.
 **/
+// TODO: integrate into themes
 #let horizontalrule(
   symbol: [#sym.ast.op #sym.ast.op #sym.ast.op], /// <- content
     /// Decoration in the middle of the horizontal rule — defaults to 3 asterisks. |
