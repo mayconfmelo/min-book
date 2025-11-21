@@ -7,11 +7,21 @@
   let pattern = pattern
   let scope = scope
   
+  if pattern == none {return none} // no numbering at all
+  if type(pattern) == str {
+    if not pattern.contains(regex("[{}]")) {
+      return {
+        orig.numbering(pattern, ..level)
+        
+        if not after-toc {h(0.5em)}
+      }
+    }
+    
+    pattern = (pattern,)
+  }
+  
   scope.part = scope.at("part", default: none)
   scope.chapter = scope.at("chapter", default: "Foo")
-  
-  if pattern == none {return none} // no numbering at all
-  if type(pattern) == str {pattern = (pattern,)}
   
   if after-toc {
     if scope.part != none and pattern.len() >= 1 {
