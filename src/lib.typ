@@ -1,15 +1,13 @@
-// NAME: Minimal Books
 // TODO: Implement ePub output when available
 // TODO: Implement themes
 // TODO: Implement #toolbox
-// TODO: Implement #toolbox.default
 
 #import "commands/notes.typ": note
 #import "commands/ambients.typ": appendices, annexes
 #import "commands/horizontalrule.typ": horizontalrule, hr
 #import "commands/blockquote.typ": blockquote
 
-/**#v(1fr)#outline()#v(1.2fr)#pagebreak()
+/**#v(1fr) #outline() #v(1.2fr) #pagebreak()
 = Quick Start
 
 ```typ
@@ -39,9 +37,6 @@ up to you: customize it your way or ride along the defaults — both ways are
 possible and encouraged.
 
 = Options
-
-These are all the options and its defaults used by _min-book_:
-
 :show.with book:
 **/
 #let book(
@@ -86,7 +81,6 @@ These are all the options and its defaults used by _min-book_:
   import "@preview/transl:0.2.0": transl
   import "utils.typ"
   
-  // Required arguments
   assert.ne(title, none, message: "#book(title) required")
   assert.ne(authors, none, message: "#book(authors) required")
   
@@ -115,6 +109,24 @@ These are all the options and its defaults used by _min-book_:
   allow to set a custom numbering used whether `#book(part)` is enabled or
   disabled.
   **/
+  let pattern = (
+    part: (
+      "{1:I}:\n",
+      "{2:I}.\n",
+      "{2:I}.{3:1}.\n",
+      "{2:I}.{3:1}.{4:1}.\n",
+      "{2:I}.{3:1}.{4:1}.{5:1}.\n",
+      "{2:I}.{3:1}.{4:1}.{5:1}.{6:a}. ",
+    ),
+    no-part: (
+      "{1:I}.\n",
+      "{1:I}.{2:1}.\n",
+      "{1:I}.{2:1}.{3:1}.\n",
+      "{1:I}.{2:1}.{3:1}.{4:1}.\n",
+      "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.\n",
+      "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.{6:a}. ",
+    )
+  )
   let part-pattern = (
     "{1:I}:\n",
     "{2:I}.\n",
@@ -171,10 +183,14 @@ These are all the options and its defaults used by _min-book_:
   
   // Check if the cfg options received are valid
   if additional != () {
-    panic(repr(additional) + " does not exist as #book(cfg)")
+    panic("Invalid #book(cfg) options: " + additional.join(", "))
   }
   cfg = std-cfg + cfg
   
+  pattern = get.auto-val(
+    cfg.numbering,
+    if part != none {pattern.part} else {pattern.no-part}
+  )
   indent = default(
     when: par.first-line-indent == (amount: 0pt, all: false),
     value: 1em,
@@ -182,9 +198,6 @@ These are all the options and its defaults used by _min-book_:
     cfg.typst-defaults,
   )
   break-to = if cfg.two-sided {"odd"} else {none}
-  
-  storage.add("break-to", break-to, namespace: "min-book")
-  storage.add("part", part, namespace: "min-book")
   
   // Insert #cfg.transl into #transl-db
   if type(cfg.transl) == str {transl-db.insert(lang-id, cfg.transl)}
@@ -195,6 +208,9 @@ These are all the options and its defaults used by _min-book_:
   transl = transl.with(data: transl-db, to: lang-id)
   chapter = get.auto-val(chapter, transl("chapter"))
   part = get.auto-val(part, transl("part"))
+  
+  storage.add("break-to", break-to, namespace: "min-book")
+  storage.add("part", part, namespace: "min-book")
   
   set document(
     title: title + if subtitle != none {" - " + subtitle},
@@ -310,17 +326,7 @@ These are all the options and its defaults used by _min-book_:
   — since the level 1 ones are parts.
   **/
   set heading(
-    numbering: utils.numbering(
-      patterns: (
-        cfg.numbering,
-        part-pattern,
-        no-part-pattern,
-      ),
-      scope: (
-        h1: part,
-        h2: chapter
-      )
-    ),
+    numbering: utils.numbering( pattern, scope: (part: part, chapter: chapter) ),
     hanging-indent: 0pt,
     supplement: it => context {
       if part != none and it.depth == 1 {part}
@@ -625,7 +631,7 @@ These are all the options and its defaults used by _min-book_:
   else if type(toc) == content {toc}
   
   // <outline> anchor allows different numbering styles in TOC and in the actual text.
-  [#metadata("Marker for situating titles after/before outline") <outline>]
+  [#metadata("Situates titles after/before outline") <outline>]
   
   // Start page numbering at the next even page:
   if part != none {pagebreak(weak: true, to: break-to)}
