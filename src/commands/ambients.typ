@@ -29,6 +29,7 @@ all level 1 heading is a new appendix.
   let singular-title = transl(type, number: "sing", mode: str)
   let plural-title = transl(type, number: "plur", mode: str)
   let break-to = storage.get("break-to", namespace: "min-book")
+  let part = storage.get("part", namespace: "min-book")
   
   set heading(
     offset: 1,
@@ -44,11 +45,11 @@ all level 1 heading is a new appendix.
   )
   
   show heading.where(level: 2): it => {
-    pagebreak(to: break-to)
+    if part != none {pagebreak(to: break-to, weak: true)}
     it
   }
   
-  pagebreak(weak: true, to: break-to)
+  //pagebreak(weak: true, to: break-to)
   
   // Appendices title
   heading(
