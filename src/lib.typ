@@ -4,10 +4,10 @@
 // TODO: Implement #toolbox
 // TODO: Implement #toolbox.default
 
-#import "additional/notes.typ": note
-#import "additional/ambient.typ": appendices, annexes
-#import "additional/horizontalrule.typ": horizontalrule, hr
-#import "additional/blockquote.typ": blockquote
+#import "commands/notes.typ": note
+#import "commands/ambients.typ": appendices, annexes
+#import "commands/horizontalrule.typ": horizontalrule, hr
+#import "commands/blockquote.typ": blockquote
 
 /**#v(1fr)#outline()#v(1.2fr)#pagebreak()
 = Quick Start
@@ -462,8 +462,8 @@ These are all the options and its defaults used by _min-book_:
   }
   
   // Insert notes of a section at its end, before next heading:
-  import "additional/notes.typ"
-  let body = notes.insert(body)
+  import "commands/notes.typ"
+  let body = notes.insert(body, new-page: part != none)
   
   if titlepage == none and catalog != none and cfg.two-sided {
     // Automatic blank titlepage when generating catalog
