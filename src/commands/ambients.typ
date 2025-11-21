@@ -26,22 +26,15 @@ all level 1 heading is a new appendix.
   import "@preview/transl:0.2.0": transl
   import "@preview/toolbox:0.1.0": storage
   
-  let singular-title = transl(type, number: "sing", mode: str)
-  let plural-title = transl(type, number: "plur", mode: str)
-  let break-to = storage.get("break-to", namespace: "min-book")
+  let title = transl(type, number: "plur", mode: str)
+  let chapter = transl(type, number: "sing", mode: str)
   let part = storage.get("part", namespace: "min-book")
+  let break-to = storage.get("break-to", namespace: "min-book")
   
   set heading(
     offset: 1,
-    supplement: singular-title,
-    numbering: utils.numbering(
-      patterns: (numbering,),
-      scope: (
-        h1: "",
-        h2: singular-title,
-        n: 1
-      )
-    ),
+    supplement: chapter,
+    numbering: utils.numbering( numbering, scope: (part: "", chapter: chapter) ),
   )
   
   show heading.where(level: 2): it => {
@@ -49,14 +42,9 @@ all level 1 heading is a new appendix.
     it
   }
   
-  //pagebreak(weak: true, to: break-to)
+  if part != none {pagebreak(weak: true, to: break-to)}
   
-  // Appendices title
-  heading(
-    plural-title,
-    level: 1,
-    numbering: none
-  )
+  heading(title, level: 1)
   
   counter(heading).update(0)
   
