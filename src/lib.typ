@@ -164,6 +164,8 @@ These are all the options and its defaults used by _min-book_:
       /// Optimizes to print content on both sides of the paper. |
     paper-friendly: true, /// <- boolean
       /// Use links attached to URL footnotes. |
+    notes-page: false, /// <- boolean
+      /// Forces `#note` data to always appear in a separate new page. |
   )
   let additional = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
   
@@ -463,13 +465,13 @@ These are all the options and its defaults used by _min-book_:
   
   // Insert notes of a section at its end, before next heading:
   import "commands/notes.typ"
-  let body = notes.insert(body, new-page: part != none)
+  let body = notes.insert(body, new-page: part != none or cfg.notes-page)
   
   if titlepage == none and catalog != none and cfg.two-sided {
     // Automatic blank titlepage when generating catalog
     titlepage = []
   }
-
+  
   if cover != none {
     import "components/cover.typ": new
     
@@ -486,7 +488,7 @@ These are all the options and its defaults used by _min-book_:
     new(cover, title, subtitle, date, authors, volume, cfg)
     pagebreak(to: break-to)
   }
-
+  
   if titlepage != none {
     import "components/titlepage.typ": new
     
@@ -494,7 +496,7 @@ These are all the options and its defaults used by _min-book_:
     if catalog != none {pagebreak()}
     else {pagebreak(to: break-to, weak: true)}
   }
-
+  
   if catalog != none {
     /**
     = Cataloging in Publication <catalog>
