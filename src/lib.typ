@@ -184,6 +184,7 @@ These are all the options and its defaults used by _min-book_:
   break-to = if cfg.two-sided {"odd"} else {none}
   
   storage.add("break-to", break-to, namespace: "min-book")
+  storage.add("part", part, namespace: "min-book")
   
   // Insert #cfg.transl into #transl-db
   if type(cfg.transl) == str {transl-db.insert(lang-id, cfg.transl)}
@@ -599,7 +600,7 @@ These are all the options and its defaults used by _min-book_:
       let entry = it.indented(it.prefix(), it.inner(), gap: 0em)
       
       // Emphasize parts in TOC:
-      if cfg.std-toc == false and it.level == 1 and part != none {
+      if not cfg.std-toc and it.level == 1 and part != none {
         v(font-size, weak: true)
         strong(entry)
       }
@@ -609,12 +610,12 @@ These are all the options and its defaults used by _min-book_:
     pagebreak(to: break-to, weak: true)
     outline(
       ..default(
-        when: outline.indent == auto,
+        when: outline.indent == auto and not cfg.std-toc,
         value: (indent: lvl => { if lvl > 0 {1.5em} else {0em} }),
         cfg.typst-defaults
       ),
       ..default(
-        when: cfg.numbering == none,
+        when: cfg.numbering == none and not cfg.std-toc,
         value: (depth: 2),
         cfg.typst-defaults
       ),
