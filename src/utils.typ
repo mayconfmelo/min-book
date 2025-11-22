@@ -9,8 +9,10 @@
   let after-toc = query(selector(<toc:inserted>).before(here())) != ()
   let pattern = pattern
   let scope = scope
+  let level = level.pos()
   
-  if pattern == none {return none} // no numbering at all
+  if pattern == none {return none}
+  if pattern.at(level.len() - 1, default: "") == none {return none}
   if type(pattern) == str {
     if not pattern.contains(regex("[{}]")) {
       return {
@@ -43,9 +45,12 @@
       pattern.at(0) = scope.chapter + pattern.at(0) // set chapter (level 1)
     }
   }
-  else {pattern = pattern.map( item => item.trim(regex("\n+$")) )}
+  else {
+    pattern = pattern.map(
+      item => if type(item) == str { item.trim(regex("\n+")) }
+    )
+  }
   
-  if pattern.last() == none {return none} // no numbering for current level
   
   numbly(default: "I.I.1.1.1.a", ..pattern)(..level)
   
