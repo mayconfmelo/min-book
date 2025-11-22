@@ -630,8 +630,7 @@ possible and encouraged.
   }
   else if type(toc) == content {toc}
   
-  // <outline> anchor allows different numbering styles in TOC and in the actual text.
-  [#metadata("Situates titles after/before outline") <outline>]
+  [#metadata("Situates headings before/after outline") <toc:inserted>]
   
   // Start page numbering at the next even page:
   if part != none {pagebreak(weak: true, to: break-to)}

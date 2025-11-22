@@ -1,9 +1,12 @@
 // Handles book numbering
-#let numbering(pattern, scope: (:)) = (..level) => context {
+#let numbering(
+  pattern,
+  scope: (:),
+) = (..level) => context {
   import "@preview/numbly:0.1.0": numbly
   import "orig.typ"
   
-  let after-toc = query(selector(label("outline")).before(here())) != ()
+  let after-toc = query(selector(<toc:inserted>).before(here())) != ()
   let pattern = pattern
   let scope = scope
   
