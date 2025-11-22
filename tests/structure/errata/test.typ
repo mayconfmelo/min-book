@@ -1,21 +1,18 @@
 #import "/src/lib.typ": book
-#set page(height: auto)
+
+#set text(font: ("libertinus serif", "new computer modern"))
+
+#let doc = []
+#let other = (
+  title: "Title", authors: "Author", titlepage: none, cover: none, toc: none,
+  cfg: (two-sided: false)
+)
+#let book = book.with(..other, doc)
+
 
 #book(
-  // Errata data
-  errata: [The information in page 99 is wrong; you can't actually eat mango while wristle.],
-  // Additional book data
-  title: "Book Title",
-  subtitle: "Book subtitle, not more than two lines long",
-  authors: "Book Author",
-  titlepage: none,
-  cover: none,
-  toc: none,
-  volume: 1,
-  cfg: (
-    font-usedefaults: true,
-    two-sided: false,
-    cover-back: false,
-  ),
-  []
+  errata: [
+    The information in page 99 is wrong; you cannot actually eat sugar cane
+    while wristle.
+  ]
 )

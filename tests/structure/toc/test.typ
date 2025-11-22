@@ -1,28 +1,26 @@
 #import "/src/lib.typ": book, blockquote
-#set page(height: auto)
+
+#set page(height: auto, width: 15cm, margin: 2cm)
+#set text(font: ("libertinus serif", "new computer modern"))
+#set outline(indent: 3em)
+
+#let cfg = (two-sided: false, numbering: "1.")
+#let other = (
+  title: "", subtitle: "", authors: "", titlepage: none, cover: none, part: none
+)
+#let book = book.with(..other)
+
 
 #show: book.with(
-  // TOC data
   toc: true,
-  // Additional book data
-  title: "Book Title",
-  subtitle: "Book subtitle, not more than two lines long",
-  authors: "Book Author",
-  titlepage: none,
-  cover: none,
-  volume: 1,
-  part: none,
-  cfg: (
-    font-usedefaults: true,
-    two-sided: false,
-    cover-back: false,
-  ),
+  cfg: cfg + (std-toc: true),
 )
 
-= Chapter
-== Section
-== Section
-=== Subsection
-= Chapter
-== Section
-== Section
+= Level One
+== Level Two
+== Level Two
+=== Level Three
+
+= Level One
+== Level Two
+== Level Two

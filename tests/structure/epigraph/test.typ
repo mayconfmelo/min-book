@@ -1,21 +1,15 @@
 #import "/src/lib.typ": book, blockquote
-#set page(height: auto)
+
+#set text(font: ("libertinus serif", "new computer modern"))
+
+#let doc = []
+#let other = (
+  title: "Title", authors: "Author", subtitle: "Subtitle", volume: 1,
+  edition: 2, titlepage: none, cover: none, toc: none, cfg: (two-sided: false)
+)
+#let book = book.with(..other, doc)
+
 
 #book(
-  // Epigraph data
-  epigraph: blockquote(by: "Einstein")[Don't believe everything you read.],
-  // Additional book data
-  title: "Book Title",
-  subtitle: "Book subtitle, not more than two lines long",
-  authors: "Book Author",
-  titlepage: none,
-  cover: none,
-  toc: none,
-  volume: 1,
-  cfg: (
-    font-usedefaults: true,
-    two-sided: false,
-    cover-back: false,
-  ),
-  []
+  epigraph: blockquote(by: "Einstein")[Don't believe everything you read.]
 )
