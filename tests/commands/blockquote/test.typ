@@ -1,5 +1,6 @@
 #import "/src/lib.typ": blockquote
 #set page(height: auto)
+#set par(justify: true)
 
 #lorem(100)
 
