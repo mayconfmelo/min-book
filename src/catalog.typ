@@ -1,3 +1,4 @@
+// TODO: update (maybe re-write)
 #let new(catalog, title, subtitle, authors, date, volume, edition) = {
   // TODO: re-write new()
   set box(width: 1fr)

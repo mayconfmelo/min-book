@@ -1,42 +1,23 @@
 /**
-== Horizontal Rule Command
+== Horizontal Rule
 :horizontalrule:
 Adds a horizontal rule, visual separators used to distinguish subtle changes
 of subject in extensive texts.
 **/
-// TODO: integrate into themes
 #let horizontalrule(
-  symbol: [#sym.ast.op #sym.ast.op #sym.ast.op], /// <- content
-    /// Decoration in the middle of the horizontal rule — defaults to 3 asterisks. |
-  spacing: 1em, /// <- length
+  spacing: 1.5em, /// <- length
     /// Vertical space before and after the horizontal rule. |
-  line-size: 15%,
-) = {
+) = context {
+  import "@preview/toolbox:0.1.0": storage
+  
+  let std = align(center, image("../themes/stylish/hr.svg", width: 50%))
+  let body = storage.final("themes", (:), namespace: "min-book")
+  
   v(spacing, weak: true)
-  
-  align(
-    center,
-    block(width: 100%)[
-      #box(
-        height: 1em,
-        align(
-          center + horizon,
-          line(length: line-size)
-        )
-      )
-      #box(height: 1em, symbol)
-      #box(
-        height: 1em,
-        align(
-          center + horizon,
-          line(length: line-size)
-        )
-      )
-    ]
-  )
-  
+  body.at("hr", default: std)
   v(spacing, weak: true)
 }
+
 
 /// The `#horizontalrule` command is also available as the smaller `#hr` alias.
 #let hr = horizontalrule

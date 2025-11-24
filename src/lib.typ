@@ -6,6 +6,7 @@
 #import "commands/ambients.typ": appendices, annexes
 #import "commands/horizontalrule.typ": horizontalrule, hr
 #import "commands/blockquote.typ": blockquote
+#import "themes.typ"
 
 /**#v(1fr) #outline() #v(1.2fr) #pagebreak()
 = Quick Start
@@ -79,22 +80,12 @@ possible and encouraged.
 ) = context {
   import "@preview/toolbox:0.1.0": storage, get, default
   import "@preview/transl:0.2.0": transl
+  import "commands/notes.typ"
   import "utils.typ"
   
   assert.ne(title, none, message: "#book(title) required")
   assert.ne(authors, none, message: "#book(authors) required")
   
-  let lang-id = text.lang + if text.region != none {"-" + text.region}
-  let h2-count = counter("min-book-h2-count")
-  let cfg = get.auto-val(cfg, (:))
-  let font-size = text.size
-  let transl-db = utils.std-langs()
-  let date = get.date(date)
-  let chapter = chapter
-  let part = part
-  let break-to
-  let std-cfg
-  let indent
   /**
   = Advanced Numbering
   
@@ -127,22 +118,7 @@ possible and encouraged.
       "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.{6:a}. ",
     )
   )
-  let part-pattern = (
-    "{1:I}:\n",
-    "{2:I}.\n",
-    "{2:I}.{3:1}.\n",
-    "{2:I}.{3:1}.{4:1}.\n",
-    "{2:I}.{3:1}.{4:1}.{5:1}.\n",
-    "{2:I}.{3:1}.{4:1}.{5:1}.{6:a}. ",
-  )
-  let no-part-pattern = (
-    "{1:I}.\n",
-    "{1:I}.{2:1}.\n",
-    "{1:I}.{2:1}.{3:1}.\n",
-    "{1:I}.{2:1}.{3:1}.{4:1}.\n",
-    "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.\n",
-    "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.{6:a}. ",
-  )
+  let cfg = get.auto-val(cfg, (:))
   /**
   = Advanced Configuration <adv-config>
   :std-cfg: "let" => cfg: <capt>
@@ -178,101 +154,16 @@ possible and encouraged.
       /// Use links attached to URL footnotes. |
     notes-page: false, /// <- boolean
       /// Forces `#note` data to always appear in a separate new page. |
+    theme: themes.stylish, /// <- module
+      /// Set book theme.
+    cover: (:), /// <- dictionary
+      /// Theme-dependent cover configurations.
   )
-  let additional = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
-  
-  // Check if the cfg options received are valid
-  if additional != () {
-    panic("Invalid #book(cfg) options: " + additional.join(", "))
-  }
-  cfg = std-cfg + cfg
-  
-  pattern = get.auto-val(
-    cfg.numbering,
-    if part != none {pattern.part} else {pattern.no-part}
-  )
-  indent = default(
-    when: par.first-line-indent == (amount: 0pt, all: false),
-    value: 1em,
-    otherwise: par.first-line-indent.amount,
-    cfg.typst-defaults,
-  )
-  break-to = if cfg.two-sided {"odd"} else {none}
-  
-  // Insert #cfg.transl into #transl-db
-  if type(cfg.transl) == str {transl-db.insert(lang-id, cfg.transl)}
-  else {transl-db += get.auto-val(cfg.transl, (:))}
-  
-  transl(data: transl-db, lang: lang-id)
-  
-  transl = transl.with(data: transl-db, to: lang-id)
-  chapter = get.auto-val(chapter, transl("chapter"))
-  part = get.auto-val(part, transl("part"))
-  
-  storage.add("break-to", break-to, namespace: "min-book")
-  storage.add("part", part, namespace: "min-book")
-  
-  set document(
-    title: title + if subtitle != none {" - " + subtitle},
-    author: authors,
-    date: date,
-  )
-  set page(
-    ..default(
-      when: page.margin == auto,
-      value: (margin: (x: 15%, y: 14%)),
-      cfg.typst-defaults,
-    ),
-    ..default(
-      when: repr(page.width) == "595.28pt" and repr(page.height) == "841.89pt",
-      value: (paper: "a5"),
-      cfg.typst-defaults,
-    ),
-  )
-  set par(
-    ..default(
-      when: par.justify == false,
-      value: (justify: true),
-      cfg.typst-defaults,
-    ),
-    ..default(
-      when: par.leading == 0.65em,
-      value: (leading: 0.5em),
-      cfg.typst-defaults,
-    ),
-    ..default(
-      when: par.spacing == 1.2em,
-      value: (spacing: 0.65em),
-      cfg.typst-defaults,
-    ),
-    first-line-indent: indent,
-  )
-  set text(
-    ..default(
-      when: text.font == "libertinus serif",
-      value: ( font: ("TeX Gyre Pagella", "Book Antiqua") ),
-      cfg.typst-defaults,
-    ),
-  )
-  set terms(
-    ..default(
-      when: terms.separator == h(0.6em, weak: true),
-      value: (separator: ": "),
-      cfg.typst-defaults,
-    ),
-    ..default(
-      when: terms.hanging-indent == 2em,
-      value: (hanging-indent: 1em),
-      cfg.typst-defaults,
-    ),
-  )
-  set list(
-    ..default(
-      when: list.marker == ([•], [‣], [–]),
-      value: ( marker: ([•], [–]) ),
-      cfg.typst-defaults,
-    ),
-  )
+  let not-cfg = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
+  let lang-id = text.lang + if text.region != none {"-" + text.region}
+  let transl-db = utils.std-langs()
+  let date = get.date(date)
+  let font-size = text.size
   /**
   = Book Parts
   
@@ -325,154 +216,55 @@ possible and encouraged.
   1 headings become chapters; otherwise, all level 2 headings become chapters
   — since the level 1 ones are parts.
   **/
-  set heading(
-    numbering: utils.numbering( pattern, scope: (part: part, chapter: chapter) ),
-    hanging-indent: 0pt,
-    supplement: it => context {
-      if part != none and it.depth == 1 {part}
-      else if chapter != none {chapter}
-      else {auto}
-    }
+  let part = part
+  let chapter = chapter
+  let body = body
+  let break-to
+  let meta 
+  
+  // Check if the cfg options received are valid
+  if not-cfg != () {
+    panic("Invalid #book(cfg) options: " + not-cfg.join(", "))
+  }
+  cfg = std-cfg + cfg
+  
+  // Insert #cfg.transl into #transl-db
+  if type(cfg.transl) == str {transl-db.insert(lang-id, cfg.transl)}
+  else {transl-db += get.auto-val(cfg.transl, (:))}
+  
+  transl(data: transl-db, lang: lang-id)
+  
+  transl = transl.with(data: transl-db, to: lang-id)
+  chapter = get.auto-val(chapter, transl("chapter"))
+  part = get.auto-val(part, transl("part"))
+  pattern = get.auto-val(
+    cfg.numbering,
+    if part != none {pattern.part} else {pattern.no-part}
+  )
+  break-to = if cfg.two-sided {"odd"} else {none}
+  meta = (
+    title: title,
+    subtitle: subtitle,
+    date: date,
+    authors: authors,
+    volume: transl("volume", n: volume),
+    edition: transl("edition", n: edition),
+    part: part,
+    chapter: chapter,
+    cover: cover,
+    numbering: utils.numbering(pattern, part: part, chapter: chapter),
   )
   
-  show heading: it => {
-    set align(center)
-    set par(justify: false)
-    set text(
-      hyphenate: false,
-      ..default(
-        when: text.weight == "bold" and it.level < 6,
-        value: (weight: "regular"),
-        cfg.typst-defaults
-      )
-    )
-    
-    it
-  }
+  storage.add("break-to", break-to, namespace: "min-book")
+  storage.add("part", part, namespace: "min-book")
+  
+  show: cfg.theme.styling.with(meta, cfg)
   show heading.where(level: 1, outlined: true): it => {
-    // Create part page, if any:
-    if part != none {
-      // Set page background
-      let part-bg = if cover == auto {
-        let m = page.margin
-        let frame = image("assets/frame-gray.svg", width: 93%)
-          
-        if type(m) != dictionary {
-          m = (
-            top: m,
-            bottom: m,
-            left: m,
-            right: m
-          )
-        }
-        
-        v(m.top * 0.25)
-        align(center + top, frame)
-        
-        align(center + bottom,
-          rotate(180deg, frame)
-        )
-        v(m.bottom * 0.25)
-      } else {
-        none
-      }
-        
-      if counter(page).get().at(0) != 1 {pagebreak(to: break-to)}
-      
-      set page(background: part-bg)
-      set par(justify: false)
-      
-      align(center + horizon, it)
-      
-      set page(background: none)
-      pagebreak(to: break-to, weak: true)
-      
-      // Continue numbering of chapters (level 2) even after parts (level 1)
-      if cfg.chapter-continuous == true {
-        let h = h2-count.get() // level 2 heading count
-        
-        counter(heading).update((h1, ..n) => (h1, ..h))
-      }
-    }
-    else {it}
-  }
-  show heading.where(level: 2): it => {
-    if it.numbering != none {h2-count.step()} // count level 2 headings
-    
+    if part != none {it = cfg.theme.part(meta, cfg, it)}
     it
-  }
-  show heading.where(level: 1): set text(size: font-size * 2)
-  show heading.where(level: 2): set text(size: font-size * 1.6)
-  show heading.where(level: 3): set text(size: font-size * 1.4)
-  show heading.where(level: 4): set text(size: font-size * 1.3)
-  show heading.where(level: 5): set text(size: font-size * 1.2)
-  show heading.where(level: 6): set text(size: font-size * 1.1)
-  show quote.where(block: true): set pad(x: indent)
-  show raw: it => {
-    set text(
-      size: font-size,
-      ..default(
-        when: text.font == "dejavu sans mono",
-        value: (font: "Inconsolata"),
-        cfg.typst-defaults
-      ),
-    )
-    
-    it
-  }
-  show raw.where(block: true): it => pad(left: indent, it)
-  show math.equation: it => {
-    set text(
-      ..default(
-        when: text.font == "new computer modern math",
-        value: ( font: ("Asana Math", "New Computer Modern Math") ),
-        cfg.typst-defaults
-      )
-    )
-    
-    it
-  }
-  show selector.or(
-      terms, enum, list, table, figure, math.equation.where(block: true),
-      quote.where(block: true), raw.where(block: true)
-    ): set block(above: font-size, below: font-size)
-  show ref: it => context {
-    let el = it.element
-    
-    // When referencing headings in "normal" form
-    if el != none and el.func() == heading and it.form == "normal" {
-      let number
-      let patterns = get.auto-val(
-        cfg.numbering,
-        if part != none {part-pattern} else {no-part-pattern}
-      )
-      
-      // Remove \n and trim full stops
-      if patterns != none and part != "" {
-        import "@preview/numbly:0.1.0": numbly
-
-        patterns = patterns.map( i => i.replace("\n", "").trim(regex("[.:]")) )
-        number = numbly(..patterns)(..counter(heading).at(el.location()))
-        
-        // New reference without \n
-        link(el.location())[#el.supplement #number]
-      }
-      else {link(it.target, el.body)}
-    }
-    else {it}
-  }
-  show link: it => {
-    // FIXME: Accept content it.body
-    if cfg.paper-friendly and type(it.dest) == str and it.dest != it.body.text {
-      it
-      footnote(it.dest)
-    }
-    else {it}
   }
   
-  // Insert notes of a section at its end, before next heading:
-  import "commands/notes.typ"
-  let body = notes.insert(body, new-page: part != none or cfg.notes-page)
+  body = notes.insert(body, new-page: part != none or cfg.notes-page)
   
   if titlepage == none and catalog != none and cfg.two-sided {
     // Automatic blank titlepage when generating catalog
@@ -480,7 +272,25 @@ possible and encouraged.
   }
   
   if cover != none {
-    import "components/cover.typ": new
+    let generate-cover
+    
+    if cover == auto {generate-cover = cfg.theme.cover-page}
+    else if type(cover) == content {
+      generate-cover = (_,_) => {
+        if cover.func() == image {
+          set image(
+            fit: "stretch",
+            width: 100%,
+            height: 100%
+          )
+          
+          page(background: cover)[]
+        }
+        else {cover}
+      }
+    }
+    else if type(cover) == function {generate-cover = cover}
+    else {panic("Invalid #book(page) value: " + cover)}
     
     /**
     = Book cover
@@ -492,16 +302,38 @@ possible and encouraged.
     custom version. Cover can be a function, in which case it will be invoked with
     the `title`, `subtitle`, `date`, `authors`, `volume` and `cfg` of the book.
     **/
-    new(cover, title, subtitle, date, authors, volume, cfg)
-    pagebreak(to: break-to)
+    generate-cover(meta, cfg.cover)
+    pagebreak(to: break-to, weak: true)
   }
   
   if titlepage != none {
-    import "components/titlepage.typ": new
+    //import "components/titlepage.typ": new
     
-    new(titlepage, title, subtitle, authors, date, volume, edition)
-    if catalog != none {pagebreak()}
-    else {pagebreak(to: break-to, weak: true)}
+    //new(titlepage, title, subtitle, authors, date, volume, edition)
+    
+    let generate-titlepage
+    
+    if titlepage == auto {generate-titlepage = cfg.theme.title-page}
+    else if type(titlepage) == content {
+      generate-titlepage = (_,_) => {
+        if titlepage == none {page[]}
+        else if titlepage.func() == image {
+          set image(
+            fit: "stretch",
+            width: 100%,
+            height: 100%
+          )
+          
+          page(background: titlepage)[]
+        }
+        else {titlepage}
+      }
+    }
+    else if type(titlepage) == function {generate-titlepage = titlepage}
+    else {panic("Invalid #book(titlepage) value: " + repr(titlepage))}
+    
+    generate-titlepage(meta, cfg.cover)
+    pagebreak(weak: true)
   }
   
   if catalog != none {
@@ -547,7 +379,7 @@ possible and encouraged.
         generally shows additional information that complements the board data. |**/
     ) + catalog
     
-    import "components/catalog.typ": new
+    import "catalog.typ": new
     
     new(catalog, title, subtitle, authors, date, volume, edition)
   }
@@ -628,7 +460,6 @@ possible and encouraged.
     )
     pagebreak(weak: true)
   }
-  else if type(toc) == content {toc}
   
   [#metadata("Situates headings before/after outline") <toc:inserted>]
   

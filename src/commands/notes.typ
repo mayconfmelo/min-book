@@ -78,7 +78,7 @@ current section, right before the next heading.
 #let insert(body, new-page: true) = {
   import "@preview/toolbox:0.1.0": storage, its
   import "../orig.typ"
-
+  
   let tmp = [#metadata("#note placeholder") #label("note:data-placeholder")]
   let doc = body.at("children", default: ())
   let index = ()

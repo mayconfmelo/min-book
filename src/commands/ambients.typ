@@ -34,7 +34,7 @@ all level 1 heading is a new appendix.
   set heading(
     offset: 1,
     supplement: chapter,
-    numbering: utils.numbering( numbering, scope: (part: "", chapter: chapter) ),
+    numbering: utils.numbering(numbering, part: "", chapter: chapter),
   )
   
   show heading.where(level: 2): it => {
