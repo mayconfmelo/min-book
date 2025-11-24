@@ -1,4 +1,4 @@
-#let cover-page(meta, cfg) = {
+#let cover-page(meta, cfg) = context {
   let std = (
     page: (
       margin: (top: 20%, rest: 10%),
@@ -20,6 +20,8 @@
   let frame = image("stylish/frame.svg", width: 93%)
   let data = (horizon: none, bottom: none)
   let background-margin = page.height * 0.017
+  let meta = meta
+  let cfg = cfg
   let background
   
   // Transform (option: color) in (option: (fill: color))
@@ -67,7 +69,7 @@
 }
 
 
-#let title-page(meta, cfg) = {
+#let title-page(meta, cfg) = context {
   let std = (
     page: ( margin: (top: 20%, rest: 10%) ),
     title: ( size: page.width * 0.06 ),
@@ -75,6 +77,8 @@
   )
   let frame = image("stylish/frame.svg", width: 93%)
   let data = (horizon: none, bottom: none)
+  let meta = meta
+  let cfg = cfg
   
   // Transform (option: color) in (option: (fill: color))
   if type(cfg.at("title", default: "")) == color {cfg.title = (fill: cfg.title)}
