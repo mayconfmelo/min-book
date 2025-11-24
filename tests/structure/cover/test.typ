@@ -14,7 +14,7 @@
 
 // 2.png
 #book(
-  cover: page(fill: blue)[
+  cover: page(fill: blue, margin: 1cm)[
     #set text(fill: white, size: 20pt)
     #block(
       width: 100%,

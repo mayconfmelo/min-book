@@ -1,5 +1,6 @@
 #import "/src/lib.typ": book
 
+#set page(paper: "a5", footer: none)
 #set text(font: ("libertinus serif", "new computer modern"))
 
 #let doc = []
@@ -12,6 +13,9 @@
 
 #book(titlepage: auto)
 
-#book(titlepage: align(center + horizon, text(size: 20pt)[*Title*]))
+#book(titlepage: align(center + horizon, text(size: 23pt)[*Title*]))
 
-// TODO: function value for #book(titlepage)
+#book(titlepage: (meta, cfg) => {
+  align(center + horizon, text(size: 23pt)[*#meta.title*])
+  align(center + bottom, text(size: 14pt, meta.authors))
+})

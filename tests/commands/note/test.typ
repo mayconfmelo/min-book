@@ -1,7 +1,7 @@
 #import "/src/lib.typ": note, book
 #import "@preview/toolbox:0.1.0": storage
 
-#set page(height: auto, width: 13cm, margin: 2cm, footer: none)
+#set page(height: auto, width: 13.5cm, margin: 2cm, footer: none)
 #set par(leading: 0.7em, spacing: 1.3em, first-line-indent: 0.0001pt)
 #set text(font: ("libertinus serif", "new computer modern"))
 #show raw: set text(font: ("dejavu sans mono", "libertinus serif"))
