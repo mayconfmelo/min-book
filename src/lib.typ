@@ -45,7 +45,7 @@ possible and encouraged.
     /// Main title. |
   subtitle: none, /// <- string | content | none
     /// Subtitle, generally two lines long or less. |
-  edition: 0, /// <- integer
+  edition: 1, /// <- integer
     /// Edition number (counts changes and updates between book releases). |
   volume: 0, /// <- integer
     /// Series volume number (situates the book in a book collection). |
@@ -247,8 +247,8 @@ possible and encouraged.
     subtitle: subtitle,
     date: date,
     authors: authors,
-    volume: transl("volume", n: volume),
-    edition: transl("edition", n: edition),
+    volume: if volume != 0 {transl("volume", n: volume)} else {""},
+    edition: if edition != 0 {transl("edition", n: edition)} else {""},
     part: part,
     chapter: chapter,
     cover: cover,
