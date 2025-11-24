@@ -1,14 +1,17 @@
 // Handles book numbering
+// TODO: test translate anywhere
 #let numbering(
   pattern,
-  scope: (:),
+  part: none,
+  chapter: none,
 ) = (..level) => context {
   import "@preview/numbly:0.1.0": numbly
   import "orig.typ"
   
   let after-toc = query(selector(<toc:inserted>).before(here())) != ()
   let pattern = pattern
-  let scope = scope
+  let part = part
+  let chapter = chapter
   let level = level.pos()
   
   if pattern == none {return none}
@@ -25,24 +28,21 @@
     pattern = (pattern,)
   }
   
-  scope.part = scope.at("part", default: none)
-  scope.chapter = scope.at("chapter", default: "Foo")
-  
   if after-toc {
-    if scope.part != none and pattern.len() >= 1 {
-      pattern.at(0) = scope.part + " " + pattern.at(0) // set part (level 1)
+    if part != none and pattern.len() >= 1 {
+      pattern.at(0) = part + " " + pattern.at(0) // set part (level 1)
       
-      if scope.part == "" {pattern.at(0) = ""}
-      if scope.chapter != none and pattern.len() >= 2 {
-        if scope.chapter != "" {scope.chapter += " "}
+      if part == "" {pattern.at(0) = ""}
+      if chapter != none and pattern.len() >= 2 {
+        if chapter != "" {chapter += " "}
         
-        pattern.at(1) = scope.chapter + pattern.at(1) // set chapter (level 2)
+        pattern.at(1) = chapter + pattern.at(1) // set chapter (level 2)
       }
     }
-    else if scope.chapter != none and pattern.len() >= 1 {
-      if scope.chapter != "" {scope.chapter += " "}
+    else if chapter != none and pattern.len() >= 1 {
+      if chapter != "" {chapter += " "}
       
-      pattern.at(0) = scope.chapter + pattern.at(0) // set chapter (level 1)
+      pattern.at(0) = chapter + pattern.at(0) // set chapter (level 1)
     }
   }
   else {
