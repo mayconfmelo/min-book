@@ -1,6 +1,4 @@
-// NAME: Manual for min-book
-
-#import "@preview/min-manual:0.2.2": manual, arg, univ, url
+#import "@preview/min-manual:0.3.0": manual
 
 #show: manual.with(
   title: "Minimal Books",
@@ -8,10 +6,10 @@
   manifest: toml("typst.toml"),
   from-comments:
     read("src/lib.typ") +
-    read("src/additional/notes.typ") +
-    read("src/additional/ambient.typ") +
-    read("src/additional/horizontalrule.typ") +
-    read("src/additional/blockquote.typ")
+    read("src/commands/notes.typ") +
+    read("src/commands/ambients.typ") +
+    read("src/commands/horizontalrule.typ") +
+    read("src/commands/blockquote.typ")
 )
 
 
