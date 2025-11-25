@@ -12,7 +12,7 @@
 = Quick Start
 
 ```typ
-#import "@preview/min-book:1.3.1": book
+#import "@preview/min-book:1.4.0": book
 #show: book.with(
   title: "Book Title",
   subtitle: "Book subtitle, not more than two lines long",
@@ -135,15 +135,6 @@ possible and encouraged.
       /// `"file"  (lang: "file")`\ Set #univ("transl") Fluent database. |
     typst-defaults: false, /// <- boolean
        /// Use Typst defaults instead of min-book defaults. |
-    cover-bgcolor: rgb("#3E210B"), /// <- color
-       /// Cover background color when `#book(cover: auto)`. |
-    cover-txtcolor: luma(200), /// <- color
-       /// Cover text color when `#book(cover: auto)`. |
-    cover-fonts: ("Cinzel", "Alice"), /// <- array of strings
-      /** `(title, text)`\
-          Cover font for main title and other texts when `#book(cover: auto)`. |**/
-    cover-back: true, /// <- boolean
-       /// Generate a back cover at the end of the document when `#book(cover: auto)` |
     std-toc: false, /// <- boolean
       /// Clean special TOC formatting (restore default `#outline` visual). |
     chapter-continuous: true, /// <- boolean
@@ -155,9 +146,13 @@ possible and encouraged.
     notes-page: false, /// <- boolean
       /// Forces `#note` data to always appear in a separate new page. |
     theme: themes.stylish, /// <- module
-      /// Set book theme.
+      /// Set book theme. |
+    styling: (:), /// <- dictionary
+      /// Theme-dependent styling configurations. |
     cover: (:), /// <- dictionary
-      /// Theme-dependent cover configurations.
+      /// Theme-dependent cover/title page configurations. |
+    part: (:), /// <- dictionary
+      /// Theme-depend part configurations. |
   )
   let not-cfg = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
   let lang-id = text.lang + if text.region != none {"-" + text.region}
