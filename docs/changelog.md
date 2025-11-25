@@ -2,44 +2,44 @@
 
 ## 0.1.0
 
-- Optional _cover_
-  - Image covers
-  - Typst cover creation
-- Optional _title page_
-  - Automatic title page generation
-  - Typst title page creation
-- Default values for all non-essential `#book` arguments
-- Automatic book divisions (_parts_)
-  - Level 1 headings used as _parts_
-- Automatic book main sections (_chapters_)
-  - Level 2 headings used as _chapters_ when _parts_ are used
-  - Level 1 headings used as _chapters_ when _parts_ are not used
+- Cover (optional)
+  - Image
+  - Typst code
+- Title page (optional)
+  - Automatic generation
+  - Typst code
+- Default values for non-essential `#book` arguments
+- Parts (optional book divisions)
+  - Level 1 headings
+- Chapters (optional main sections)
+  - Level 2 headings when _parts_ are used
+  - Level 1 headings when _parts_ are not used
 - Extended numbering
   - Typst numbering strings
   - Numbly numbering arrays
 - Additional `#note` command
-- Additional `#horizontalrule` and `#hr` commands
+- Additional `#horizontalrule` command (alias `#hr`)
 - Additional `#blockquote` command
 
 ### 0.1.1
 
-- Added: automatic default cover generation
+- Added: Automatic cover generation
 - Added: `#appendices` command
 - Added: `#annexes` command
-- Added: Unnumbered _part_ and _chapter_ with `#book(numbering-style: none)`
+- Added: Support for unnumbered _part/chapter_ with `#book(numbering-style: none)`
 - Updated: `#book(titlepage)` defaults to `false`
-- Updated: `#book(paper)` can be a `"type"` or `(x: LENGTH, y: LENGTH)` size
-- Fixed: no part name was shown when `#book(toc: false)`
-- Fixed: broken `@ref` to headings with `\n` in its numbering
+- Updated: `#book(paper)` can be a a string or dictionary
+- Fixed: No part name was shown when `#book(toc: false)`
+- Fixed: Broken `@ref` to headings with `\n` in its numbering
 
 # 1.0.0
 
 - Added: Default _part, chapter, appendix_ and _annex_ titles in `#lang.text` language
 - Added: Custom TOML translation file with `#book(lang-data)`
-- Added: Manual embedded on the source code with doc-comments
-- Added: `#note(numbering-style)` set the numbering of all the next `#note` commands also
+- Added: Documentation retrieval from special comments
+- Added: `#note(numbering-style)` set the numbering of the next `#note` commands also
 - Added: `#book(page-cfg)` act as `#set page(..page-cfg)`
-- Added: `#book(date)` can be a `(year: YYYY, month: MM, day: DD)` dictionary
+- Added: `#book(date)` can be a `(year, month, day)` dictionary
 - Added: `#book(volume)` for book series volume
 - Added: `#book(edition)` for book publication edition
 - Added: `#book(catalog)` to generate a _cataloging in publication_ page
@@ -49,9 +49,9 @@
 - Added: `#book(epigraph)` for epigraph page
 - Added: `#book(cfg)` for advanced configuration
 - Added: `#book(cfg.font-mono)` to set monospaced text font
+- Updated: Reorganized internal structure
 - Updated: All advanced configuration options moved to `#book(cfg)`
 - Updated: `#book(paper)` &rarr; `#book(page-cfg)`
-- Updated: Reorganized internal structure
 - Updated: `#outline(depth: 2)` when `#book(numbering-style: none)`
 - Updated: `#book(part: "")` set an unnumbered and unnamed part (just heading title)
 - Updated: Headings level 1–5 with regular font weight by default
@@ -65,7 +65,7 @@ the help testing some features.
 
 ## 1.1.0
 
-- Added: `#book(cfg)` new options
+- Added: `#book(cfg)` options
   - `cfg.cover-bg` change automatic cover background
   - `cfg.cover-txtcolor` change automatic cover text color
   - `cfg.cover-fonts` change the fonts used in automatic cover
@@ -82,13 +82,13 @@ the help testing some features.
 ## 1.2.0
 
 - Removed: `#book(cfg)` redundant options
-  - `cfg.toc-indent` was the same as `#set outline(indent)`
-  - `cfg.font` was the same as `#set text(font)`
-  - `cfg.font-math` was the same as `#show math.equation: set text(font)`
-  - `cfg.font-mono` was the same as `#show raw: set text(font)`
-  - `cfg.font-size` was the same as `set text(size)`
+  - `cfg.toc-indent` &rarr; `#set outline(indent)`
+  - `cfg.font` &rarr; `#set text(font)`
+  - `cfg.font-math` &rarr; `#show math.equation: set text(font)`
+  - `cfg.font-mono` &rarr; `#show raw: set text(font)`
+  - `cfg.font-size` &rarr; `set text(size)`
 - Added: `#annexes(cfg.toc-stdindent)` enables standard TOC
-- Added: Translation with [transl](https://typst.app/universe/package/transl) package (Fluent)
+- Added: Translation with [transl:0.1.0](https://typst.app/universe/package/transl/0.1.0) package (Fluent)
 - Added: IA translations
 - Added: Custom TOC creation
 - Updated: `#book(cfg.lang-data)` &rarr; `#book(cfg.transl)`
@@ -121,6 +121,34 @@ the help testing some features.
   - Unnumbered headings ignored
 
 
-## 1.3.1
+## 1.4.0
 
 - Internal re-design
+- Added: Defaults changeable by `#set` rules
+- Added: Support for themes
+- Added: Default themes 
+  - _stylish_ (default)
+  - _coffee_
+  - _elegance_
+- Added: `#book(transl)` support to multiple languages (Fluent YAML database)
+- Updated: `#book(transl)` using _transl:0.2.0_
+- Updated:  `#book(cfg)` options
+  - `cfg.justify` &rarr; `#set par(justify)`
+  - `cfg.line-space` &rarr; `#set par(leading)`
+  - `cfg.line-indentfirst` &rarr; `#set par(first-line-indent)`
+  - `cfg.par-margin` &rarr; `#set par(spacing)`
+  - `cfg.margin` &rarr; `#set page(margin)`
+  - `cfg.heading-weight` &rarr; `#show heading: set text(weight)`
+  - `cfg.toc-stdindent` &rarr; `#outline(indent)`
+  - `cfg.cover-bgcolor` &rarr; `cfg.cover.page`
+  - `cfg.cover-txtcolor` &rarr; `cfg.cover.text`
+  - `cfg.cover-fonts` &rarr; `cfg.cover`
+  - `cfg.use-fontdefaults` &rarr; `cfg.styling.reset`
+  - `cfg.toc-bold` &rarr; `cfg.std-toc`
+  - `cfg.chapter-numrestart` &rarr; `cfg.chapter-continuous`
+  - `cfg.paper-links` &rarr; `cfg.paper-friendly`
+  - `cfg.notes-page` set notes in new pages
+  - `cfg.theme` set theme
+  - `cfg.styling` set theme styling
+  - `cfg.cover` set theme cover
+  - `cfg.part` set theme part

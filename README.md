@@ -13,18 +13,20 @@
     <img src="https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmayconfmelo%2Fmin-book%2Frefs%2Fheads%2Fdev%2Ftypst.toml&query=%24.package.version&logo=github&label=Development&logoColor=%2397978e&color=%23239DAE&labelColor=%23353c44" /></a>
 </p>
 
-[![Manual](https://img.shields.io/badge/Manual-%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.3.0/docs/manual.pdf)
-[![Example PDF](https://img.shields.io/badge/Example-PDF-%23777?labelColor=%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.3.0/docs/example.pdf)
-[![Example SRC](https://img.shields.io/badge/Example-SRC-%23777?labelColor=%23353c44)](https://github.com/mayconfmelo/min-book/blob/1.3.0/template/main.typ)
+[![Manual](https://img.shields.io/badge/Manual-%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.4.0/docs/manual.pdf)
+[![Themes](https://img.shields.io/badge/Themes-%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.4.0/docs/themes.md)
+[![Example PDF](https://img.shields.io/badge/Example-.pdf-%23777?labelColor=%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.4.0/docs/example.pdf)
+[![Example SRC](https://img.shields.io/badge/Example-.typ-%23777?labelColor=%23353c44)](https://github.com/mayconfmelo/min-book/blob/1.4.0/template/main.typ)
 [![Changelog](https://img.shields.io/badge/Changelog-%23353c44)](https://github.com/mayconfmelo/min-book/blob/main/docs/changelog.md)
 [![Contribute](https://img.shields.io/badge/Contribute-%23353c44)](https://github.com/mayconfmelo/min-book/blob/main/docs/contributing.md)
 
 <p class="hidden">
-
-[![Tests](https://github.com/mayconfmelo/min-book/actions/workflows/tests.yml/badge.svg)](https://github.com/mayconfmelo/min-book/actions/workflows/tests.yml)
-[![Build](https://github.com/mayconfmelo/min-book/actions/workflows/build.yml/badge.svg)](https://github.com/mayconfmelo/min-book/actions/workflows/build.yml)
-[![Spellcheck](https://github.com/mayconfmelo/min-book/actions/workflows/spellcheck.yml/badge.svg)](https://github.com/mayconfmelo/min-book/actions/workflows/spellcheck.yml)
-
+  <a href="https://github.com/mayconfmelo/min-book/actions/workflows/tests.yml">
+    <img alt ="Tests" src="https://github.com/mayconfmelo/min-book/actions/workflows/tests.yml/badge.svg"></a>
+  <a href="https://github.com/mayconfmelo/min-book/actions/workflows/build.yml">
+    <img alt="Build" src="https://github.com/mayconfmelo/min-book/actions/workflows/build.yml/badge.svg"></a>
+  <a href="https://github.com/mayconfmelo/min-book/actions/workflows/spellcheck.yml">
+    <img alt ="Spellcheck" src="https://github.com/mayconfmelo/min-book/actions/workflows/spellcheck.yml/badge.svg"></a>
 </p>
 </div>
 
@@ -32,7 +34,7 @@
 ## Quick Start
 
 ```typst
-#import "@preview/min-book:1.3.0": book
+#import "@preview/min-book:1.4.0": book
 #show: book.with(
   title: "Book Title",
   subtitle: "Book subtitle",
@@ -78,10 +80,11 @@ possible and encouraged.
   - Insert manually
 - Book parts (headings)
 - Book chapters (headings)
-- Multi-language structure
+- Translations
   - Default translations for several languages
   - Custom translation files
   - Localization using [Fluent](https://projectfluent.org/)
+- Themes (default and third-party)
 - Advanced customization options
 - Free default fonts
 - End Notes
