@@ -161,7 +161,7 @@
   import "@preview/toolbox:0.1.0": default, get
   import "../utils.typ"
   
-  cfg.reset = cfg.at("reset", default: false)
+  cfg.styling.reset = cfg.styling.at("reset", default: false)
   cfg.std-toc = cfg.at("std-toc", default: false)
   
   let h2-count = counter("min-book-h2-count")
@@ -169,13 +169,13 @@
     when: text.size == 11pt,
     value: 12pt,
     otherwise: 11pt,
-    cfg.reset
+    cfg.styling.reset
   )
   let indent = default(
     when: par.first-line-indent == (amount: 0pt, all: false),
     value: 1em,
     otherwise: par.first-line-indent.amount,
-    cfg.reset,
+    cfg.styling.reset,
   )
   let pattern = (
     part: (
@@ -210,24 +210,24 @@
     ..default(
       when: page.margin == auto,
       value: (margin: (x: 15%, y: 14%)),
-      cfg.reset,
+      cfg.styling.reset,
     ),
     ..default(
       when: repr(page.width) == "595.28pt" and repr(page.height) == "841.89pt",
       value: (paper: "a5"),
-      cfg.reset,
+      cfg.styling.reset,
     ),
   )
   set par(
     ..default(
       when: par.justify == false,
       value: (justify: true),
-      cfg.reset,
+      cfg.styling.reset,
     ),
     ..default(
       when: par.leading == 0.65em,
       value: (leading: 0.5em),
-      cfg.reset,
+      cfg.styling.reset,
     ),
     first-line-indent: indent,
   )
@@ -235,7 +235,7 @@
     ..default(
       when: text.font == "libertinus serif",
       value: ( font: ("TeX Gyre Pagella", "Book Antiqua") ),
-      cfg.reset,
+      cfg.styling.reset,
     ),
     size: font-size
   )
@@ -243,19 +243,19 @@
     ..default(
       when: terms.separator == h(0.6em, weak: true),
       value: (separator: ": "),
-      cfg.reset,
+      cfg.styling.reset,
     ),
     ..default(
       when: terms.hanging-indent == 2em,
       value: (hanging-indent: 1em),
-      cfg.reset,
+      cfg.styling.reset,
     ),
   )
   set list(
     ..default(
       when: list.marker == ([•], [‣], [–]),
       value: ( marker: ([•], [–]) ),
-      cfg.reset,
+      cfg.styling.reset,
     ),
   )
   set heading(
@@ -276,7 +276,7 @@
       ..default(
         when: text.weight == "bold" and it.level < 6,
         value: (weight: "regular"),
-        cfg.reset
+        cfg.styling.reset
       )
     )
     
@@ -294,7 +294,7 @@
       ..default(
         when: text.font == "dejavu sans mono",
         value: (font: "Inconsolata"),
-        cfg.reset
+        cfg.styling.reset
       ),
     )
     
@@ -306,7 +306,7 @@
       ..default(
         when: text.font == "new computer modern math",
         value: ( font: ("Asana Math", "New Computer Modern Math") ),
-        cfg.reset
+        cfg.styling.reset
       )
     )
     

@@ -9,6 +9,8 @@
   
   if type(meta.authors) == array {meta.authors = meta.authors.at(0) + " et al."}
   
+  cfg.back = cfg.at("back", default: true)
+  
   cfg.page = (
     margin: (x: 1.5cm, y: 0pt),
     fill: palette.mantle.rgb,
@@ -32,7 +34,6 @@
     font: "nunito",
   ) + cfg.at("text", default: (:))
   
-  cfg.back = cfg.at("back", default: true)
   
   set page(..cfg.page)
   set text(..cfg.text)
@@ -320,7 +321,7 @@
       ..default(
         when: text.font == "new computer modern math",
         value: ( font: ("Asana Math", "New Computer Modern Math") ),
-        cfg.reset
+        cfg.styling.reset
       )
     )
     
@@ -388,7 +389,6 @@
   let palette = flavor.colors
   let svg = read("coffee/hr.svg")
   let data = bytes(svg.replace("BLUE", palette.lavender.hex))
-  
   
   v(cfg.styling.hr.spacing, weak: true)
   align(center, image(data, width: 40%))
