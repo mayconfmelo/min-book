@@ -38,6 +38,7 @@
   
   set par(justify: false)
   set text(..cfg.text)
+  set page(footer: none)
   
   background = {
     v(background-margin)
@@ -142,20 +143,22 @@
 
 
 #let horizontalrule(meta, cfg) = {
-  import "@preview/toolbox:0.1.0": storage
+  let img
   
-  let body =  align(center, {
-    if meta.part != none {image("stylish/hr.svg", width: 45%)}
-    else {line(length: 80%)}
-  })
-
-  storage.add("themes", (hr: body), append: true, namespace: "min-book")
+  cfg.styling.hr = (spacing: 1.5em) + cfg.styling.at("hr", default: (:))
+  
+  if meta.cover == auto {img = image("stylish/hr.svg", width: 45%)}
+  else {img = line(length: 80%)}
+  
+  v(cfg.styling.hr.spacing, weak: true)
+  align(center, block(img, above: 1em, below: 1em))
+  v(cfg.styling.hr.spacing, weak: true)
 }
 
 
 // Book styling and formatting
 #let styling(meta, cfg, body) = {
-  import "@preview/toolbox:0.1.0": default
+  import "@preview/toolbox:0.1.0": default, get
   import "../utils.typ"
   
   cfg.reset = cfg.at("reset", default: false)
@@ -173,6 +176,29 @@
     value: 1em,
     otherwise: par.first-line-indent.amount,
     cfg.reset,
+  )
+  let pattern = (
+    part: (
+      "{1:I}:\n",
+      "{2:I}.\n",
+      "{2:I}.{3:1}.\n",
+      "{2:I}.{3:1}.{4:1}.\n",
+      "{2:I}.{3:1}.{4:1}.{5:1}.\n",
+      "{2:I}.{3:1}.{4:1}.{5:1}.{6:a}. ",
+    ),
+    no-part: (
+      "{1:I}.\n",
+      "{1:I}.{2:1}.\n",
+      "{1:I}.{2:1}.{3:1}.\n",
+      "{1:I}.{2:1}.{3:1}.{4:1}.\n",
+      "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.\n",
+      "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.{6:a}. ",
+    )
+  )
+  
+  pattern = get.auto-val(
+    cfg.numbering,
+    if meta.part != none {pattern.part} else {pattern.no-part}
   )
   
   set document(
@@ -201,11 +227,6 @@
     ..default(
       when: par.leading == 0.65em,
       value: (leading: 0.5em),
-      cfg.reset,
-    ),
-    ..default(
-      when: par.spacing == 1.2em,
-      value: (spacing: 0.65em),
       cfg.reset,
     ),
     first-line-indent: indent,
@@ -238,7 +259,7 @@
     ),
   )
   set heading(
-    numbering: meta.numbering,
+    numbering: utils.numbering(pattern, part: meta.part, chapter: meta.chapter),
     hanging-indent: 0pt,
     supplement: it => context {
       if part != none and it.depth == 1 {part}
