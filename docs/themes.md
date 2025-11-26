@@ -2,6 +2,9 @@
   <h1>Themes</h1>
 </div>
 
+_Theme support is currently experimental and in early stages of development;
+therefore, any type of errors may occur._
+
 ## Stylish
 
 ![cover](assets/theme-stylish.png)
@@ -18,7 +21,8 @@ The default _min-book_ theme; no need to set it.
       back: value),
     styling: (
       reset: value,
-      std-toc: value),
+      std-toc: value,
+      hr: (spacing: value)),
   )
 )
 ```
@@ -34,18 +38,24 @@ Options:
   
   <dt><strong><code>cfg.cover.text:</code></strong></dt>
   <dd>Cover <code>#text</code> <em>color</em>, or a <em>dictionary</em> of options.</dd>
+   
+  <dt><strong><code>cfg.cover.back:</code></strong></dt>
+  <dd>Generate back cover from cover template (<em>boolean</em>).</dd>
   
   <dt><strong><code>cfg.styling.reset:</code></strong></dt>
   <dd>Reset back to Typst defaults (<em>boolean</em>).</dd>
   
   <dt><strong><code>cfg.styling.std-toc:</code></strong></dt>
   <dd>Reset to default <code>#outline</code> appearance (<em>boolean</em>).</dd>
+  
+  <dt><strong><code>cfg.styling.hr.spacing:</code></strong></dt>
+  <dd>Set <em>length</em> of the spaces before and after the horizontal rule.</dd>
 </dl>
 
 
 ## Coffee
 
-![cover](assets/theme-stylish.png)
+![cover](assets/theme-coffee.png)
 
 Confortable fonts in cozy pastel colors for creative writing.
 ```typst
@@ -56,8 +66,12 @@ Confortable fonts in cozy pastel colors for creative writing.
     cover: (
       page: value,
       text: value,
-      back: value),
-    styling: (flavor: value),
+      back: value,
+      flavor: value),
+    styling: (
+      flavor: value,
+      reset: value,
+      hr: (spacing: value)),
   )
 )
 ```
@@ -74,10 +88,24 @@ Options:
   <dt><strong><code>cfg.cover.text:</code></strong></dt>
   <dd>Cover <code>#text</code> <em>color</em>, or a <em>dictionary</em> of options.</dd>
   
-  <dt><strong><code>cfg.styling.flavor:</code></strong></dt>
-  <dd>Catppuccin color scheme: <code>"latte"</code>, <code>"frappé"</code>,
+  <dt><strong><code>cfg.cover.back:</code></strong></dt>
+  <dd>Generate back cover from cover template (<em>boolean</em>).</dd>
+  
+  <dt><strong><code>cfg.cover.flavor:</code></strong></dt>
+  <dd>Catppuccin cover color scheme: <code>"latte"</code>, <code>"frappé"</code>,
   <code>"macchiato"</code>, <code>"mocha"</code>.</dd>
+  
+  <dt><strong><code>cfg.styling.flavor:</code></strong></dt>
+  <dd>Catppuccin book color scheme: <code>"latte"</code>, <code>"frappé"</code>,
+  <code>"macchiato"</code>, <code>"mocha"</code>.</dd>
+  
+  <dt><strong><code>cfg.styling.reset:</code></strong></dt>
+  <dd>Reset back to Typst defaults (<em>boolean</em>).</dd>
+  
+  <dt><strong><code>cfg.styling.hr.spacing:</code></strong></dt>
+  <dd>Set <em>length</em> of the spaces before and after the horizontal rule.</dd>
 </dl>
+
 
 ## Elegance
 
@@ -91,13 +119,14 @@ Options:
 )
 ```
 
+
 # Create a Theme
 Creating a theme should be quite easy by just following these steps:
 
 **1. Write Typst functions in a file:** There are four predefined functions used
 for theme customization, and one function for customizing the `#horizontalrule`
 command. If any of these functions are omitted, it will be necessary to inherit
-them from another theme by importing.
+them from another theme by importing it.
 
 ```typst
 #import "@preview/min-book:1.3.0": themes
