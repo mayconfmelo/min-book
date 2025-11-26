@@ -1,58 +1,51 @@
 #import "@preview/transl:0.2.0": transl
-#import "/src/lib.typ": horizontalrule
-#import "/src/themes.typ"
-#transl(data: read("/src/l10n/en.ftl"), lang: "en")
+#import "/src/lib.typ": book, themes, horizontalrule
 
-#set text(font: ("libertinus serif", "new computer modern"), size: 12pt)
-#set outline(indent: 2em)
-
-#let theme = themes.stylish
-
-#let meta = (
+#let theme = themes.coffee
+#let args = (
   title: lorem(12),
   subtitle: lorem(30),
   date: datetime.today(),
   authors: ("Main Author", "Collaborator", "Collaborator"),
-  volume: transl("volume", n: 1),
-  edition: transl("edition", n: 3),
+  volume: 1,
+  edition: 3,
   part: "Pt.",
   chapter: "Chapt.",
-  cover: auto,
-  numbering: "I.i.i.i.i.a ",
+  cfg: (
+    theme: theme,
+    two-sided: false,
+  )
 )
 
+#show: book.with(..args)
 
-#show: body => context {
-  let body = theme.styling(meta, (:), body)
-  body
-}
+= Heading #context text.size
+#lorem(8)
+== Heading #context text.size
+#lorem(8)
+=== Heading #context text.size
+#lorem(8)
+==== Heading #context text.size
+#lorem(8)
+===== Heading #context text.size
+#lorem(8)
+====== Heading #context text.size
+#lorem(16)
 
-#context theme.cover-page(meta, (:)) // 1.png
+#pagebreak()
 
-#context theme.title-page(meta, (:)) // 2.png
+== Heading
 
-#context theme.part(meta, (:), heading[Part Heading]) // 3.png
+#lorem(25)
 
-#context theme.horizontalrule(meta, (:))
+#quote(lorem(15), attribution: [Lipsum], block: true)
 
-
-#lorem(50)
-
-#quote(lorem(25), attribution: [Lipsum], block: true)
-
-#lorem(50)
+#lorem(25)
 
 #horizontalrule(spacing: 2em)
 
-#lorem(50)
+#lorem(25)
 
-
-#outline()
-#metadata("TOC inserted") <toc:inserted> // internal
-
-= Heading #context {text.size}
-== Heading #context {text.size}
-=== Heading #context {text.size}
-==== Heading #context {text.size}
-===== Heading #context {text.size}
-====== Heading #context {text.size}
+```typ
+#show: book.with(options)
+```

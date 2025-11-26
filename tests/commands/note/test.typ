@@ -8,7 +8,7 @@
 
 #show: book.with(
   title: "", authors: "", part: none, cover: none, titlepage: none, toc: none,
-  cfg: (numbering: none, two-sided: false, cover-back: false)
+  cfg: (numbering: none, two-sided: false, cover: (back: false))
 )
 
 // Note storage representation

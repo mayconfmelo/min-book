@@ -5,8 +5,8 @@
 
 #let doc = []
 #let other = (title: "Title", authors: "Author", subtitle: "Subtitle", volume: 1,
-  titlepage: none, toc: none, cfg: (two-sided: false, cover-back: false,
-  cover-fonts: ("Libertinus Serif", "Libertinus Serif")))
+  titlepage: none, toc: none, cfg: (two-sided: false, cover: (back: false,
+  title: (font: "Libertinus Serif"), text: (font: "Libertinus Serif"))))
 #let book = book.with(..other, doc)
 
 
