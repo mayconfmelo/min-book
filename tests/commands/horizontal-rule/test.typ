@@ -1,5 +1,9 @@
-#import "/src/lib.typ": horizontalrule, hr
+#import "/src/lib.typ": horizontalrule, hr, themes
 #set page(height: auto)
+#let args = ( (cover: auto), (styling: (:)) )
+
+#show <horizontalrule:insert>: themes.stylish.horizontalrule(..args)
+
 
 #lorem(100)
 
