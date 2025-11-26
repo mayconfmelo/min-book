@@ -100,24 +100,6 @@ possible and encouraged.
   allow to set a custom numbering used whether `#book(part)` is enabled or
   disabled.
   **/
-  let pattern = (
-    part: (
-      "{1:I}:\n",
-      "{2:I}.\n",
-      "{2:I}.{3:1}.\n",
-      "{2:I}.{3:1}.{4:1}.\n",
-      "{2:I}.{3:1}.{4:1}.{5:1}.\n",
-      "{2:I}.{3:1}.{4:1}.{5:1}.{6:a}. ",
-    ),
-    no-part: (
-      "{1:I}.\n",
-      "{1:I}.{2:1}.\n",
-      "{1:I}.{2:1}.{3:1}.\n",
-      "{1:I}.{2:1}.{3:1}.{4:1}.\n",
-      "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.\n",
-      "{1:I}.{2:1}.{3:1}.{4:1}.{5:1}.{6:a}. ",
-    )
-  )
   let cfg = get.auto-val(cfg, (:))
   /**
   = Advanced Configuration <adv-config>
@@ -232,10 +214,6 @@ possible and encouraged.
   transl = transl.with(data: transl-db, to: lang-id)
   chapter = get.auto-val(chapter, transl("chapter"))
   part = get.auto-val(part, transl("part"))
-  pattern = get.auto-val(
-    cfg.numbering,
-    if part != none {pattern.part} else {pattern.no-part}
-  )
   break-to = if cfg.two-sided {"odd"} else {none}
   meta = (
     title: title,
@@ -247,7 +225,6 @@ possible and encouraged.
     part: part,
     chapter: chapter,
     cover: cover,
-    numbering: utils.numbering(pattern, part: part, chapter: chapter),
   )
   
   storage.add("break-to", break-to, namespace: "min-book")
@@ -258,6 +235,12 @@ possible and encouraged.
     if part != none {it = cfg.theme.part(meta, cfg, it)}
     it
   }
+  show <horizontalrule:insert>: it => {
+    if dictionary(cfg.theme).keys().contains("horizontalrule") {
+      cfg.theme.horizontalrule(meta, cfg)
+    }
+    else {align(center, line(length: 80%))}
+  }
   
   body = notes.insert(body, new-page: part != none or cfg.notes-page)
   
@@ -267,7 +250,10 @@ possible and encouraged.
   }
   
   if cover != none {
+    let cfg = cfg
     let generate-cover
+    
+    cfg.cover += (back: false)
     
     if cover == auto {generate-cover = cfg.theme.cover-page}
     else if type(cover) == content {
@@ -465,40 +451,9 @@ possible and encouraged.
   
   body
   
-  if cover == auto and cfg.cover-back {
-    let cover-bg = context {
-          let m = page.margin
-          let frame = image(
-              width: 93%,
-              "assets/frame.svg"
-            )
-            
-          if type(m) != dictionary {
-            m = (
-              top: m,
-              bottom: m,
-              left: m,
-              right: m
-            )
-          }
-          
-          v(m.top * 0.25)
-          align(center + top, frame)
-          
-          align(center + bottom,
-            rotate(180deg, frame)
-          )
-          v(m.bottom * 0.25)
-        }
-    
-    pagebreak(weak: true, to: break-to)
-    page(
-      footer: none,
-      background: cover-bg,
-      fill: cfg.cover-bgcolor,
-      []
-    )
-  }
+  cfg.cover.back = cfg.cover.at("back", default: true)
+  
+  if cover == auto and cfg.cover.back  { cfg.theme.cover-page(meta, cfg.cover) }
 }
 
 /**
