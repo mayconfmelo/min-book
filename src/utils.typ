@@ -4,6 +4,7 @@
   pattern,
   part: none,
   chapter: none,
+  default: "I.I.1.1.1.a",
 ) = (..level) => context {
   import "@preview/numbly:0.1.0": numbly
   import "orig.typ"
@@ -51,8 +52,7 @@
     )
   }
   
-  
-  numbly(default: "I.I.1.1.1.a", ..pattern)(..level)
+  numbly(default: default, ..pattern)(..level)
   
   if not after-toc {h(0.5em)} // gap between numbering and title in TOC
 }
