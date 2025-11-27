@@ -111,3 +111,5 @@ Book Antiqua
     
 **Cover text:**
 [Alice](https://fonts.google.com/specimen/Alice)
+
+These are the fonts used by the default theme; other themes may use different fonts.

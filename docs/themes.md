@@ -11,7 +11,7 @@ therefore, any type of errors may occur._
 
 The default _min-book_ theme; no need to set it.
 ```typst
-#import "@preview/min-book:1.3.0": book
+#import "@preview/min-book:1.4.0": book
 #show: book.with(
   cfg: (
     cover: (
@@ -52,6 +52,26 @@ Options:
   <dd>Set <em>length</em> of the spaces before and after the horizontal rule.</dd>
 </dl>
 
+<details><summary>Default fonts:</summary>
+
+**Text:**
+[TeX Gyre Pagella](https://www.gust.org.pl/projects/e-foundry/tex-gyre/pagella/qpl2_501otf.zip) or
+Book Antiqua
+  
+**Math:**
+[Asana Math](https://mirrors.ctan.org/fonts/Asana-Math/Asana-Math.otf)
+  
+**Mono:**
+[Inconsolata](https://fonts.google.com/specimen/Inconsolata)
+
+**Cover title:**
+[Cinzel](https://fonts.google.com/specimen/Cinzel)
+    
+**Cover text:**
+[Alice](https://fonts.google.com/specimen/Alice)
+
+</details>
+
 
 ## Coffee
 
@@ -59,7 +79,7 @@ Options:
 
 Confortable fonts in cozy pastel colors for creative writing.
 ```typst
-#import "@preview/min-book:1.3.0": book, themes
+#import "@preview/min-book:1.4.0": book, themes
 #show: book.with(
   cfg: (
     theme: themes.coffee,
@@ -106,14 +126,27 @@ Options:
   <dd>Set <em>length</em> of the spaces before and after the horizontal rule.</dd>
 </dl>
 
+<details><summary>Default fonts:</summary>
+
+**Text:**
+[Nunito](https://fonts.google.com/specimen/Inconsolata)
+  
+**Headings:**
+[Jellee](https://www.fontsquirrel.com/fonts/jellee)
+
+**Mono:**
+[Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro) or
+[Fira Mono](https://fonts.google.com/specimen/Fira+Mono)
+
+</details>
+
 
 ## Elegance
 
 ![cover](assets/theme-stylish.png)
 
-
 ```typst
-#import "@preview/min-book:1.3.0": book, themes
+#import "@preview/min-book:1.4.0": book, themes
 #show: book.with(
   theme: themes.elegance,
 )
@@ -129,7 +162,7 @@ command. If any of these functions are omitted, it will be necessary to inherit
 them from another theme by importing it.
 
 ```typst
-#import "@preview/min-book:1.3.0": themes
+#import "@preview/min-book:1.4.0": themes
 #import themes.styling: *  // inheritance
 
 #let styling(meta, cfg, body) = { }
