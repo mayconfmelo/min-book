@@ -15,7 +15,6 @@ current section, right before the next heading.
 ) = context {
   import "@preview/toolbox:0.1.0": storage, has
   import "../orig.typ"
-  
   let selected = selector(heading).before(here())
   let level = counter(selected).display() // numbering of current heading
   let count = counter("note:count")
@@ -24,6 +23,8 @@ current section, right before the next heading.
   let data = (:)
   let ref = (:)
   let number
+  
+  h(0pt, weak: true) // remove neighbor spaces
   
   // Retrieve/store note numbering
   if numbering == auto {

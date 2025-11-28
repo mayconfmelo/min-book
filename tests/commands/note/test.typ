@@ -26,25 +26,25 @@
 
 = Current Heading
 
-Foo#note[Note of foo] blah blah, blah blah blah blah blah, blah blah blah.
+Foo #note[Note of foo] blah blah, blah blah blah blah blah, blah blah blah.
 
-Blah blah bar,#note[Note of bar] blah blah blah blah blah: blah blah blah.
+Blah blah bar, #note[Note of bar] blah blah blah blah blah: blah blah blah.
 
-Blah blah blah, blah blah baz#note[Note of baz] blah blah blah blah blah.
+Blah blah blah, blah blah baz #note[Note of baz] blah blah blah blah blah.
 
-Blah qux#note[Note of qux] blah blah; blah blah quz,#note[Note of quz]
-blah qward#note(numbering: "a")[Note of qward] blah.
+Blah qux#note[Note of qux] blah blah; blah blah quz, #note[Note of quz]
+blah qward #note(numbering: "a")[Note of qward] blah.
 
-Blah blah blah. Blah blah blah blah, blah blah corge!#note[Note of corge]
+Blah blah blah. Blah blah blah blah, blah blah corge! #note[Note of corge]
 
-Blah blah blah blah blah blah blah blah grault,#note[Note of grault]
-garply.#note[Note of garply]
+Blah blah blah blah blah blah blah blah grault, #note[Note of grault]
+garply. #note[Note of garply]
 
 
 // Notes of current heading appear here (before next heading)
 = Next Heading
 
-Foobar#note[Note of foobar] blah blah, blah blah blah blah, blah blah blah.
+Foobar #note[Note of foobar] blah blah, blah blah blah blah, blah blah blah.
 
 
 // Notes of next heading appear here (at the end of the document)
