@@ -415,17 +415,6 @@ possible and encouraged.
   }
   
   if toc == true {
-    show outline.entry: it => {
-      let entry = it.indented(it.prefix(), it.inner(), gap: 0em)
-      
-      // Emphasize parts in TOC:
-      if not cfg.std-toc and it.level == 1 and part != none {
-        v(font-size, weak: true)
-        strong(entry)
-      }
-      else {entry}
-    }
-    
     pagebreak(to: break-to, weak: true)
     outline(
       ..default(
