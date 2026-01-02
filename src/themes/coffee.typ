@@ -34,7 +34,6 @@
     font: "nunito",
   ) + cfg.at("text", default: (:))
   
-  
   set page(..cfg.page)
   set text(..cfg.text)
   set par(justify: false)
