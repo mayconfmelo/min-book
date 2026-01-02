@@ -32,21 +32,19 @@ all level 1 heading is a new appendix.
   let break-to = storage.get("break-to", namespace: "min-book")
   
   set heading(
-    offset: 1,
     supplement: chapter,
     numbering: utils.numbering(numbering, part: "", chapter: chapter),
   )
   
-  show heading.where(level: 2): it => {
-    if part != none {pagebreak(to: break-to, weak: true)}
-    it
-  }
-  
   if part != none {pagebreak(weak: true, to: break-to)}
+  
+  [#metadata("Book back matter") <min-book:back-matter>]
   
   heading(title, level: 1)
   
   counter(heading).update(0)
+  
+  set heading(offset: 1)
   
   body
 }
