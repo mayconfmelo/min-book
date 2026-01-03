@@ -5,11 +5,12 @@
 _Theme support is currently experimental and in early stages of development;
 therefore, any type of errors may occur._
 
-## Stylish
+## Stylish (default)
 
 ![cover](assets/theme-stylish.png)
 
-The default _min-book_ theme; no need to set it.
+Typography and formatting inspired by traditional designs, with a touch of
+modernity. The default theme, no need to set it.
 ```typst
 #import "@preview/min-book:1.4.0": book
 #show: book.with(
@@ -22,7 +23,7 @@ The default _min-book_ theme; no need to set it.
     styling: (
       reset: value,
       std-toc: value,
-      hr: (spacing: value)),
+      hr-spacing: value),
   )
 )
 ```
@@ -31,25 +32,25 @@ Options:
 
 <dl>
   <dt><strong><code>cfg.cover.page:</code></strong></dt>
-  <dd>Cover <code>#page</code> <em>color</em>, or a <em>dictionary</em> of options.</dd>
+  <dd>Cover <code>#page</code> options (<em>color</em> or <em>dictionary</em>).</dd>
   
   <dt><strong><code>cfg.cover.title:</code></strong></dt>
-  <dd>Cover title <code>#text</code> <em>color</em>, or a <em>dictionary</em> of options.</dd>
+  <dd>Cover title <code>#text</code> options (<em>color</em> or <em>dictionary</em>).</dd>
   
   <dt><strong><code>cfg.cover.text:</code></strong></dt>
-  <dd>Cover <code>#text</code> <em>color</em>, or a <em>dictionary</em> of options.</dd>
+  <dd>Cover <code>#text</code> options (<em>color</em> or <em>dictionary</em>).</dd>
    
   <dt><strong><code>cfg.cover.back:</code></strong></dt>
-  <dd>Generate back cover from cover template (<em>boolean</em>).</dd>
+  <dd>Enables a back cover at the end of the document (<em>boolean</em>).</dd>
   
   <dt><strong><code>cfg.styling.reset:</code></strong></dt>
-  <dd>Reset back to Typst defaults (<em>boolean</em>).</dd>
+  <dd>Reset defaults back to Typst defaults (<em>boolean</em>).</dd>
   
   <dt><strong><code>cfg.styling.std-toc:</code></strong></dt>
-  <dd>Reset to default <code>#outline</code> appearance (<em>boolean</em>).</dd>
+  <dd>Use default <code>#outline</code> appearance (<em>boolean</em>).</dd>
   
-  <dt><strong><code>cfg.styling.hr.spacing:</code></strong></dt>
-  <dd>Set <em>length</em> of the spaces before and after the horizontal rule.</dd>
+  <dt><strong><code>cfg.styling.hr-spacing:</code></strong></dt>
+  <dd>Set spacing before and after the horizontal rule (<em>length</em>).</dd>
 </dl>
 
 <details><summary>Default fonts:</summary>
@@ -91,7 +92,8 @@ Confortable fonts in cozy pastel colors for creative writing.
     styling: (
       flavor: value,
       reset: value,
-      hr: (spacing: value)),
+      std-toc: value,
+      hr-spacing: value),
   )
 )
 ```
@@ -99,17 +101,17 @@ Confortable fonts in cozy pastel colors for creative writing.
 Options:
 
 <dl>
-  <dt><strong><code>cfg.themes:</code></strong></dt>
+  <dt><strong><code>cfg.theme:</code></strong></dt>
   <dd>Set <em>min-book</em> theme (<em>module</em>).</dd>
   
   <dt><strong><code>cfg.cover.page:</code></strong></dt>
-  <dd>Cover <code>#page</code> <em>color</em>, or a <em>dictionary</em> of options.</dd>
+  <dd>Cover <code>#page</code> options (<em>dictionary</em>).</dd>
   
   <dt><strong><code>cfg.cover.text:</code></strong></dt>
-  <dd>Cover <code>#text</code> <em>color</em>, or a <em>dictionary</em> of options.</dd>
+  <dd>Cover <code>#text</code> options (<em>dictionary</em>).</dd>
   
   <dt><strong><code>cfg.cover.back:</code></strong></dt>
-  <dd>Generate back cover from cover template (<em>boolean</em>).</dd>
+  <dd>Enables back cover at the end of the document (<em>boolean</em>).</dd>
   
   <dt><strong><code>cfg.cover.flavor:</code></strong></dt>
   <dd>Catppuccin cover color scheme: <code>"latte"</code>, <code>"frappé"</code>,
@@ -120,10 +122,13 @@ Options:
   <code>"macchiato"</code>, <code>"mocha"</code>.</dd>
   
   <dt><strong><code>cfg.styling.reset:</code></strong></dt>
-  <dd>Reset back to Typst defaults (<em>boolean</em>).</dd>
+  <dd>Reset defaults back to Typst defaults (<em>boolean</em>).</dd>
   
-  <dt><strong><code>cfg.styling.hr.spacing:</code></strong></dt>
-  <dd>Set <em>length</em> of the spaces before and after the horizontal rule.</dd>
+  <dt><strong><code>cfg.styling.std-toc:</code></strong></dt>
+  <dd>Use default <code>#outline</code> appearance (<em>boolean</em>).</dd>
+  
+  <dt><strong><code>cfg.styling.hr-spacing:</code></strong></dt>
+  <dd>Set spacing before and after the horizontal rule (<em>length</em>).</dd>
 </dl>
 
 <details><summary>Default fonts:</summary>
@@ -143,23 +148,95 @@ Options:
 
 ## Elegance
 
-![cover](assets/theme-stylish.png)
+![cover](assets/theme-elegance.png)
 
+Modern typography and minimal visuals, without unnecessary visual clutter.
 ```typst
 #import "@preview/min-book:1.4.0": book, themes
 #show: book.with(
-  theme: themes.elegance,
+  cfg: (
+    theme: themes.elegance,
+    cover: (
+      page: value,
+      title: value,
+      text: value,
+      back: value,
+      image: value,
+      publisher: value),
+    styling: (
+      reset: value,
+      std-toc: value,
+      hr-spacing: value),
+    part-toc: value,
+  )
 )
 ```
+
+Options:
+
+<dl>
+  <dt><strong><code>cfg.theme:</code></strong></dt>
+  <dd>Set <em>min-book</em> theme (<em>module</em>).</dd>
+  
+  <dt><strong><code>cfg.cover.page:</code></strong></dt>
+  <dd>Cover <code>#page</code> options (<em>dictionary</em>).</dd>
+  
+  <dt><strong><code>cfg.cover.title:</code></strong></dt>
+  <dd>Cover title <code>#text</code> options (<em>dictionary</em>).</dd>
+  
+  <dt><strong><code>cfg.cover.text:</code></strong></dt>
+  <dd>Cover <code>#text</code> options (<em>dictionary</em>).</dd>
+  
+  <dt><strong><code>cfg.cover.back:</code></strong></dt>
+  <dd>Enables back cover at the end of the document (<em>boolean</em>).</dd>
+  
+  <dt><strong><code>cfg.cover.image:</code></strong></dt>
+  <dd>Cover main image.</dd>
+  
+  <dt><strong><code>cfg.cover.publisher:</code></strong></dt>
+  <dd>Cover publisher logo/name (<em>image</em> or <em>content</em>).</dd>
+  
+  <dt><strong><code>cfg.styling.reset:</code></strong></dt>
+  <dd>Reset defaults back to Typst defaults (<em>boolean</em>).</dd>
+  
+  <dt><strong><code>cfg.styling.std-toc:</code></strong></dt>
+  <dd>Use default <code>#outline</code> appearance (<em>boolean</em>).</dd>
+  
+  <dt><strong><code>cfg.styling.hr-spacing:</code></strong></dt>
+  <dd>Set spacing before and after the horizontal rule (<em>length</em>).</dd>
+  
+  <dt><strong><code>cfg.part-toc:</code></strong></dt>
+  <dd>Enables mini table of contents in part headings (<em>boolean</em>).</dd>
+</dl>
+
+<details><summary>Default fonts:</summary>
+
+**Text:**
+[TeX Gyre Heros](https://fonts.google.com/specimen/Inconsolata)
+  
+**Headings:**
+[TeX Gyre Adventor](https://www.fontsquirrel.com/fonts/jellee)
+
+**Mono:**
+[Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro) or
+[Fira Mono](https://fonts.google.com/specimen/Fira+Mono)
+
+**Math:**
+[TeX Gyre Pagella Math](https://www.gust.org.pl/projects/e-foundry/tg-math/download/texgyrepagella-math-1632.zip) or
+[Asana Math](https://mirrors.ctan.org/fonts/Asana-Math/Asana-Math.otf)
+
+</details>
 
 
 # Create a Theme
 Creating a theme should be quite easy by just following these steps:
 
-**1. Write Typst functions in a file:** There are four predefined functions used
-for theme customization, and one function for customizing the `#horizontalrule`
-command. If any of these functions are omitted, it will be necessary to inherit
-them from another theme by importing it.
+
+#### 1. Write Typst functions in a file
+
+The theming system uses special functions to customize specific aspects of the
+book; your custom theme can provide all of these functions or inherit them from
+other themes through import. The currently supported functions are as follows:
 
 ```typst
 #import "@preview/min-book:1.4.0": themes
@@ -179,46 +256,56 @@ them from another theme by importing it.
 Functions: 
 <dl>
   <dt><strong><code>styling()</code></strong></dt>
-  <dd>General theme formating. Receives book metadata (<code>meta</code> dictionary),
-  configurations (<code>cfg</code> dictionary), and book content
-  (<code>body</code>); must return book content.</dd>
+  <dd>General formating. Receives 3 items: metadata (<em>dictionary</em>),
+  configurations (<em>dictionary</em>), and book content (<em>content</em>);
+  must return <em>content</em>.</dd>
 
   <dt><strong><code>cover-page()</code></strong></dt>
-  <dd>Book cover page. Receives book metadata (<code>meta</code> dictionary) and
-  cover configurations (<code>cfg</code> dictionary); must return cover content.</dd>
+  <dd>Book cover page. Receives 2 items: metadata (<em>dictionary</em>) and
+  configurations (<em>dictionary</em>); must return <em>content</em>.</dd>
 
   <dt><strong><code>title-page()</code></strong></dt>
-  <dd>Book title page. Receives book metadata (<code>meta</code> dictionary) and
-  cover configurations (<code>cfg</code> dictionary); must return title page content.</dd>
+  <dd>Book title page. Receives 2 items: metadata (<em>dictionary</em>) and
+  configurations (<em>dictionary</em>); must return <em>content</em>.</dd>
   
   <dt><strong><code>part-page()</code></strong></dt>
-  <dd>Book part content. Receives book metadata (<code>meta</code> dictionary),
-  configurations (<code>cfg</code> dictionary), and part <code>heading</code>;
-  must return the part heading content.</dd>
+  <dd>Book part heading. Receives 3 items: metadata (<em>dictionary</em>),
+  configurations (<em>dictionary</em>), and part content (<em>heading</em>);
+  must return <em>content</em>.</dd>
   
   <dt><strong><code>horizontalrule()</code></strong></dt>
-  <dd>horizontal rule content. Receives book metadata (<code>meta</code> dictionary)
-  and configurations (<code>cfg</code> dictionary); must return horizontal rule
-  content.</dd>
+  <dd>Horizontal rule. Receives 2 items: metadata (<em>dictionary</em>) and
+  configurations (<em>dictionary</em>); must return <em>content</em>.</dd>
 </dl>
 
-**2. Save the file:** Insert the file into a Typst project or publish it to
-Typst Universe.
+Check the theme files embedded in `src/themes/` to get a practical idea of how to
+write theme code; however, any code structure can be used as long as the required
+data types are returned.
 
-**3. Import and set:** Import the saved file as a module and set the whole module
-as value for `#book(cfg.theme)` option.
+
+#### 2. Import file as Typst module
+
+Insert the file into a Typst project or publish it to Typst Universe, then import
+it into the project as a Typst module and set the whole module as value for
+`#book(cfg.theme)` option:
 
 ```typst
-#import "my-theme.typ"
+#import "custom-theme.typ"
 #show: book.with(
-  cfg: (
-    theme: my-theme)
+  cfg: (theme: custom-theme)
 )
 ```
 
-**4. Enjoy!** Now you have all _min-book_ features in a book with a fresh new look!
+The theming system will use the appropriate functions to apply the created custom
+theme (additional code and functions will be just ignored).
 
-Check the default themes in `src/themes/` for more practical information.
+
+#### 3. Enjoy!
+
+After importing and defining the theme, the book will be automatically compiled with
+a fresh new look! 
 
 
-<style>img {max-width: 100%}</style>
+<style>
+img {max-width: 100%; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5)}
+</style>

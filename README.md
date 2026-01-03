@@ -84,7 +84,11 @@ possible and encouraged.
   - Default translations for several languages
   - Custom translation files
   - Localization using [Fluent](https://projectfluent.org/)
-- Themes (default and third-party)
+- Themes
+  - Stylish (default)
+  - Coffee
+  - Elegance
+  - Custom themes
 - Advanced customization options
 - Free default fonts
 - End Notes
@@ -96,20 +100,6 @@ possible and encouraged.
 
 ## Default Fonts
 
-**Text:**
-[TeX Gyre Pagella](https://www.gust.org.pl/projects/e-foundry/tex-gyre/pagella/qpl2_501otf.zip) or
-Book Antiqua
-  
-**Math:**
-[Asana Math](https://mirrors.ctan.org/fonts/Asana-Math/Asana-Math.otf)
-  
-**Mono:**
-[Inconsolata](https://fonts.google.com/specimen/Inconsolata)
-
-**Cover title:**
-[Cinzel](https://fonts.google.com/specimen/Cinzel)
-    
-**Cover text:**
-[Alice](https://fonts.google.com/specimen/Alice)
-
-These are the fonts used by the default theme; other themes may use different fonts.
+Each theme may require a different set of default fonts to work properly. The
+fonts required by the embeded themes can be found in [`docs/themes.md`]();
+for third-party themes, check their documentation.
