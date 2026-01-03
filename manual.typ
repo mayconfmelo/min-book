@@ -1,4 +1,4 @@
-#import "@preview/min-manual:0.3.0": manual
+#import "@preview/min-manual:0.3.0": manual, url
 
 #show: manual.with(
   title: "Minimal Books",
@@ -24,6 +24,25 @@ If no translation file is found or set for the language used, _min-book_ will
 Also consider contributing to the _min-book_ project by submitting a translation
 pull request or even opening an issue — since most of the
 supported languages were originally translated by IA and may contain errors.
+
+
+= Themes
+
+#show raw: set block(breakable: false)
+
+Built-in themes are provided under the `themes` module for quick customization
+of project appearance. To apply a theme, import it as a module and set its option:
+```typ
+#import "@preview/min-manual:1.4.0": book, themes
+#show: book.with(
+  cfg: (theme: themes.default)
+)
+```
+
+It is also possible to create custom themes to suit your project needs. For more
+information about built-in and custom themes, please check the 
+#url("https://github.com/mayconfmelo/min-book/blob/main/docs/themes.md",
+`docs/themes.md`) file.
 
 
 = Copyright

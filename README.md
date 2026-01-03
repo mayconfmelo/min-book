@@ -14,7 +14,7 @@
 </p>
 
 [![Manual](https://img.shields.io/badge/Manual-%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.4.0/docs/manual.pdf)
-[![Themes](https://img.shields.io/badge/Themes-%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.4.0/docs/themes.md)
+[![Themes](https://img.shields.io/badge/Themes-%23353c44)](https://github.com/mayconfmelo/min-book/blob/main/docs/themes.md)
 [![Example PDF](https://img.shields.io/badge/Example-.pdf-%23777?labelColor=%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.4.0/docs/example.pdf)
 [![Example SRC](https://img.shields.io/badge/Example-.typ-%23777?labelColor=%23353c44)](https://github.com/mayconfmelo/min-book/blob/1.4.0/template/main.typ)
 [![Changelog](https://img.shields.io/badge/Changelog-%23353c44)](https://github.com/mayconfmelo/min-book/blob/main/docs/changelog.md)
@@ -100,10 +100,8 @@ possible and encouraged.
 
 ## Default Fonts
 
-<!--
- TODO: Link for docs/themes.md GitHub URL
---->
 Each theme may require a different set of default fonts to function correctly.
-The fonts required by the built-in themes can be found in [`docs/themes.md`]().
+The fonts required by the built-in themes can be found in [`docs/themes.md`](
+https://github.com/mayconfmelo/min-book/blob/main/docs/themes.md).
 
 For third-party themes, please refer to their documentation.

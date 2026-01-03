@@ -13,7 +13,7 @@
 #import "@preview/min-book:1.4.0": book
 #show: book.with(
   title: "Book Title",
-  subtitle: "Book subtitle, not more than two lines long",
+  subtitle: "Book subtitle",
   authors: "Book Author",
 )
 ```
@@ -56,7 +56,7 @@ possible and encouraged.
   titlepage: auto, /// <- auto | content | none
     /// Title page (shown after cover). |
   catalog: none, /// <- dictionary | yaml | toml
-    /// Cataloging-in-publication board, used for library data (see "@catalog"). |
+    /// Cataloging-in-publication board, used for library data (see "@catalog" section). |
   errata: none, /// <- content | string
     /// Correction of errors from previous book editions. |
   dedication: none, /// <- content | string
@@ -101,7 +101,7 @@ possible and encouraged.
   let cfg = get.auto-val(cfg, (:))
   /**
   = Advanced Configuration <adv-config>
-  :std-cfg: "let" => cfg: <capt>
+  :std-cfg: typc "let" => cfg: <capt>
   
   These `#book(cfg)` configurations allows to modify certain aspects of the
   book and manage its appearance and structure. Built with some thoughful
