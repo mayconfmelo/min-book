@@ -350,8 +350,7 @@
     else {it}
   }
   show link: it => {
-    // FIXME: Accept content it.body
-    if cfg.paper-friendly and type(it.dest) == str and it.dest != it.body.text {
+    if cfg.paper-friendly and type(it.dest) == str and [#it.dest] != it.body {
       it
       footnote(it.dest)
     }
