@@ -7,7 +7,7 @@
   
   cfg.back = cfg.at("back", default: true)
   cfg.page = (margin: 1.5cm) + cfg.at("page", default: (:))
-  cfg.background = cfg.at("background", default: image("elegance/cover-image.png"))
+  cfg.image = cfg.at("image", default: image("elegance/cover-image.png"))
   cfg.publisher = cfg.at("publisher", default: image("elegance/pub.png"))
   cfg.title = (size: 2.1em) + cfg.at("text", default: (:))
   
@@ -30,9 +30,9 @@
       
       text(meta.title, size: cfg.title.size)
       v(-1em)
-      cfg.background
+      cfg.image
       
-      set image(width: auto, height: 1em)
+      set image(width: auto, height: 1.5em)
       
       place(center + bottom, dy: -cfg.page.margin, cfg.publisher)
     })
@@ -60,8 +60,6 @@
   if type(meta.authors) == array {meta.authors = meta.authors.join(", ", last: " & ")}
   
   cfg.page = (margin: 1.5cm) + cfg.at("page", default: (:))
-  cfg.background = cfg.at("background", default: image("elegance/cover-image.png"))
-  cfg.publisher = cfg.at("publisher", default: image("elegance/pub.png"))
   cfg.title = (size: 2.1em) + cfg.at("text", default: (:))
   
   cfg.text = (
@@ -115,8 +113,8 @@
   import "../utils.typ"
   
   cfg.std-toc = cfg.at("std-toc", default: false)
+  cfg.part-toc = cfg.at("part-toc", default: true)
   cfg.styling = (reset: false) + cfg.styling
-  cfg.part = (toc: true) + cfg.part
   
   let pattern = (
     part: (
@@ -249,13 +247,12 @@
     )
     
     show outline: set text(size: font-size)
-    show outline.entry: it => {
-      it.indented(none, it.inner())
-    }
+    show outline.entry: it => it.indented(none, it.inner())
     
     let minitoc = none
+    let back-matter = query(selector(<min-book:back-matter>).before(here())) == ()
     
-    if (1, 2).contains(it.level) and it.outlined {
+    if (1, 2).contains(it.level) and it.outlined and back-matter {
       let level = counter(heading).get()
       let font = default(
         when: text.font == "tex gyre adventor",
@@ -269,7 +266,7 @@
         data = meta.part + " " + numbly(..pattern, default: none)(..level)
         above = 1.8em
         
-        if cfg.part.toc {
+        if cfg.part-toc {
           import "@preview/suboutline:0.3.0": suboutline
           
           minitoc = pad(suboutline(indent: 0pt, depth: 1), left: 1cm)
@@ -292,7 +289,7 @@
     
     it
     
-    align(end, minitoc)
+    align(start, minitoc)
   }
   show heading.where(level: 1): set text(size: font-size + 12pt)
   show heading.where(level: 2): set text(size: font-size + 8pt)
@@ -316,7 +313,7 @@
     set text(
       ..default(
         when: text.font == "new computer modern math",
-        value: ( font: ("Asana Math", "New Computer Modern Math") ),
+        value: ( font: ("tex gyre pagella math", "asana math") ),
         cfg.styling.reset
       )
     )
@@ -364,6 +361,8 @@
     let entry = it.indented(it.prefix(), it.inner(), gap: 0em)
     
     if not cfg.std-toc and it.level == 1 and meta.part != none {
+      show repeat: none
+      
       v(font-size, weak: true)
       strong(entry)
     }
@@ -377,17 +376,19 @@
 #let horizontalrule(meta, cfg) = context {
   let cfg = cfg
   
-  cfg.styling = (stroke: luma(210)) + cfg.at("styling", default: (:))
-  cfg.styling.hr = (spacing: 1.5em) + cfg.styling.at("hr", default: (:))
+  cfg.styling = (
+    stroke: luma(210),
+    hr-spacing: 1.5em,
+  ) + cfg.at("styling", default: (:))
   
   set align(center)
   set line(stroke: text.fill.opacify(-90%))
   
-  v(cfg.styling.hr.spacing, weak: true)
+  v(cfg.styling.hr-spacing, weak: true)
   text(size: 5pt, {
     line(length: 60%)
     line(length: 70%)
     line(length: 60%)
   })
-  v(cfg.styling.hr.spacing, weak: true)
+  v(cfg.styling.hr-spacing, weak: true)
 }
