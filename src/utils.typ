@@ -10,6 +10,7 @@
   import "orig.typ"
   
   let after-toc = query(selector(<toc:inserted>).before(here())) != ()
+  let spacing = not after-toc and part != ""
   let pattern = pattern
   let part = part
   let chapter = chapter
@@ -22,7 +23,7 @@
       return {
         orig.numbering(pattern, ..level)
         
-        if not after-toc {h(0.5em)}
+        if spacing {h(0.5em)}
       }
     }
     
@@ -54,7 +55,7 @@
   
   numbly(default: default, ..pattern)(..level)
   
-  if not after-toc {h(0.5em)} // gap between numbering and title in TOC
+  if spacing {h(0.5em)} // gap between numbering and title in TOC
 }
 
 
