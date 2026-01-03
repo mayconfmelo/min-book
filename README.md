@@ -100,6 +100,10 @@ possible and encouraged.
 
 ## Default Fonts
 
-Each theme may require a different set of default fonts to work properly. The
-fonts required by the embeded themes can be found in [`docs/themes.md`]();
-for third-party themes, check their documentation.
+<!--
+ TODO: Link for docs/themes.md GitHub URL
+--->
+Each theme may require a different set of default fonts to function correctly.
+The fonts required by the built-in themes can be found in [`docs/themes.md`]().
+
+For third-party themes, please refer to their documentation.
