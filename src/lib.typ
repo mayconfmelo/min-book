@@ -329,7 +329,6 @@ possible and encouraged.
     options must be explicitly set to generate the board; otherwise it will
     be just ignored.
     **/
-    // FIXME: accept content #catalog(title)
     let catalog = (
       id: none, /// <- string | content
         /** A #url("http://www.cutternumber.com/")[Cutter-Sanborn identification code,]
@@ -364,9 +363,9 @@ possible and encouraged.
     
     if meta.volume != "" {meta.volume = volume}
     if meta.edition != "" {meta.edition = edition}
+    if meta.subtitle != none {meta.subtitle = content2str(meta.subtitle)}
     
     meta.title = content2str(meta.title)
-    meta.subtitle = content2str(meta.subtitle)
     
     cataloging.insert(catalog, meta)
   }
