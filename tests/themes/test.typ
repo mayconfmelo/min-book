@@ -1,8 +1,11 @@
 #import "@preview/transl:0.2.0": transl
 #import "/src/lib.typ": book, themes, horizontalrule
 
-#let theme = themes.coffee
 #let args = (
+  cfg: (
+    theme: themes.elegance,
+    two-sided: false,
+  ),
   title: lorem(12),
   subtitle: lorem(30),
   date: datetime.today(),
@@ -11,10 +14,6 @@
   edition: 3,
   part: "Pt.",
   chapter: "Chapt.",
-  cfg: (
-    theme: theme,
-    two-sided: false,
-  )
 )
 
 #show: book.with(..args)
@@ -38,7 +37,7 @@
 
 #lorem(25)
 
-#quote(lorem(15), attribution: [Lipsum], block: true)
+#quote(lorem(30), attribution: [Lipsum], block: true)
 
 #lorem(25)
 
