@@ -1,5 +1,4 @@
 // Handles book numbering
-// TODO: test translate anywhere
 #let numbering(
   pattern,
   part: none,

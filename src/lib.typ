@@ -1,6 +1,4 @@
 // TODO: Implement ePub output when available
-// TODO: Implement themes
-// TODO: Implement #toolbox
 
 #import "commands/notes.typ": note
 #import "commands/ambients.typ": appendices, annexes
@@ -78,7 +76,7 @@ possible and encouraged.
   body /// <- content
     /// The book content. |
 ) = context {
-  import "@preview/toolbox:0.1.0": storage, get, default
+  import "@preview/toolbox:0.1.0": storage, get, default, content2str
   import "@preview/transl:0.2.0": transl
   import "commands/notes.typ"
   import "utils.typ"
@@ -318,6 +316,8 @@ possible and encouraged.
   }
   
   if catalog != none {
+    import "catalog.typ" as cataloging
+    
     /**
     = Cataloging in Publication <catalog>
     
@@ -334,9 +334,9 @@ possible and encouraged.
       id: none, /// <- string | content
         /** A #url("http://www.cutternumber.com/")[Cutter-Sanborn identification code,]
         used to identify the book author. |**/
-      place: none, /// <- string | content
+      place: none, /// <- string
         /// The city or region where the book was published. |
-      publisher: none, /// <- string | content
+      publisher: none, /// <- string
         /// The organization or person responsible for releasing the book. |
       isbn: none, /// <- string | content
         /// The _International Standard Book Number_, used to identify the book. |
@@ -358,11 +358,17 @@ possible and encouraged.
       after: none, /// <- content
         /** Content showed after (below) the cataloging in publication board;
         generally shows additional information that complements the board data. |**/
+      bib-style: "chicago-notes", /// <- string
+        /// Bibliographic reference style of the book data. |
     ) + catalog
     
-    import "catalog.typ": new
+    if meta.volume != "" {meta.volume = volume}
+    if meta.edition != "" {meta.edition = edition}
     
-    new(catalog, title, subtitle, authors, date, volume, edition)
+    meta.title = content2str(meta.title)
+    meta.subtitle = content2str(meta.subtitle)
+    
+    cataloging.insert(catalog, meta)
   }
   
   if errata != none {
