@@ -145,14 +145,14 @@
 #let horizontalrule(meta, cfg) = {
   let img
   
-  cfg.styling.hr = (spacing: 1.5em) + cfg.styling.at("hr", default: (:))
+  cfg.styling.hr-spacing = cfg.styling.at("hr-spacing", default: 1.5em)
   
   if meta.cover == auto {img = image("stylish/hr.svg", width: 45%)}
   else {img = line(length: 80%)}
   
-  v(cfg.styling.hr.spacing, weak: true)
+  v(cfg.styling.hr-spacing, weak: true)
   align(center, block(img, above: 1em, below: 1em))
-  v(cfg.styling.hr.spacing, weak: true)
+  v(cfg.styling.hr-spacing, weak: true)
 }
 
 

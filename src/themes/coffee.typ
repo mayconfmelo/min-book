@@ -381,15 +381,17 @@
 #let horizontalrule(meta, cfg) = {
   import "@preview/catppuccin:1.0.1": catppuccin, get-flavor
   
-  cfg.styling = (flavor: "mocha") + cfg.at("styling", default: (:))
-  cfg.styling.hr = (spacing: 1.5em) + cfg.styling.at("hr", default: (:))
+  cfg.styling = (
+    flavor: "mocha",
+    hr-spacing: 1.5em,
+  ) + cfg.at("styling", default: (:))
   
   let flavor = get-flavor(cfg.styling.flavor)
   let palette = flavor.colors
   let svg = read("coffee/hr.svg")
   let data = bytes(svg.replace("BLUE", palette.lavender.hex))
   
-  v(cfg.styling.hr.spacing, weak: true)
+  v(cfg.styling.hr-spacing, weak: true)
   align(center, image(data, width: 40%))
-  v(cfg.styling.hr.spacing, weak: true)
+  v(cfg.styling.hr-spacing, weak: true)
 }
