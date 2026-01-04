@@ -356,8 +356,8 @@
     else {it}
   }
   show outline.entry: it => {
-    let prefix = if it.element.numbering == none and outline.indent == auto {h(0.5em)}
-      else {it.prefix()}
+    let condition = it.element.numbering == none and outline.indent == auto
+    let prefix = if condition {h(0.5em)} else {it.prefix()}
     let entry = it.indented(prefix, it.inner(), gap: 0em)
     
     if not cfg.std-toc and it.level == 1 and meta.part != none {
