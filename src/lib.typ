@@ -8,15 +8,14 @@
 
 /**#v(1fr) #outline() #v(1.2fr) #pagebreak()
 = Quick Start
-
 ```typ
-#import "@preview/min-book:1.4.0": book
+#import "@preview/min-book:0.0.0": book
 #show: book.with(
   title: "Book Title",
   subtitle: "Book subtitle",
   authors: "Book Author",
 )
-```
+``
 
 = Description
 
@@ -52,7 +51,7 @@ possible and encouraged.
   date: datetime.today(), /// <- datetime | array | dictionary
     /// `(year, month, day)`\ Publication date. |
   cover: auto, /// <- auto | function | image | content | none
-    /// Cover; when using function, takes two arguments (`meta, cfg`). |
+    /// Cover; when function, takes 2 arguments: metadata and configurations. |
   titlepage: auto, /// <- auto | content | none
     /// Title page (shown after cover). |
   catalog: none, /// <- dictionary | yaml | toml
@@ -60,7 +59,7 @@ possible and encouraged.
   errata: none, /// <- content | string
     /// Correction of errors from previous book editions. |
   dedication: none, /// <- content | string
-    /// Tribute or words addressed to someone imprtant. |
+    /// Tribute or words addressed to someone important. |
   acknowledgements: none, /// <- content | string
     /// Expression of gratitude to those who contributed to the work. |
   epigraph: none, /// <- quote | content
@@ -72,9 +71,8 @@ possible and encouraged.
   chapter: auto, /// <- string | none
     /// Custom name of sections of the book (chapters). |
   cfg: auto, /// <- dictionary
-    /// Set advanced configurations (see "@adv-config"). |
-  body /// <- content
-    /// The book content. |
+    /// Set advanced configurations (see "@adv-config") section. |
+  body
 ) = context {
   import "@preview/toolbox:0.1.0": storage, get, default, content2str
   import "@preview/transl:0.2.0": transl
@@ -84,21 +82,6 @@ possible and encouraged.
   assert.ne(title, none, message: "#book(title) required")
   assert.ne(authors, none, message: "#book(authors) required")
   
-  /**
-  = Advanced Numbering
-  
-  The book headings can be numbered two ways: using a
-  #url("https://typst.app/docs/reference/model/numbering/")[standard]
-  numbering string or a #univ("numbly") numbering array. Strings are more
-  simple and easy to use, while arrays are more complete and customizable.
-  
-  By default, _min-book_ uses slightly different numbering when `#book(part)`
-  is enabled or disabled, that's why _parts_ and _chapters_ appear to have
-  independent numbering when used. The `#book(cfg.numbering)` option
-  allow to set a custom numbering used whether `#book(part)` is enabled or
-  disabled.
-  **/
-  let cfg = get.auto-val(cfg, (:))
   /**
   = Advanced Configuration <adv-config>
   :std-cfg: typc "let" => cfg: <capt>
@@ -113,8 +96,6 @@ possible and encouraged.
       /// Heading numbering (uses #univ("numbly") package). |
     transl: auto, /// <- string | dictionary
       /// `"file"  (lang: "file")`\ Set #univ("transl") Fluent database. |
-    typst-defaults: false, /// <- boolean
-       /// Use Typst defaults instead of min-book defaults. |
     std-toc: false, /// <- boolean
       /// Clean special TOC formatting (restore default `#outline` visual). |
     chapter-continuous: true, /// <- boolean
@@ -134,6 +115,7 @@ possible and encouraged.
     part: (:), /// <- dictionary
       /// Theme-depend part configurations. |
   )
+  let cfg = get.auto-val(cfg, (:))
   let not-cfg = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
   let lang-id = text.lang + if text.region != none {"-" + text.region}
   let transl-db = utils.std-langs()
@@ -141,11 +123,8 @@ possible and encouraged.
   let font-size = text.size
   /**
   = Book Parts
-  
   ```typ
-  #show: book.with(
-    part: "Act",
-  )
+  #show: book.with(part: "Act")
   = This is a part!  // Act 1
   ```
   
@@ -162,24 +141,13 @@ possible and encouraged.
   appear when `#book(cover: auto)`.
   
   = Book Chapters
+  ```typ
+  #show: book.with(chapter: "Scene")
+  == This is a chapter!  // Scene 1 
   
-  #grid(columns: (auto, auto),
-    ```typ
-    #show: book.with(
-      chapter: "Scene",
-    )
-    
-    == This is a chapter!  // Scene 1 
-    ```,
-    grid.vline(stroke: gray.lighten(60%)),
-    ```typ
-    #show: book.with(
-      part: none,
-      chapter: "Scene",
-    )
-    = This is a chapter!  // Scene 1
-    ```
-  )
+  #show: book.with(part: none, chapter: "Scene")
+  = This is a chapter!  // Scene 1
+  ```
   
   In most cases, books are divided into smaller sections called chapters.
   Generally, each chapter contains a single minor story, or event, or scene,
@@ -254,6 +222,7 @@ possible and encouraged.
     cfg.cover += (back: false)
     
     if cover == auto {generate-cover = cfg.theme.cover-page}
+    else if type(cover) == function {generate-cover = cover}
     else if type(cover) == content {
       generate-cover = (_,_) => {
         if cover.func() == image {
@@ -263,12 +232,11 @@ possible and encouraged.
             height: 100%
           )
           
-          page(background: cover)[]
+          page(background: cover, none)
         }
         else {cover}
       }
     }
-    else if type(cover) == function {generate-cover = cover}
     else {panic("Invalid #book(page) value: " + cover)}
     
     /**
@@ -286,29 +254,24 @@ possible and encouraged.
   }
   
   if titlepage != none {
-    //import "components/titlepage.typ": new
-    
-    //new(titlepage, title, subtitle, authors, date, volume, edition)
-    
     let generate-titlepage
     
     if titlepage == auto {generate-titlepage = cfg.theme.title-page}
+    else if type(titlepage) == function {generate-titlepage = titlepage}
     else if type(titlepage) == content {
       generate-titlepage = (_,_) => {
-        if titlepage == none {page[]}
-        else if titlepage.func() == image {
+        if titlepage.func() == image {
           set image(
             fit: "stretch",
             width: 100%,
             height: 100%
           )
           
-          page(background: titlepage)[]
+          page(background: titlepage, none)
         }
         else {titlepage}
       }
     }
-    else if type(titlepage) == function {generate-titlepage = titlepage}
     else {panic("Invalid #book(titlepage) value: " + repr(titlepage))}
     
     generate-titlepage(meta, cfg.cover)
@@ -320,7 +283,6 @@ possible and encouraged.
     
     /**
     = Cataloging in Publication <catalog>
-    
     :arg catalog: "let"
     
     These `#book(catalog)` options set the data used to create the
@@ -357,7 +319,7 @@ possible and encouraged.
       after: none, /// <- content
         /** Content showed after (below) the cataloging in publication board;
         generally shows additional information that complements the board data. |**/
-      bib-style: "chicago-notes", /// <- string
+      bib-style: "associacao-brasileira-de-normas-tecnicas", /// <- string
         /// Bibliographic reference style of the book data. |
     ) + catalog
     
@@ -421,18 +383,7 @@ possible and encouraged.
   
   if toc == true {
     pagebreak(to: break-to, weak: true)
-    outline(
-      ..default(
-        when: outline.indent == auto and not cfg.std-toc,
-        value: (indent: lvl => { if lvl > 0 {1.5em} else {0em} }),
-        cfg.typst-defaults
-      ),
-      ..default(
-        when: cfg.numbering == none and not cfg.std-toc,
-        value: (depth: 2),
-        cfg.typst-defaults
-      ),
-    )
+    outline()
     pagebreak(weak: true)
   }
   
