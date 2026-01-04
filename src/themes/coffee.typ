@@ -239,7 +239,13 @@
       else {auto}
     }
   )
-  set outline(depth: outline-depth)
+  set outline(
+    ..default(
+      when: not cfg.std-toc,
+      value: (depth: outline-depth),
+      cfg.styling.reset
+    )
+  )
   
   show heading: it => {
     let this = it
@@ -363,7 +369,9 @@
     else {it}
   }
   show outline.entry: it => {
-    let entry = it.indented(it.prefix(), it.inner(), gap: 0em)
+    let prefix = if it.element.numbering == none and outline.indent == auto {h(0.5em)}
+      else {it.prefix()}
+    let entry = it.indented(prefix, it.inner(), gap: 0em)
     
     if not cfg.std-toc and it.level == 1 and meta.part != none {
       v(font-size, weak: true)
