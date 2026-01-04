@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# DESC: Install or remove Typst package in TARGET namespace, or check if it is already installed.
-# USAGE: package [ACTION] [TARGET] [PROJECT-ROOT]
+# Install or remove Typst package in TARGET namespace, or check if it is already installed.
+# Usage: package [ACTION] [TARGET] [PROJECT-ROOT]
 
 # Find system data dir
 if [[ "$OSTYPE" == "linux"* ]]; then

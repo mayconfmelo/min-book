@@ -1,6 +1,6 @@
 #!/usr/local/env bash
-# DESC: Symlink Typst project in ../ to DATA-DIR/typst/package/local/
-# USAGE: dev-link [PROJECT-ROOT]
+# Symlink Typst project in ../ to DATA-DIR/typst/package/
+# Usage: dev-link [PROJECT-ROOT]
 
 # Find system data dir
 if [[ "$OSTYPE" == "linux"* ]]; then

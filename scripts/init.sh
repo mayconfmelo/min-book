@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# DESC: Initialize Typst template project.
-# USAGE: init [TARGET]
+# Initialize Typst template project.
+# Usage: init [TARGET]
 
 TARGET="$1"
 
