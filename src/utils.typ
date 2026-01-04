@@ -8,14 +8,15 @@
   import "@preview/numbly:0.1.0": numbly
   import "orig.typ"
   
+  if pattern == none {return none}
+  
   let level = level.pos()
   let after-toc = query(selector(<toc:inserted>).before(here())) != ()
-  let spacing = not after-toc and (pattern.at(level.len() - 1) != "")
+  let spacing = not after-toc and pattern.at(level.len() - 1, default: none) != ""
   let pattern = pattern
   let part = part
   let chapter = chapter
   
-  if pattern == none {return none}
   if pattern.at(level.len() - 1, default: "") == none {return none}
   if type(pattern) == str {
     if not pattern.contains(regex("[{}]")) {
