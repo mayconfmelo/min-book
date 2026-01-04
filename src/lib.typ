@@ -9,13 +9,13 @@
 /**#v(1fr) #outline() #v(1.2fr) #pagebreak()
 = Quick Start
 ```typ
-#import "@preview/min-book:0.0.0": book
+#import "@preview/min-book:1.4.0": book
 #show: book.with(
   title: "Book Title",
   subtitle: "Book subtitle",
   authors: "Book Author",
 )
-``
+```
 
 = Description
 
@@ -45,15 +45,15 @@ possible and encouraged.
   edition: 1, /// <- integer
     /// Edition number (counts changes and updates between book releases). |
   volume: 0, /// <- integer
-    /// Series volume number (situates the book in a book collection). |
+    /// Series volume number (situates the book inside a collection). |
   authors: none, /// <- string | array of strings <required>
     /// Author or authors. |
   date: datetime.today(), /// <- datetime | array | dictionary
     /// `(year, month, day)`\ Publication date. |
   cover: auto, /// <- auto | function | image | content | none
-    /// Cover; when function, takes 2 arguments: metadata and configurations. |
+    /// Cover (overrides theme); when function, takes 2 arguments: metadata and configurations. |
   titlepage: auto, /// <- auto | content | none
-    /// Title page (shown after cover). |
+    /// Title page, shown after cover (overrides theme). |
   catalog: none, /// <- dictionary | yaml | toml
     /// Cataloging-in-publication board, used for library data (see "@catalog" section). |
   errata: none, /// <- content | string
@@ -92,12 +92,14 @@ possible and encouraged.
   casual writers can safely ignore it and _just write_.
   **/
   let std-cfg = (
-    numbering: auto, /// <- string | array of strings | none
-      /// Heading numbering (uses #univ("numbly") package). |
-    transl: auto, /// <- string | dictionary
-      /// `"file"  (lang: "file")`\ Set #univ("transl") Fluent database. |
+    numbering: auto, /// <- string | any
+      /// Heading numbering (managed by theme). |
+    transl: auto, /// <- string | dictionary of strings
+      /** `"file"   (lang: "file")`\
+          Set custom Fluent files to #univ("transl") translation database (check
+          `src/l10n/` for practical references). |**/
     std-toc: false, /// <- boolean
-      /// Clean special TOC formatting (restore default `#outline` visual). |
+      /// Restore default `#outline` appearance. |
     chapter-continuous: true, /// <- boolean
       /// Continue chapter (level 2) numbering even after a book part (level 1). |
     two-sided: true, /// <- boolean
@@ -109,11 +111,11 @@ possible and encouraged.
     theme: themes.stylish, /// <- module
       /// Set book theme. |
     styling: (:), /// <- dictionary
-      /// Theme-dependent styling configurations. |
+      /// Theme general styling configurations. |
     cover: (:), /// <- dictionary
-      /// Theme-dependent cover/title page configurations. |
+      /// Theme cover/title page configurations. |
     part: (:), /// <- dictionary
-      /// Theme-depend part configurations. |
+      /// Theme part configurations. |
   )
   let cfg = get.auto-val(cfg, (:))
   let not-cfg = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
@@ -131,33 +133,31 @@ possible and encouraged.
   Some larger books are internally divided into multiple _parts_. This
   structure allows to better organize and understand a text with multiple
   sequential plots, or tales, or time jumps, or anything that internally
-  differentiate parts of the story. Each book can set different names for
-  them, like parts, subjects, books, acts, units, modules, etc;
-  by default, _min-book_ tries to get the word for "Part" in book language as
-  its name.
+  differentiate parts of the story. Parts can also be called subjects, books,
+  acts, units, modules, etc.; by default, _min-book_ tries to use "Part"
+  tranlated to `#text.lang` as name.
   
-  When a value is set, all level 1 headings become _parts_: they occupy the
-  entire page and are aligned at its middle; some decorative frame also
-  appear when `#book(cover: auto)`.
+  When set, all level 1 headings become _parts_ and its appearance is managed by
+  the current theme.
   
   = Book Chapters
   ```typ
   #show: book.with(chapter: "Scene")
   == This is a chapter!  // Scene 1 
   
-  #show: book.with(part: none, chapter: "Scene")
+  #show: book.with(chapter: "Scene", part: none)
   = This is a chapter!  // Scene 1
   ```
   
-  In most cases, books are divided into smaller sections called chapters.
+  In most cases, books are divided into smaller sections called _chapters_.
   Generally, each chapter contains a single minor story, or event, or scene,
-  or any type of subtle plot change. Each book can set different names for
-  them, like chapters, sections, articles, scenes, etc; by default, _min-book_
-  tries to get the word for "Chapter" in book language as its name.
+  or any type of subtle plot change. Chapters can also be called sections,
+  articles, scenes, etc.; by default, _min-book_ tries to use "Chapter" tranlated
+  to `#text.lang` as name.
   
-  Chapters are smart: when a value is set, if `#book(parts: none)` all level
+  Chapters are smart: when set, if `#book(parts: none)` then all level
   1 headings become chapters; otherwise, all level 2 headings become chapters
-  — since the level 1 ones are parts.
+  — since parts are level 1 headings.
   **/
   let part = part
   let chapter = chapter
@@ -210,6 +210,36 @@ possible and encouraged.
   
   body = notes.insert(body, new-page: part != none or cfg.notes-page)
   
+  /**
+  = Theming & Customization
+  
+  Book customization relies on three pillars: themes, defaults, and settings.
+  Themes are broader and more practical sets of customizations; defaults define
+  pre-programmed adjustments that can be overridden; and settings allow for
+  fine-tuning specific behaviors.
+  
+  Built-in themes are provided under the `themes` module for quick visual
+  customization; it is also possible to create a custom theme (check the
+  `docs/themes.md` file for a practical reference). A theme is applied as following:
+  ```typ
+  #import "@preview/min-manual:1.4.0": book, themes
+  #show: book.with( cfg: (theme: themes.default) )
+  ```
+  
+  Themes can provide defaults that can be overridden by `#set` rules defined
+  before the `#show: book` command — defaults take precedence over rules after it.
+  ```typ
+  #set page(margin: 2cm)
+  #set text(size: 18pt)
+  #set outline(depth: 4)
+  
+  #show: book.with(...)
+  ```
+  
+  The settings are options of the `#book` command and allow for more specific
+  adjustments. Some settings can be used by themes; they can also control defaults.
+  **/
+  
   if titlepage == none and catalog != none and cfg.two-sided {
     // Automatic blank titlepage when generating catalog
     titlepage = []
@@ -239,16 +269,6 @@ possible and encouraged.
     }
     else {panic("Invalid #book(page) value: " + cover)}
     
-    /**
-    = Book cover
-    
-    By default, _min-book_ automatically generates a book cover if `#book(cover)`
-    is not set, it's also possible to set a custom cover image or create one
-    using Typst code — the default automatic cover (see
-    `/src/components/cover.typ`) can be a good start as a base to create a
-    custom version. Cover can be a function, in which case it will be invoked with
-    the `title`, `subtitle`, `date`, `authors`, `volume` and `cfg` of the book.
-    **/
     generate-cover(meta, cfg.cover)
     pagebreak(to: break-to, weak: true)
   }
@@ -401,11 +421,4 @@ possible and encouraged.
   if cover == auto and cfg.cover.back  { cfg.theme.cover-page(meta, cfg.cover) }
 }
 
-/**
-= Additional Commands
-
-These commands are provided as a way to access some fancy book features that
-cannot be implemented by re-working and adapting existing Typst elements. They
-are completely optional, and is perfectly possible to write an entire book without
-using them.
-**/
+/// = Commands

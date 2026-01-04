@@ -24,6 +24,7 @@ modernity. The default theme, no need to set it.
       reset: value,
       std-toc: value,
       hr-spacing: value),
+    numbering: value,
   )
 )
 ```
@@ -51,6 +52,10 @@ Options:
   
   <dt><strong><code>cfg.styling.hr-spacing:</code></strong></dt>
   <dd>Set spacing before and after the horizontal rule (<em>length</em>).</dd>
+  
+  <dt><strong><code>cfg.numbering:</code></strong></dt>
+  <dd>Heading <em><a href="https://www.typst.app/universe/package/numbly/">
+    numbly</a></em> numbering (<em>string</em> or <em>array</em>)</dd>
 </dl>
 
 <details><summary>Default fonts:</summary>
@@ -94,6 +99,7 @@ Confortable fonts in cozy pastel colors for creative writing.
       reset: value,
       std-toc: value,
       hr-spacing: value),
+    numbering: value,
   )
 )
 ```
@@ -129,6 +135,10 @@ Options:
   
   <dt><strong><code>cfg.styling.hr-spacing:</code></strong></dt>
   <dd>Set spacing before and after the horizontal rule (<em>length</em>).</dd>
+
+  <dt><strong><code>cfg.numbering:</code></strong></dt>
+  <dd>Heading <em><a href="https://www.typst.app/universe/package/numbly/">
+    numbly</a></em> numbering (<em>string</em> or <em>array</em>)</dd>
 </dl>
 
 <details><summary>Default fonts:</summary>
@@ -168,6 +178,7 @@ Modern typography and minimal visuals, without unnecessary visual clutter.
       std-toc: value,
       hr-spacing: value),
     part-toc: value,
+    numbering: value,
   )
 )
 ```
@@ -207,6 +218,10 @@ Options:
   
   <dt><strong><code>cfg.part-toc:</code></strong></dt>
   <dd>Enables mini table of contents in part headings (<em>boolean</em>).</dd>
+
+  <dt><strong><code>cfg.numbering:</code></strong></dt>
+  <dd>Heading <em><a href="https://www.typst.app/universe/package/numbly/">
+    numbly</a></em> numbering (<em>string</em> or <em>array</em>)</dd>
 </dl>
 
 <details><summary>Default fonts:</summary>

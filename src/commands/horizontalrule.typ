@@ -1,13 +1,12 @@
 /**
 == Horizontal Rule
-:horizontalrule:
+```typ
+#horizontalrule()
+```
 Adds a horizontal rule, visual separators used to distinguish subtle changes
-of subject in extensive texts.
+of subject in extensive texts. Its appearance is controlled by the current theme.
 **/
-#let horizontalrule(
-  spacing: 1.5em, /// <- length
-    /// Vertical space before and after the horizontal rule. |
-) = [#metadata("hr placeholder") <horizontalrule:insert>]
+#let horizontalrule() = [#metadata("hr placeholder") <horizontalrule:insert>]
 
 
 /// The `#horizontalrule` command is also available as the smaller `#hr` alias.

@@ -1,7 +1,6 @@
 /**
 == Block Quote Command
 :blockquote:
-Adds a block of quotation, a simple alias to `#quote(block: true)`, with a
-smaller and more semantic `#quote(attribution)` option: `#blockquote(by)`.
+A simple alias for `#quote(block: true)` with a shorter attribution option.
 **/
 #let blockquote(by: none, ..args) = quote(block: true, attribution: by, ..args)
