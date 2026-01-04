@@ -13,7 +13,6 @@
       en-US: read("en-US.ftl"),
       pt-BR: read("pt-BR.ftl"),
     ),
-    typst-defaults: true,
     std-toc: true,
     chapter-continuous: false,
     two-sided: false,

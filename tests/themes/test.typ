@@ -41,7 +41,7 @@
 
 #lorem(25)
 
-#horizontalrule(spacing: 2em)
+#horizontalrule()
 
 #lorem(25)
 
