@@ -8,12 +8,12 @@
   import "@preview/numbly:0.1.0": numbly
   import "orig.typ"
   
+  let level = level.pos()
   let after-toc = query(selector(<toc:inserted>).before(here())) != ()
-  let spacing = not after-toc and part != ""
+  let spacing = not after-toc and (pattern.at(level.len() - 1) != "")
   let pattern = pattern
   let part = part
   let chapter = chapter
-  let level = level.pos()
   
   if pattern == none {return none}
   if pattern.at(level.len() - 1, default: "") == none {return none}
