@@ -5,7 +5,6 @@
   
   if type(meta.authors) == array {meta.authors = meta.authors.at(0) + " et al."}
   
-  cfg.back = cfg.at("back", default: true)
   cfg.page = (margin: 1.5cm) + cfg.at("page", default: (:))
   cfg.image = cfg.at("image", default: image("elegance/cover-image.png"))
   cfg.publisher = cfg.at("publisher", default: image("elegance/pub.png"))
@@ -24,7 +23,7 @@
     inset: (bottom: 5pt, rest: cfg.page.margin),
   )
   
-  if not cfg.back {
+  if not meta.is-back-cover {
     data = align(top, {
       set image(width: 100% + 1pt)
       

@@ -48,7 +48,7 @@
   }
   
   // Back cover will be empty (no data content)
-  if not cfg.back {
+  if not meta.is-back-cover {
     data.horizon = align(center + horizon, {
       par(text(meta.title, ..cfg.title), leading: 1.2em, spacing: 1.2em)
       
@@ -374,7 +374,7 @@
     svg = svg.replace("FILL", text.fill.to-hex()) // same color as text
     data = image(bytes(svg), width: 45%)
   }
-  else {data = line(length: 80%, fill: text.fill)}
+  else {data = line(length: 80%, stroke: text.fill)}
   
   v(spacing, weak: true)
   align(

@@ -6,7 +6,7 @@
 #import "commands/blockquote.typ": blockquote
 #import "themes.typ"
 
-/**#v(1fr) #outline() #v(1.2fr) #pagebreak()
+/** #v(1fr) #outline() #v(1.2fr) #pagebreak()
 = Quick Start
 ```typ
 #import "@preview/min-book:1.4.0": book
@@ -51,7 +51,9 @@ possible and encouraged.
   date: datetime.today(), /// <- datetime | array | dictionary
     /// `(year, month, day)`\ Publication date. |
   cover: auto, /// <- auto | function | image | content | none
-    /// Cover (overrides theme); when function, takes 2 arguments: metadata and configurations. |
+    /** Cover (overrides theme); when function, takes `(meta, cfg) => { }` and
+        generate a back cover (use `meta.is-back-cover`) when enabed by
+        `#book(cfg.cover.back: true)`. |**/
   titlepage: auto, /// <- auto | content | none
     /// Title page, shown after cover (overrides theme). |
   catalog: none, /// <- dictionary | yaml | toml
@@ -246,10 +248,9 @@ possible and encouraged.
   }
   
   if cover != none {
-    let cfg = cfg
     let generate-cover
     
-    cfg.cover += (back: false)
+    meta += (is-back-cover: false)
     
     if cover == auto {generate-cover = cfg.theme.cover-page}
     else if type(cover) == function {generate-cover = cover}
@@ -416,9 +417,18 @@ possible and encouraged.
   
   body
   
-  cfg.cover.back = cfg.cover.at("back", default: true)
-  
-  if cover == auto and cfg.cover.back  { cfg.theme.cover-page(meta, cfg.cover) }
+  // Back cover
+  if cfg.cover.at("back", default: cover == auto) {
+    let generate-cover
+    
+    meta += (is-back-cover: true)
+    
+    if cover == auto {generate-cover = cfg.theme.cover-page}
+    else if type(cover) == function {generate-cover = cover}
+    else {panic("Back cover must be function (got " + repr(type(cover)) + ")")}
+    
+    generate-cover(meta, cfg.cover)
+  }
 }
 
 /// = Commands

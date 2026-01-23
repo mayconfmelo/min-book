@@ -40,7 +40,7 @@
   
   meta.title = {
     line(length: 100%, stroke: gradient.linear(..main-grad, angle: 50deg))
-    if not cfg.back {
+    if not meta.is-back-cover {
       align(right, text(
         meta.title,
         fill: gradient.linear(..main-grad, angle: 60deg),
