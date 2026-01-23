@@ -1,22 +1,4 @@
 #let cover-page(meta, cfg) = context {
-  let std = (
-    page: (
-      margin: (top: 20%, rest: 10%),
-      fill: rgb("#3E210B"),
-    ),
-    title: (
-      size: page.width * 0.06,
-      font: "cinzel",
-      fill: luma(250),
-    ),
-    text: (
-      size: page.width * 0.04,
-      font: "alice",
-      fill: luma(200),
-      hyphenate: false,
-    ),
-    back: false,
-  )
   let frame = image("stylish/frame.svg", width: 93%)
   let data = (horizon: none, bottom: none)
   let background-margin = page.height * 0.017
@@ -30,16 +12,33 @@
   if type(cfg.at("text", default: "")) == color {cfg.text = (fill: cfg.text)}
   if type(meta.authors) == array {meta.authors = meta.authors.join("\n")}
   
-  // Unite std-cfg and cfg options
-  cfg.page = std.page + cfg.at("page", default: (:))
-  cfg.title = std.title + cfg.at("title", default: (:))
-  cfg.text = std.text + cfg.at("text", default: (:))
-  cfg.back = cfg.at("back", default: std.back)
+  // Override defaults:
+  
+  cfg.back = cfg.at("back", default: false)
+  
+  cfg.page = (
+    margin: (top: 20%, rest: 10%),
+    fill: rgb("#3E210B"),
+  ) + cfg.at("page", default: (:))
+  
+  cfg.title = (
+    size: page.width * 0.06,
+    font: "cinzel",
+    fill: luma(250),
+  ) + cfg.at("title", default: (:))
+  
+  cfg.text = (
+    size: page.width * 0.04,
+    font: "alice",
+    fill: luma(200),
+    hyphenate: false,
+  ) + cfg.at("text", default: (:))
   
   set par(justify: false)
   set text(..cfg.text)
   set page(footer: none)
   
+  // Page background
   background = {
     v(background-margin)
     align(center + top, frame) // top frame
@@ -48,6 +47,7 @@
     v(background-margin)
   }
   
+  // Back cover will be empty (no data content)
   if not cfg.back {
     data.horizon = align(center + horizon, {
       par(text(meta.title, ..cfg.title), leading: 1.2em, spacing: 1.2em)
@@ -66,16 +66,12 @@
     })
   }
   
+  // Insert cover page
   page(background: background, ..cfg.page, data.horizon + data.bottom)
 }
 
 
 #let title-page(meta, cfg) = context {
-  let std = (
-    page: ( margin: (top: 20%, rest: 10%) ),
-    title: ( size: page.width * 0.06 ),
-    text: ( size: page.width * 0.04, hyphenate: false ),
-  )
   let frame = image("stylish/frame.svg", width: 93%)
   let data = (horizon: none, bottom: none)
   let meta = meta
@@ -87,14 +83,20 @@
   if type(cfg.at("text", default: "")) == color {cfg.text = (fill: cfg.text)}
   if type(meta.authors) == array {meta.authors = meta.authors.join("\n")}
   
-  // Unite std-cfg and cfg options
-  cfg.page = std.page + cfg.at("page", default: (:))
-  cfg.title = std.title + cfg.at("title", default: (:))
-  cfg.text = std.text + cfg.at("text", default: (:))
+  // Override defaults:
+  
+  cfg.page = (margin: (top: 20%, rest: 10%)) + cfg.at("page", default: (:))
+  cfg.title = (size: page.width * 0.06) + cfg.at("title", default: (:))
+  
+  cfg.text = (
+    size: page.width * 0.04,
+    hyphenate: false
+  ) + cfg.at("text", default: (:))
   
   set par(justify: false)
   set text(size: page.width * 0.04)
   
+  // Set data content
   data.horizon = align(center + horizon, {
     par(text(meta.title, ..cfg.title), leading: 1.2em, spacing: 1.2em)
     
@@ -111,20 +113,21 @@
       size: page.width * 0.035,
     ))
   })
-
+  
+  // Insert title page
   page(data.horizon + data.bottom)
 }
 
 
 #let part(meta, cfg, heading) = {
-  let std = (two-sided: true)
   let background = none
   let break-to
   let frame
   
-  cfg = std + cfg
+  cfg = (two-sided: true) + cfg
   break-to = if cfg.two-sided {"odd"} else {none}
   
+  // Gray frame when using automatic cover
   if meta.cover == auto {
     frame = image("stylish/frame-gray.svg", width: 93%)
     background = {
@@ -138,21 +141,8 @@
   
   if break-to != none {pagebreak(to: break-to, weak: true)}
   
+  // Insert part page
   page(align(center + horizon, heading), background: background)
-}
-
-
-#let horizontalrule(meta, cfg) = {
-  let img
-  
-  cfg.styling.hr-spacing = cfg.styling.at("hr-spacing", default: 1.5em)
-  
-  if meta.cover == auto {img = image("stylish/hr.svg", width: 45%)}
-  else {img = line(length: 80%)}
-  
-  v(cfg.styling.hr-spacing, weak: true)
-  align(center, block(img, above: 1em, below: 1em))
-  v(cfg.styling.hr-spacing, weak: true)
 }
 
 
@@ -161,6 +151,7 @@
   import "@preview/toolbox:0.1.0": default, get
   import "../utils.typ"
   
+  // Override defaults
   cfg.styling.reset = cfg.styling.at("reset", default: false)
   cfg.std-toc = cfg.at("std-toc", default: false)
   
@@ -196,6 +187,7 @@
     )
   )
   
+  // Set default numbering pattern (when cfg.numbering is auto)
   pattern = get.auto-val(
     cfg.numbering,
     if meta.part != none {pattern.part} else {pattern.no-part}
@@ -368,4 +360,26 @@
   }
 
   body
+}
+
+
+// Appearance of #horizontalrule (#hr) command
+#let horizontalrule(meta, cfg) = context {
+  let spacing = cfg.styling.at("hr-spacing", default: 1.5em)
+  let data
+  
+  if meta.cover == auto {
+    let svg = read("stylish/hr.svg")
+    
+    svg = svg.replace("FILL", text.fill.to-hex()) // same color as text
+    data = image(bytes(svg), width: 45%)
+  }
+  else {data = line(length: 80%, fill: text.fill)}
+  
+  v(spacing, weak: true)
+  align(
+    center,
+    block(data, above: 1em, below: 1em)
+  )
+  v(spacing, weak: true)
 }
