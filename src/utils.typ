@@ -23,7 +23,7 @@
       return {
         orig.numbering(pattern, ..level)
         
-        if spacing {h(0.5em)}
+        if spacing {h(0.3em)}
       }
     }
     
@@ -55,7 +55,7 @@
   
   numbly(default: default, ..pattern)(..level)
   
-  if spacing {h(0.5em)} // gap between numbering and title in TOC
+  if spacing {h(0.3em)} // gap between numbering and title in TOC
 }
 
 
