@@ -14,10 +14,10 @@ all level 1 heading is a new appendix.
   numbering: ( /// <- array of strings | string
     "",
     "{2:A}.\n",
-    "{2:A}.{3:1}. ",
-    "{2:A}.{3:1}.{4:1}. ",
-    "{2:A}.{3:1}.{4:1}.{5:1}. ",
-    "{2:A}.{3:1}.{4:1}.{5:1}.{6:a}. ",
+    "{2:A}.{3:1}.",
+    "{2:A}.{3:1}.{4:1}.",
+    "{2:A}.{3:1}.{4:1}.{5:1}.",
+    "{2:A}.{3:1}.{4:1}.{5:1}.{6:a}.",
   ),
     /// Custom appendices numbering (uses #univ("numbly") package). |
   type: "appendix",
@@ -42,7 +42,7 @@ all level 1 heading is a new appendix.
   
   heading(title, level: 1)
   
-  counter(heading).update(0)
+  //counter(heading).update()
   
   set heading(offset: 1)
   
@@ -65,10 +65,10 @@ document. Inside this ambient, all level 1 heading is a new annex.
   numbering: ( /// <- array of strings | string
     "",
     "{2:A}.\n",
-    "{2:A}.{3:1}. ",
-    "{2:A}.{3:1}.{4:1}. ",
-    "{2:A}.{3:1}.{4:1}.{5:1}. ",
-    "{2:A}.{3:1}.{4:1}.{5:1}.{6:a}. ",
+    "{2:A}.{3:1}.",
+    "{2:A}.{3:1}.{4:1}.",
+    "{2:A}.{3:1}.{4:1}.{5:1}.",
+    "{2:A}.{3:1}.{4:1}.{5:1}.{6:a}.",
   ),
     /// Custom annexes numbering (uses #univ("numbly") package). |
 ) = appendices(
