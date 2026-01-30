@@ -123,7 +123,7 @@ possible and encouraged.
   let not-cfg = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
   let lang-id = text.lang + if text.region != none {"-" + text.region}
   let transl-db = utils.std-langs()
-  let date = get.date(date)
+  let date = get.date(..date)
   let font-size = text.size
   /**
   = Book Parts
