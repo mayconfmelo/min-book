@@ -235,8 +235,8 @@
     },
     hanging-indent: 0pt,
     supplement: it => context {
-      if part != none and it.depth == 1 {part}
-      else if chapter != none {chapter}
+      if meta.part != none and it.depth == 1 {meta.part}
+      else if meta.chapter != none {meta.chapter}
       else {auto}
     }
   )
@@ -342,18 +342,15 @@
     
     // When referencing headings in "normal" form
     if el != none and el.func() == heading and it.form == "normal" {
+      let pattern = pattern
       let number
-      let patterns = get.auto-val(
-        cfg.numbering,
-        if part != none {part-pattern} else {no-part-pattern}
-      )
       
       // Remove \n and trim full stops
-      if patterns != none and part != "" {
+      if pattern != none and part != "" {
         import "@preview/numbly:0.1.0": numbly
 
-        patterns = patterns.map( i => i.replace("\n", "").trim(regex("[.:]")) )
-        number = numbly(..patterns)(..counter(heading).at(el.location()))
+        pattern = pattern.map( i => i.replace("\n", "").trim(regex("[.:]")) )
+        number = numbly(..pattern)(..counter(heading).at(el.location()))
         
         // New reference without \n
         link(el.location())[#el.supplement #number]
