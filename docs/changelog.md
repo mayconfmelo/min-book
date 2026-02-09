@@ -126,11 +126,11 @@ the help testing some features.
 - Internal re-design
 - Added: Defaults changeable by `#set` rules
 - Added: Support for themes
-- Added: _Stylish_ built-in theme
-- Added: _Coffee_ built-in theme
-- Added: _Elegance_ built-in theme
-- Added: `#book(transl)` support multiple languages (Fluent YAML database)
-- Updated: `#book(transl)` using _transl:0.2.0_
+- Added: Built-in themes
+  - _Stylish_ (default)
+  - _Coffee_
+  - _Elegance_
+- Added: `#book(transl)` set multiple languages using Fluent database (_transl:0.2.0_)
 - Updated:  `#book(cfg)` options
   - `cfg.justify` &rarr; `#set par(justify)`
   - `cfg.line-space` &rarr; `#set par(leading)`
@@ -148,4 +148,6 @@ the help testing some features.
   - `cfg.paper-links` &rarr; `cfg.paper-friendly`
   - `cfg.notes-page` set notes in new pages
   - `cfg.theme` set theme
-  - `cfg` options set by themes
+  - `cfg.styling` set theme general options
+  - `cfg.cover` set theme cover options
+  - `cfg.part` set theme book part options

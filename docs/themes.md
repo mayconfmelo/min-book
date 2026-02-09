@@ -242,9 +242,9 @@ Options:
 
 </details>
 
-[Harpia Brasieira](https://www.deviantart.com/psychosk1/art/Harpia-Brasileira-864239992)
+Default cover image: [Harpia Brasieira](https://www.deviantart.com/psychosk1/art/Harpia-Brasileira-864239992)
 © Psychosk1  
-[_Rio Memórias_](https://riomemorias.com.br/memoria/machado-de-assis/)
+This cover image: [_Rio Memórias_](https://riomemorias.com.br/memoria/machado-de-assis/)
 
 
 # Create a Theme
