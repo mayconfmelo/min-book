@@ -157,16 +157,16 @@
   
   let h2-count = counter("min-book-h2-count")
   let font-size = default(
-    when: text.size == 11pt,
+    when: text.size == 11pt and not cfg.styling.reset,
     value: 12pt,
     otherwise: 11pt,
-    cfg.styling.reset
+    false
   )
   let indent = default(
-    when: par.first-line-indent == (amount: 0pt, all: false),
+    when: par.first-line-indent == (amount: 0pt, all: false) and not cfg.styling.reset,
     value: 1em,
     otherwise: par.first-line-indent.amount,
-    cfg.styling.reset,
+    false
   )
   let pattern = (
     part: (

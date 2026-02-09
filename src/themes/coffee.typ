@@ -126,16 +126,16 @@
     no-part: (if meta.chapter != none {"{2:1}\n"})
   )
   let font-size = default(
-    when: text.size == 11pt,
+    when: text.size == 11pt and not cfg.styling.reset,
     value: 12pt,
     otherwise: text.size,
-    cfg.styling.reset
+    false
   )
   let indent = default(
-    when: par.first-line-indent == (amount: 0pt, all: false),
+    when: par.first-line-indent == (amount: 0pt, all: false) and not cfg.styling.reset,
     value: 1em,
     otherwise: par.first-line-indent.amount,
-    cfg.styling.reset,
+    false
   )
   let outline-depth
   
