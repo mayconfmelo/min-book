@@ -37,7 +37,7 @@ tab.
 Typst code inside `/** **/` or `///` comments will appear in the manual.
 
 <span id="9"></span>
-**9.** English is not my native language; if you found any mispellings or grammar errors
+**9.** English is not my native language; if you found any misspellings or grammar errors
 please let me know through issue or correct via PR.
 
 

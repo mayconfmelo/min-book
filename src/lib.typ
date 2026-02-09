@@ -52,7 +52,7 @@ possible and encouraged.
     /// `(year, month, day)`\ Publication date. |
   cover: auto, /// <- auto | function | image | content | none
     /** Cover (overrides theme); when function, takes `(meta, cfg) => { }` and
-        generate a back cover (use `meta.is-back-cover`) when enabed by
+        generate a back cover (use `meta.is-back-cover`) when enabled by
         `#book(cfg.cover.back: true)`. |**/
   titlepage: auto, /// <- auto | content | none
     /// Title page, shown after cover (overrides theme). |
@@ -137,7 +137,7 @@ possible and encouraged.
   sequential plots, or tales, or time jumps, or anything that internally
   differentiate parts of the story. Parts can also be called subjects, books,
   acts, units, modules, etc.; by default, _min-book_ tries to use "Part"
-  tranlated to `#text.lang` as name.
+  translated to `#text.lang` as name.
   
   When set, all level 1 headings become _parts_ and its appearance is managed by
   the current theme.
@@ -154,7 +154,7 @@ possible and encouraged.
   In most cases, books are divided into smaller sections called _chapters_.
   Generally, each chapter contains a single minor story, or event, or scene,
   or any type of subtle plot change. Chapters can also be called sections,
-  articles, scenes, etc.; by default, _min-book_ tries to use "Chapter" tranlated
+  articles, scenes, etc.; by default, _min-book_ tries to use "Chapter" translated
   to `#text.lang` as name.
   
   Chapters are smart: when set, if `#book(parts: none)` then all level

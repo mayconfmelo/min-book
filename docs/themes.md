@@ -83,7 +83,7 @@ Book Antiqua
 
 ![cover](assets/theme-coffee.png)
 
-Confortable fonts in cozy pastel colors for creative writing.
+Comfortable fonts in cozy pastel colors for creative writing.
 ```typst
 #import "@preview/min-book:1.4.0": book, themes
 #show: book.with(
@@ -275,7 +275,7 @@ other themes through import. The currently supported functions are as follows:
 Functions: 
 <dl>
   <dt><strong><code>styling()</code></strong></dt>
-  <dd>General formating. Receives 3 items: metadata (<em>dictionary</em>),
+  <dd>General formatting. Receives 3 items: metadata (<em>dictionary</em>),
   configurations (<em>dictionary</em>), and book content (<em>content</em>);
   must return <em>content</em>.</dd>
 
