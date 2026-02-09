@@ -242,6 +242,10 @@ Options:
 
 </details>
 
+[Harpia Brasieira](https://www.deviantart.com/psychosk1/art/Harpia-Brasileira-864239992)
+© Psychosk1  
+[_Rio Memórias_](https://riomemorias.com.br/memoria/machado-de-assis/)
+
 
 # Create a Theme
 Creating a theme should be quite easy by just following these steps:
@@ -293,9 +297,9 @@ Functions:
   configurations (<em>dictionary</em>); must return <em>content</em>.</dd>
 </dl>
 
-Check the theme files embedded in `src/themes/` to get a practical idea of how to
-write theme code; however, any code structure can be used as long as the required
-data types are returned.
+Check the built-in themes in `src/themes/` to get a practical reference on how
+to write the theme code; however, any code structure can be used as long as the
+required data types are returned.
 
 
 #### 2. Import file as Typst module
@@ -319,7 +323,6 @@ theme (additional code and functions will be just ignored).
 
 After importing and defining the theme, the book will be automatically compiled with
 a fresh new look! 
-
 
 <style>
 img {max-width: 100%; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5)}

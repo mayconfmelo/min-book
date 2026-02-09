@@ -40,6 +40,11 @@
   subtitle: "Book subtitle",
   authors: "Book Author",
 )
+
+= Book Part
+
+== Book Chapter
+#lorem(200)
 ```
 
 
