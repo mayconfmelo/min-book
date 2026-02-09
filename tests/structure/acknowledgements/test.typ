@@ -5,7 +5,7 @@
 #let doc = []
 #let other = (
   title: "A", authors: "", part: none, cover: none, toc: none,
-  cfg: (two-sided: false), titlepage: none,
+  cfg: (two-sided: false, styling: (reset: true)), titlepage: none,
 )
 #let book = book.with(..other, doc)
 
