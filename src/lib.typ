@@ -76,7 +76,7 @@ possible and encouraged.
     /// Set advanced configurations (see "@adv-config") section. |
   body
 ) = context {
-  import "@preview/toolbox:0.1.0": storage, get, default, content2str
+  import "@preview/nexus-tools:0.1.0": storage, get, default, content2str
   import "@preview/transl:0.2.0": transl
   import "commands/notes.typ"
   import "utils.typ"
@@ -123,7 +123,7 @@ possible and encouraged.
   let not-cfg = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
   let lang-id = text.lang + if text.region != none {"-" + text.region}
   let transl-db = utils.std-langs()
-  let date = get.date(..date)
+  let date = if not type(date) in (array, dictionary) {(date,)} else {date}
   let font-size = text.size
   /**
   = Book Parts
@@ -183,6 +183,7 @@ possible and encouraged.
   chapter = get.auto-val(chapter, transl("chapter"))
   part = get.auto-val(part, transl("part"))
   break-to = if cfg.two-sided {"odd"} else {none}
+  date =  get.date(..date)
   meta = (
     title: title,
     subtitle: subtitle,

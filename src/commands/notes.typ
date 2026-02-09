@@ -12,7 +12,7 @@ the end of the current section, right before the next heading.
   body, /// <- content <required>
     /// The content of the end note. |
 ) = context {
-  import "@preview/toolbox:0.1.0": storage, has
+  import "@preview/nexus-tools:0.1.0": storage, has
   import "../orig.typ"
   let selected = selector(heading).before(here())
   let level = counter(selected).display() // numbering of current heading
@@ -76,7 +76,7 @@ the end of the current section, right before the next heading.
 
 // internal: Insert notes before the next heading
 #let insert(body, new-page: true) = {
-  import "@preview/toolbox:0.1.0": storage, its
+  import "@preview/nexus-tools:0.1.0": storage, its
   import "../orig.typ"
   
   let tmp = [#metadata("#note placeholder") #label("note:data-placeholder")]

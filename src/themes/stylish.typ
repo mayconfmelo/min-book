@@ -148,7 +148,7 @@
 
 // Book styling and formatting
 #let styling(meta, cfg, body) = {
-  import "@preview/toolbox:0.1.0": default, get
+  import "@preview/nexus-tools:0.1.0": default, get
   import "../utils.typ"
   
   // Override defaults

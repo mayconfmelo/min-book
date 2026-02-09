@@ -24,7 +24,7 @@ all level 1 heading is a new appendix.
 ) = context {
   import "../utils.typ"
   import "@preview/transl:0.2.0": transl
-  import "@preview/toolbox:0.1.0": storage
+  import "@preview/nexus-tools:0.1.0": storage
   
   let title = transl(type, number: "plur", mode: str)
   let chapter = transl(type, number: "sing", mode: str)

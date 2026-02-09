@@ -1,5 +1,5 @@
 #import "/src/lib.typ": note, book
-#import "@preview/toolbox:0.1.0": storage
+#import "@preview/nexus-tools:0.1.0": storage
 
 #set page(height: auto, width: 13.5cm, margin: 2cm, footer: none)
 #set par(leading: 0.7em, spacing: 1.3em, first-line-indent: 0.0001pt)
