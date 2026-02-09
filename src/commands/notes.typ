@@ -12,8 +12,11 @@ the end of the current section, right before the next heading.
   body, /// <- content <required>
     /// The content of the end note. |
 ) = context {
+  h(0pt, weak: true) // remove neighbor spaces
+  
   import "@preview/nexus-tools:0.1.0": storage, has
   import "../orig.typ"
+  
   let selected = selector(heading).before(here())
   let level = counter(selected).display() // numbering of current heading
   let count = counter("note:count")
@@ -22,8 +25,6 @@ the end of the current section, right before the next heading.
   let data = (:)
   let ref = (:)
   let number
-  
-  h(0pt, weak: true) // remove neighbor spaces
   
   // Retrieve/store note numbering
   if numbering == auto {
