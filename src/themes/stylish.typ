@@ -201,7 +201,9 @@
   set page(
     ..default(
       when: page.margin == auto,
-      value: (margin: (x: 15%, y: 14%)),
+      //value: (margin: (x: 15%, y: 14%)),  // removed due to drafting:0.2.2
+      //value: (margin: (x: 2.25cm, y: 3cm)),
+      value: (margin: (x: 2cm, y: 2.5cm)),
       cfg.styling.reset,
     ),
     ..default(
