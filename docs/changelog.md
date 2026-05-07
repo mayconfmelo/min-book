@@ -151,3 +151,10 @@ the help testing some features.
   - `cfg.styling` set theme general options
   - `cfg.cover` set theme cover options
   - `cfg.part` set theme book part options
+  
+
+## 1.5.0
+
+- Added: `#book(draft)` option
+- Added: `#comment` for draft annotations
+- Added: `#mark` to highlight text in draft

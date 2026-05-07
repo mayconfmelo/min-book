@@ -4,6 +4,7 @@
 #import "commands/ambients.typ": appendices, annexes
 #import "commands/horizontalrule.typ": horizontalrule, hr
 #import "commands/blockquote.typ": blockquote
+#import "commands/draft.typ": comment, mark
 #import "themes.typ"
 
 /** #v(1fr) #outline() #v(1.2fr) #pagebreak()
@@ -118,6 +119,8 @@ possible and encouraged.
       /// Theme cover/title page configurations. |
     part: (:), /// <- dictionary
       /// Theme part configurations. |
+    draft: false /// <- boolean
+      /// Toggle draft mode (support for annotation tools).
   )
   let cfg = get.auto-val(cfg, (:))
   let not-cfg = cfg.keys().filter( i => not std-cfg.keys().contains(i) )
@@ -165,13 +168,15 @@ possible and encouraged.
   let chapter = chapter
   let body = body
   let break-to
-  let meta 
+  let meta
   
   // Check if the cfg options received are valid
   if not-cfg != () {
     panic("Invalid #book(cfg) options: " + not-cfg.join(", "))
   }
   cfg = std-cfg + cfg
+  
+  if type(cfg.draft) != bool {panic("#book(cfg.draft) must be a boolean")}
   
   // Insert #cfg.transl into #transl-db
   if type(cfg.transl) == str {transl-db.insert(lang-id, cfg.transl)}
@@ -198,6 +203,7 @@ possible and encouraged.
   
   storage.add("break-to", break-to, namespace: "min-book")
   storage.add("part", part, namespace: "min-book")
+  storage.add("draft", cfg.draft, namespace: "min-book")
   
   show: cfg.theme.styling.with(meta, cfg)
   show heading.where(level: 1, outlined: true): it => {

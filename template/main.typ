@@ -1,4 +1,4 @@
-#import "@preview/min-book:1.4.0": book, appendices
+#import "@preview/min-book:1.5.0": book, appendices
 
 #set text(lang: "pt")//, region: "BR")
 
@@ -16,7 +16,7 @@
     como saudosa lembrança\
     estas\
     memórias póstumas.
-  ])
+  ]),
 )
 
 

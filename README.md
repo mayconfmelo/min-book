@@ -13,10 +13,10 @@
     <img src="https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmayconfmelo%2Fmin-book%2Frefs%2Fheads%2Fdev%2Ftypst.toml&query=%24.package.version&logo=github&label=Development&logoColor=%2397978e&color=%23239DAE&labelColor=%23353c44" /></a>
 </p>
 
-[![Manual](https://img.shields.io/badge/Manual-%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.4.0/docs/manual.pdf)
+[![Manual](https://img.shields.io/badge/Manual-%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.5.0/docs/manual.pdf)
 [![Themes](https://img.shields.io/badge/Themes-%23353c44)](https://github.com/mayconfmelo/min-book/blob/main/docs/themes.md)
-[![Example PDF](https://img.shields.io/badge/Example-.pdf-%23777?labelColor=%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.4.0/docs/example.pdf)
-[![Example SRC](https://img.shields.io/badge/Example-.typ-%23777?labelColor=%23353c44)](https://github.com/mayconfmelo/min-book/blob/1.4.0/template/main.typ)
+[![Example PDF](https://img.shields.io/badge/Example-.pdf-%23777?labelColor=%23353c44)](https://raw.githubusercontent.com/mayconfmelo/min-book/refs/tags/1.5.0/docs/example.pdf)
+[![Example SRC](https://img.shields.io/badge/Example-.typ-%23777?labelColor=%23353c44)](https://github.com/mayconfmelo/min-book/blob/1.5.0/template/main.typ)
 [![Changelog](https://img.shields.io/badge/Changelog-%23353c44)](https://github.com/mayconfmelo/min-book/blob/main/docs/changelog.md)
 [![Contribute](https://img.shields.io/badge/Contribute-%23353c44)](https://github.com/mayconfmelo/min-book/blob/main/docs/contributing.md)
 
@@ -34,7 +34,7 @@
 ## Quick Start
 
 ```typst
-#import "@preview/min-book:1.4.0": book
+#import "@preview/min-book:1.5.0": book
 #show: book.with(
   title: "Book Title",
   subtitle: "Book subtitle",
@@ -94,6 +94,9 @@ possible and encouraged.
   - Coffee
   - Elegance
   - Custom themes
+- Draft tools
+  - Comments
+  - Text highlight
 - Advanced customization options
 - Free default fonts
 - End Notes
