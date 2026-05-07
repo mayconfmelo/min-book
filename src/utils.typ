@@ -72,3 +72,16 @@
   }
   return database
 }
+
+
+// Calculates tue relative relative luminance of a color
+#let relative-luminance(color) = {
+  let components = rgb(color).components().map(c => c / 100%)
+  let luminance = 0
+  
+  luminance += 0.2126 * components.at(0)
+  luminance += 0.7152 * components.at(1)
+  luminance += 0.0722 * components.at(2)
+  
+  return luminance
+}
