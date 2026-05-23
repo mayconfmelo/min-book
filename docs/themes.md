@@ -12,7 +12,7 @@ therefore, any type of errors may occur._
 Typography and formatting inspired by traditional designs, with a touch of
 modernity. The default theme, no need to set it.
 ```typst
-#import "@preview/min-book:1.4.0": book
+#import "@preview/min-book:1.5.0": book
 #show: book.with(
   cfg: (
     cover: (
@@ -85,7 +85,7 @@ Book Antiqua
 
 Comfortable fonts in cozy pastel colors for creative writing.
 ```typst
-#import "@preview/min-book:1.4.0": book, themes
+#import "@preview/min-book:1.5.0": book, themes
 #show: book.with(
   cfg: (
     theme: themes.coffee,
@@ -162,7 +162,7 @@ Options:
 
 Modern typography and minimal visuals, without unnecessary visual clutter.
 ```typst
-#import "@preview/min-book:1.4.0": book, themes
+#import "@preview/min-book:1.5.0": book, themes
 #show: book.with(
   cfg: (
     theme: themes.elegance,
@@ -258,7 +258,7 @@ book; your custom theme can provide all of these functions or inherit them from
 other themes through import. The currently supported functions are as follows:
 
 ```typst
-#import "@preview/min-book:1.4.0": themes
+#import "@preview/min-book:1.5.0": themes
 #import themes.styling: *  // inheritance
 
 #let styling(meta, cfg, body) = { }

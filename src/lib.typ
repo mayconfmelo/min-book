@@ -10,7 +10,7 @@
 /** #v(1fr) #outline() #v(1.2fr) #pagebreak()
 = Quick Start
 ```typ
-#import "@preview/min-book:1.4.0": book
+#import "@preview/min-book:1.5.0": book
 #show: book.with(
   title: "Book Title",
   subtitle: "Book subtitle",
