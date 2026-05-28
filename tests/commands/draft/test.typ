@@ -6,23 +6,13 @@
 #storage.add("draft", true, namespace: "min-book")
 
 #lorem(20)
-#comment[This is a comment.]
-#lorem(10)
-
-#lorem(20)
-#comment(type: box)[This is a comment.]
-#lorem(10)
-
-#lorem(20)
-#comment(type: block)[This is a comment.]
-#lorem(10)
+#comment[Margin comment.] #lorem(10)
+#comment(type: box)[Inline comment.] #lorem(10)
+#comment(type: block)[Block comment.] #lorem(10)
+#comment(stroke: red + 2pt)[Red comment box.] #lorem(10)
 
 #line()
 
 #lorem(20)
-#mark[This is a marked text]
-#lorem(10)
-
-#lorem(20)
-#mark(gray.darken(20%))[This is a marked text]
-#lorem(10)
+#mark[Marked text] #lorem(10)
+#mark(red)[Red marked text] #lorem(10)
