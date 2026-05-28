@@ -94,7 +94,7 @@ possible and encouraged.
   - Coffee
   - Elegance
   - Custom themes
-- Draft tools
+- Draft mode
   - Comments
   - Text highlight
 - Advanced customization options

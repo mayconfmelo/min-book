@@ -1,11 +1,15 @@
 /**
-== Annotation Tools
+== Draft Comments
+:comment:
 
-=== Comments
+Insert editorial comments that became visible only in `#book(draft)` mode.
 
+..args <- arguments
+  Amy arguments supported by #univ("drafting") package.
 
+type <- auto | block | box
+  Set comment type: marginalia, paragraph, or inline.
 **/
-
 #let comment(..args, type: auto) = context {
   import "@preview/nexus-tools:0.1.0": storage
   import "@preview/drafting:0.2.2"
@@ -31,7 +35,6 @@
   else if type in (block, box) {
     if type == box {named.insert("par-break", false)}
     
-    
     drafting.inline-note(
       pos.at(0),
       ..named
@@ -41,6 +44,20 @@
 }
 
 
+/**
+== Draft Text Marker
+```typ
+#mark(background, data)
+```
+
+Insert text markings to highlight certain excerpts in `#book(draft)` mode. When using darker backgrounds, the text is automatically set to white.
+
+background <- color
+  Optional marker background color (defaults to gray).
+
+data <- content
+  The text to be highlithed.
+**/
 #let mark(..args) = context {
   import "@preview/nexus-tools:0.1.0": storage
   import "../utils.typ"
@@ -70,11 +87,10 @@
   
   luminance = utils.relative-luminance(background)
   
-  
   // White text when using a dark background
   if luminance < 0.55 {text-color = white}
   
   set text(fill: text-color)
   
-  box(data, fill: background, outset: 2pt)
+  box(data, fill: background, outset: (x: 1pt, y: 2pt))
 }
