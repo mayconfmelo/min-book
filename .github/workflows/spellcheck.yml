@@ -6,6 +6,8 @@ on:
     branches: [ main ]
   schedule:
     - cron: '0 0 1 * *'
+  workflow_dispatch:
+    branches: [ main, dev ]
 
 jobs:
   codespell:
@@ -13,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Python 3.12.9
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v6
         with:
           python-version: 3.12.9
       - name: Install codespell
@@ -24,14 +26,14 @@ jobs:
           pip install codespell
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Setup just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
       - name: Run check
         run: just spell
   misspell:
     name: Misspell check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
       - name: Install misspell
         run: wget -O - -q https://git.io/misspell | sh -s -- -b .
       - name: Run check

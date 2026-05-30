@@ -6,6 +6,8 @@ on:
     branches: [ main ]
   schedule:
     - cron: '0 0 1 * *'
+  workflow_dispatch:
+    branches: [ main, dev ]
 
 jobs:
   tests:
@@ -13,17 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
       - name: Setup typst
-        uses: typst-community/setup-typst@v4
+        uses: typst-community/setup-typst@v5
       - name: Setup tytanic
         uses: typst-community/setup-tytanic@v1
       - name: Run test suite
         run: just test
       - name: Archive test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: typst-${{ steps.setup-typst.outputs.typst-version }}-test-results

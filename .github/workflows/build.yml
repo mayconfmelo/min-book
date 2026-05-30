@@ -13,15 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
       - name: Setup typst
-        uses: typst-community/setup-typst@v4
+        uses: typst-community/setup-typst@v5
       - name: Running build script
         run: just build
       - name: Archive test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: typst-build-results
