@@ -63,7 +63,7 @@
 #let std-langs() = {
   let database = (l10n: "ftl")
   let langs = (
-    "en", "pt", "la", "zh", "hi", "es", "ar", "fr", 
+    "en", "pt", "pt-BR", "la", "zh", "hi", "es", "ar", "fr", 
     "bn", "ru", "ur", "id", "de", "ja", "it",
   )
   

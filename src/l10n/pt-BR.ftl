@@ -1,11 +1,11 @@
 volume = Volume { $n }
-edition = { $n }.ª edição
+edition = { $n }ª edição
 errata = Errata
 thanks = Agradecimentos
 part = Parte
 chapter = Capítulo
 comments = Comentários
-timeline = Cronologia
+timeline = Linha do Tempo
 narrator = Narrador
 
 scene = { $number ->
