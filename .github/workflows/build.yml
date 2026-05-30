@@ -1,10 +1,11 @@
 name: Build
+
 on:
   push:
     tags: 
       - "*"
-    # branches:
-    #   - "main"
+  workflow_dispatch:
+    branches: [ main, dev ]
 
 jobs:
   building:
@@ -13,15 +14,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install just
-        uses: taiki-e/install-action@v2
-        with:
-          tool: just
+      - name: Setup just
+        uses: extractions/setup-just@v3
       - name: Setup typst
-        id: setup-typst
-        uses: typst-community/setup-typst@v3
-        with:
-          typst-version: 0.13
+        uses: typst-community/setup-typst@v4
       - name: Running build script
         run: just build
       - name: Archive test results

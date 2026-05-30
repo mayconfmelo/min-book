@@ -9,31 +9,17 @@ on:
 
 jobs:
   tests:
-    strategy:
-      # run tests on all versions, even if one fails
-      fail-fast: false
-      matrix:
-        # add any other Typst versions that your package should support
-        typst-version:
-          - typst: 0.14
-            tytanic: 0.3.1
-            # the docs don't need to build with all versions supported by the package;
-            # the latest one is enough
-            doc: true
     name: Test for ${{ matrix.typst-version.typst }} (Tytanic ${{ matrix.typst-version.tytanic }}${{ matrix.typst-version.doc && ', with docs' }})
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install just and tytanic
-        uses: taiki-e/install-action@v2
-        with:
-          tool: just,tytanic@${{ matrix.typst-version.tytanic }}
+      - name: Setup just
+        uses: extractions/setup-just@v3
       - name: Setup typst
-        id: setup-typst
-        uses: typst-community/setup-typst@v3
-        with:
-          typst-version: ${{ matrix.typst-version.typst }}
+        uses: typst-community/setup-typst@v4
+      - name: Setup tytanic
+        uses: typst-community/setup-tytanic@v1
       - name: Run test suite
         run: just test
       - name: Archive test results
@@ -46,6 +32,3 @@ jobs:
             tests/**/out/*.png
             tests/**/ref/*.png
           retention-days: 5
-      # - name: Build example
-      #   if: ${{ matrix.typst-version.doc }}
-      #   run: just doc
