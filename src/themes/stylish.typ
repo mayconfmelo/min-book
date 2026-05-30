@@ -223,6 +223,11 @@
       value: (leading: 0.5em),
       cfg.styling.reset,
     ),
+    ..default(
+      when: par.spacing == 1.2em,
+      value: (spacing: 0.65em),
+      cfg.styling.reset,
+    ),
     first-line-indent: indent,
   )
   set text(
