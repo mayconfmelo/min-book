@@ -3,6 +3,14 @@ errata = التصحيحات
 thanks = الشكر والتقدير
 part = الجزء
 chapter = الفصل
+comments = التعليقات
+timeline = الخط الزمني
+narrator = الراوي
+
+scene = { $number ->
+  *[sing] مشهد { $n }
+   [plur] مشاهد
+}
 
 edition = { $n ->
     [1] الطبعة { $n } الأولى

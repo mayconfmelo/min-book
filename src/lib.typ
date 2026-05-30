@@ -4,7 +4,7 @@
 #import "commands/ambients.typ": appendices, annexes
 #import "commands/horizontalrule.typ": horizontalrule, hr
 #import "commands/blockquote.typ": blockquote
-#import "commands/draft.typ": comment, mark
+#import "commands/draft.typ": comment, mark, event, scene
 #import "themes.typ"
 
 /** #v(1fr) #outline() #v(1.2fr) #pagebreak()
@@ -204,6 +204,19 @@ possible and encouraged.
   storage.add("break-to", break-to, namespace: "min-book")
   storage.add("part", part, namespace: "min-book")
   storage.add("draft", cfg.draft, namespace: "min-book")
+  
+  // Insert draft info before everything else
+  if cfg.draft {
+    import "commands/draft.typ"
+    
+    set page(height: auto)
+
+    draft.comment-list()
+    draft.event-timeline()
+    draft.scene-list()
+
+    pagebreak()
+  }
   
   show: cfg.theme.styling.with(meta, cfg)
   show heading.where(level: 1, outlined: true): it => {

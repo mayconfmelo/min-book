@@ -3,6 +3,14 @@ errata = تصحیحات
 thanks = شکریہ
 part = حصہ
 chapter = باب
+comments = تبصرے
+timeline = زمانی ترتیب
+narrator = راوی
+
+scene = { $number ->
+  *[sing] منظر { $n }
+   [plur] مناظر
+}
 
 edition = { $n ->
     [1] { $n } پہلی اشاعت

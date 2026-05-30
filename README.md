@@ -97,6 +97,8 @@ possible and encouraged.
 - Draft mode
   - Comments
   - Text highlight
+  - Event timeline
+  - Book scenes
 - Advanced customization options
 - Free default fonts
 - End Notes

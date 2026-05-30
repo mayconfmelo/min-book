@@ -3,8 +3,15 @@ errata = Исправления
 thanks = Благодарности
 part = Часть
 chapter = Глава
-
 edition = { $n }-е издание
+comments = Комментарии
+timeline = Хронология
+narrator = Рассказчик
+
+scene = { $number ->
+  *[sing] Сцена { $n }
+   [plur] Сцены
+}
 
 appendix = { $number ->
   *[sing] Приложение

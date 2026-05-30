@@ -157,4 +157,9 @@ the help testing some features.
 
 - Added: `#book(draft)` option
 - Added: `#comment` for draft annotations
-- Added: `#mark` to highlight text in draft
+- Added: `#mark` highlights text in draft mode
+- Added: `#event` declares an event in the story (draft)
+- Added: `#scene` declares a scene in the story (draft)
+- Added: Comment outline in draft mode
+- Added: Event timeline in draft mode
+- Added: List of scenes in draft mode

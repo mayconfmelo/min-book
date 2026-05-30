@@ -3,6 +3,14 @@ errata = Corrigenda
 thanks = Gratiarum actio
 part = Pars
 chapter = Capitulum
+comments = Commentarii
+timeline = Ordo Temporis
+narrator = Narrator
+
+scene = { $number ->
+  *[sing] Scaena { $n }
+   [plur] Scaenae
+}
 
 edition = { $n ->
     [1] Editio prima

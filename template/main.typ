@@ -1,4 +1,4 @@
-#import "@preview/min-book:1.5.0": book, appendices
+#import "@preview/min-book:1.5.0": book, appendices, comment, mark, event, scene
 
 #set text(lang: "pt")//, region: "BR")
 
@@ -17,13 +17,17 @@
     estas\
     memórias póstumas.
   ]),
+  cfg: (draft: true)
 )
-
 
 = Excerto da Obra
 
 #heading("Ao Leitor", level: 2, numbering: none)
 
+#comment[Foo]
+#mark[Bar]
+#scene(location: "Baz", mood: "Calm")
+#event(date: 1, alt: "Qux")[Quz]
 Que, no alto do principal de seus livros, confessasse Stendhal havê-lo escrito
 para cem leitores, coisa é que admira e consterna. O que não admira, nem
 provavelmente consternará é se este outro livro não tiver os cem leitores de

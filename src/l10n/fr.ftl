@@ -3,6 +3,14 @@ errata = Errata
 thanks = Remerciements
 part = Partie
 chapter = Chapitre
+comments = Commentaires
+timeline = Chronologie
+narrator = Narrateur
+
+scene = { $number ->
+  *[sing] Scène { $n }
+   [plur] Scènes
+}
 
 edition = { $n ->
    [one] { $n }re édition
