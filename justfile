@@ -54,7 +54,7 @@ spell correct="no":
     arg="--interactive 3 --write-changes"
   fi
   codespell $arg \
-    --skip "*.pdf,./dev/*,.git/*,./docs/assets/manual-pt.typ,./template/*" \
+    --skip "*.pdf,./dev/*,.git/*,./docs/assets/manual-pt.typ,./template/*,./src/l10n/*" \
     --ignore-words-list "nd,heros"
 
 # init template in dev/
