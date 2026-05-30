@@ -1,16 +1,14 @@
 /**
 == Draft Comments
 :comment:
-
 Insert editorial comments that became visible only in `#book(draft)` mode.
-
-..args <- arguments
-  Any arguments supported by #univ("drafting") package.
-
-type <- auto | block | box
-  Set comment type: marginalia, paragraph, or inline.
 **/
-#let comment(..args, type: auto) = context {
+#let comment(
+  ..args, /// <- arguments
+    /// Any arguments supported by~#univ("drafting") package. |
+  type: auto /// <- auto | block | box
+    /// Set comment type: marginalia, paragraph, or inline. |
+) = context {
   import "@preview/nexus-tools:0.1.0": storage
   import "@preview/drafting:0.2.2"
 
@@ -51,7 +49,6 @@ type <- auto | block | box
 ```typ
 #mark(background, data)
 ```
-
 Insert text markings to highlight certain excerpts in `#book(draft)` mode. When using darker backgrounds, the text is automatically set to white.
 
 background <- color
@@ -102,22 +99,18 @@ data <- content
 /**
 == Draft Event
 :event:
-
 Defines an event occurring in a section of the work.
-
-description <- content
-  Event name and general description.
-
-date <- none | datetime | integer
-  Event date. For dates from fictional calendars, use integers.
-
-alt <- content
-  Defines an alternative event title when using dates from fictional calendars.
-
-stroke <- stroke
-  Set event board stroke.
 **/
-#let event(description, date: none, alt: none, stroke: red) = context {
+#let event(
+  date: none, /// <- datetime | integer <required>
+    /// Event date. For dates from fictional calendars, use integers. |
+  alt: none, ///  <- content
+    /// Defines an alternative event title when using dates from fictional calendars. |
+  stroke: red, /// <- stroke
+    /// Set event block stroke. |
+  description, /// <- content <required>
+    /// Event name and general description.
+) = context {
   import "@preview/nexus-tools:0.1.0": storage
   import "@preview/heroic:0.1.2": hi
 
@@ -159,22 +152,20 @@ stroke <- stroke
 /**
 == Draft Scene
 :scene:
-
-It defines a scene happening in the story.
-
-pov: "Narrator" <- none | content
-  Point of view, who tells the story. By default, it defines a narrator (third person).
-
-location <- content
-  Where the scene takes place.
-  
-characters <- content
-  Characters involved in the scene.
-
-mood <- content
-  The narrative atmosphere of the scene.
+Defines a scene happening in the story.
 **/
-#let scene(pov: none, location: none, mood: none, characters: none, stroke: red) = context {
+#let scene(
+  pov: none, /// <- none | content
+    /// Point of view, who tells the story. By default, define as a narrator (third person). |
+  location: none, /// <- content <required>
+    /// Where the scene takes place. |
+  mood: none, /// <- content <required>
+    /// The narrative atmosphere of the scene. |
+  characters: none, /// <- content
+    /// Characters involved in the scene. |
+  stroke: red /// <- stroke
+    /// Set scene block stroke. |
+) = context {
   import "@preview/nexus-tools:0.1.0": storage
   import "@preview/heroic:0.1.2": hi
   import "@preview/transl:0.2.0": transl
