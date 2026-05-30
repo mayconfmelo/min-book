@@ -13,10 +13,11 @@ type <- auto | block | box
 #let comment(..args, type: auto) = context {
   import "@preview/nexus-tools:0.1.0": storage
   import "@preview/drafting:0.2.2"
-  
-  if not storage.get("draft", true, namespace: "min-book") {return}
 
-  storage.add("draft:comments", true, namespace: "min-book")
+  // Ignore when not #book(cfg.draft)
+  if not storage.get("draft", true, namespace: "min-book") {return}
+  
+  storage.add("draft:comments", true, namespace: "min-book")  // Set #comment as being used
   
   set text(hyphenate:  true, size: text.size - 1pt)
   
@@ -28,7 +29,6 @@ type <- auto | block | box
   
   if type == auto {
     // Margin comments cannot be justified text due to lack of space
-    
     drafting.margin-note(
       ..pos.map(arg => par(arg, justify: false)),
       ..named
@@ -74,6 +74,9 @@ data <- content
   
   assert.eq(named, (:), message: "Invalid named arguments")
   assert(pos.len() <= 2, message: "Expected only 2 pisitional arguments")
+
+  // Ignore when not #book(cfg.draft)
+  if not storage.get("draft", true, namespace: "min-book") {return data}
   
   if pos.len() == 1 {
     luminance = utils.relative-luminance(text.fill)
@@ -84,8 +87,6 @@ data <- content
     background = pos.at(0)
     data = pos.at(1)
   }
-  
-  if not storage.get("draft", true, namespace: "min-book") {return data}
   
   luminance = utils.relative-luminance(background)
   
@@ -119,11 +120,13 @@ stroke <- stroke
 #let event(description, date: none, alt: none, stroke: red) = context {
   import "@preview/nexus-tools:0.1.0": storage
   import "@preview/heroic:0.1.2": hi
-  
+
+  // Ignore when not #book(cfg.draft)
   if not storage.get("draft", true, namespace: "min-book") {return}
 
   let alt = alt
-  
+
+  // Transform #datetime in readable date
   if type(date) == datetime {
     import "@preview/datify:1.0.0": custom-date-format
     
@@ -132,7 +135,8 @@ stroke <- stroke
 
   assert.ne(date, none, message: "#event(date) required")
   assert.ne(alt, none, message: "#event(alt) required")
-  
+
+  // Set #event metadata
   [
     #metadata((
       description: description,
@@ -176,12 +180,14 @@ mood <- content
   import "@preview/transl:0.2.0": transl
 
   let pov = if pov == none {transl("narrator")} else {pov}
-  
+
+  // Ignore when not #book(cfg.draft)
   if not storage.get("draft", true, namespace: "min-book") {return}
   
   assert.ne(location, none, message: "#scene(location) required")
   assert.ne(mood, none, message: "#scene(mood) required")
-  
+
+  // Insert #scene metadata
   [
     #metadata((
       pov: pov,
@@ -210,6 +216,7 @@ mood <- content
 }
 
 
+// Generate timeline from #event metadata
 #let event-timeline() = context {
   import "@preview/datify:1.0.0": custom-date-format
   import "@preview/nexus-tools:0.1.0": storage
@@ -218,7 +225,8 @@ mood <- content
   
   let data = query(<min-book:draft:event>)
   let events = ()
-    
+
+  // Ignore when not #book(cfg.draft), or no #event queried
   if not storage.get("draft", true, namespace: "min-book") {return}
   if data == () {return}
   
@@ -226,7 +234,8 @@ mood <- content
 
   timeline = timeline.with(theme: (colors: (accent: black, muted: gray.darken(50%), line: gray.darken(50%))))
   custom-date-format = custom-date-format.with(pattern: "long", lang: text.lang)
-  
+
+  // Sort by crescent dates
   data = data.sorted(
     key: e => e.value.date,
     by: (l, r) => if type(l) != type(r) {true} else {l <= r}
@@ -234,7 +243,8 @@ mood <- content
 
   for event in data {
     event = event.value
-    
+
+    // Set readable date or alternative date
     event.date = if type(event.date) == datetime {custom-date-format(event.date)} else {event.alt}
 
     events.push((date: event.date, desc: event.description))
@@ -244,6 +254,7 @@ mood <- content
 }
 
 
+// Generate list of book scenes from #scene metadata
 #let scene-list() = context {
   import "@preview/nexus-tools:0.1.0": storage
   import "@preview/heroic:0.1.2": hi
@@ -251,18 +262,19 @@ mood <- content
   
   let scenes = query(<min-book:draft:scene>).map(e => e.value)
   let n = 0
-  
+
+  // Ignore when not #book(cfg.draft), or no #scene queried
   if not storage.get("draft", true, namespace: "min-book") {return}
   if scenes == () {return}
   
   heading(transl("scene", number: "plur"))
 
   for scene in scenes {
-    n += 1
+    n += 1  // scene number
     
     heading(level: 2, transl("scene", n: n))
 
-    show: it => pad(it, left: 1em)
+    show: it => pad(it, left: 1em) // scene data left padding
 
     hi("speaker-wave") + " " + scene.pov + linebreak()
     hi("map-pin") + " " + scene.location + linebreak()
@@ -273,11 +285,13 @@ mood <- content
 }
 
 
+// Generate and outline of #comment
 #let comment-list() = context {
   import "@preview/nexus-tools:0.1.0": storage
   import "@preview/transl:0.2.0": transl
   import "@preview/drafting:0.2.2": note-outline
-  
+
+  // Ignore when not #book(cfg.draft), or no #comment used
   if not storage.get("draft", true, namespace: "min-book") {return}
   if not storage.final("draft:comments", false, namespace: "min-book") {return}
   

@@ -155,7 +155,7 @@ the help testing some features.
 
 ## 1.5.0
 
-- Added: `#book(draft)` option
+- Added: `#book(cfg.draft)` option
 - Added: `#comment` for draft annotations
 - Added: `#mark` highlights text in draft mode
 - Added: `#event` declares an event in the story (draft)
