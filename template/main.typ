@@ -1,6 +1,6 @@
-#import "@preview/min-book:1.5.0": book, appendices, comment, mark, event, scene
+#import "@preview/min-book:1.5.0": book, appendices
 
-#set text(lang: "pt")//, region: "BR")
+#set text(lang: "pt", region: "BR")
 
 #show: book.with(
   title: "Memórias Póstumas\nde\nBrás Cubas",
@@ -8,26 +8,15 @@
   date: 1881,
   catalog: yaml("assets/catalog.yaml"),
   dedication: par(leading: 1.1em, emph[
-    Ao verme\
-    que\
-    primeiro roeu as frias carnes\
-    do meu cadáver\
-    dedico\
-    como saudosa lembrança\
-    estas\
-    memórias póstumas.
+    Ao verme\ que\ primeiro roeu as frias carnes\ do meu cadáver\
+    dedico\ como saudosa lembrança\ estas\ memórias póstumas.
   ]),
-  cfg: (draft: true)
 )
 
 = Excerto da Obra
 
 #heading("Ao Leitor", level: 2, numbering: none)
 
-#comment[Foo]
-#mark[Bar]
-#scene(location: "Baz", mood: "Calm")
-#event(date: 1, alt: "Qux")[Quz]
 Que, no alto do principal de seus livros, confessasse Stendhal havê-lo escrito
 para cem leitores, coisa é que admira e consterna. O que não admira, nem
 provavelmente consternará é se este outro livro não tiver os cem leitores de
@@ -645,7 +634,7 @@ feiticeira, e outra tesa, engomada e chocha. Vamos ao dia 20 de
 outubro. 
 
 
-#set text(lang: "en")
+#set text(lang: "en", region: none)
 
 #appendices[
   = Disclaimer
