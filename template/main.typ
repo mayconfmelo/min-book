@@ -101,6 +101,8 @@ que uma idéia grandiosa e útil, a causa da minha morte, é possível que o lei
 não creia, e todavia é verdade. Vou expor-lhe sumariamente o caso. Julgue-o por
 si mesmo.
 
+#pagebreak()
+
 == O Emplasto
 
 Com efeito, um dia de manhã, estando a passear na chácara,
@@ -132,6 +134,8 @@ o amor da glória era a coisa mais verdadeiramente humana que há no homem, e,
 conseguintemente, a sua mais genuína feição.
 
 Decida o leitor entre o militar e o cônego; eu volto ao emplasto.
+
+#pagebreak()
 
 == Genealogia
 
@@ -166,6 +170,8 @@ Vivem ainda alguns membros de minha família, minha sobrinha Venância, por
 exemplo, o lírio-do-vale, que é a flor das damas do seu tempo; vive o pai, o
 Cotrim, um sujeito que... Mas não antecipemos os sucessos; acabemos de uma vez
 com o nosso emplasto.
+
+#pagebreak()
 
 == A Idéia Fixa
 
@@ -239,6 +245,8 @@ capítulo, a tal, cuja imaginação à semelhança das cegonhas do Ilisso... Tin
 54 anos, era uma ruína, uma imponente ruína. Imagine o leitor que nos amamos, ela
 e eu, muitos anos antes e que um dia, já enfermo, vejo-a assomar à porta da
 alcova...
+
+#pagebreak()
 
 == Chimène, qui l'eut dit? --- Rodrigue, qui l'eut cru?
 
@@ -338,7 +346,9 @@ sentia-se satisfeito, ouvindo aquela palavra digna e forte, e eu
 perguntava a mim mesmo o que diriam de nós os gaviões, se Buffon 
 tivesse nascido gavião... 
 
-Era o meu delírio que começava. 
+Era o meu delírio que começava.
+
+#pagebreak()
 
 == O Delírio
 
@@ -573,6 +583,8 @@ começou a diminuir, a diminuir, a diminuir, até ficar do tamanho de
 um gato. Era efetivamente um gato. Encarei-o bem; era o meu gato 
 Sultão, que brincava à porta da alcova, com uma bola de papel... 
 
+#pagebreak()
+
 == Razão contra sandice
 
 Já o leitor compreendeu que era a Razão que voltava à casa, e 
@@ -614,6 +626,8 @@ entrou e fechou-se. A Sandice ainda gemeu algumas súplicas,
 grunhiu algumas zangas; mas desenganou-se depressa, deitou a 
 língua de fora, em ar de surriada, e foi andando... foi andando...
 Provavelmente andará até a consumação dos séculos.
+
+#pagebreak()
 
 == Transição
 
