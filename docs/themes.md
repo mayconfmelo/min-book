@@ -12,7 +12,7 @@ therefore, any type of errors may occur._
 Typography and formatting inspired by traditional designs, with a touch of
 modernity. The default theme, no need to set it.
 ```typst
-#import "@preview/min-book:1.5.0": book
+#import "@preview/min-book:1.5.1": book
 #show: book.with(
   cfg: (
     cover: (
@@ -23,7 +23,7 @@ modernity. The default theme, no need to set it.
     styling: (
       reset: value,
       std-toc: value,
-      hr-spacing: value),
+      divider-spacing: value),
     numbering: value,
   )
 )
@@ -50,7 +50,7 @@ Options:
   <dt><strong><code>cfg.styling.std-toc:</code></strong></dt>
   <dd>Use default <code>#outline</code> appearance (<em>boolean</em>).</dd>
   
-  <dt><strong><code>cfg.styling.hr-spacing:</code></strong></dt>
+  <dt><strong><code>cfg.styling.divider-spacing:</code></strong></dt>
   <dd>Set spacing before and after the horizontal rule (<em>length</em>).</dd>
   
   <dt><strong><code>cfg.numbering:</code></strong></dt>
@@ -85,7 +85,7 @@ Book Antiqua
 
 Comfortable fonts in cozy pastel colors for creative writing.
 ```typst
-#import "@preview/min-book:1.5.0": book, themes
+#import "@preview/min-book:1.5.1": book, themes
 #show: book.with(
   cfg: (
     theme: themes.coffee,
@@ -98,7 +98,7 @@ Comfortable fonts in cozy pastel colors for creative writing.
       flavor: value,
       reset: value,
       std-toc: value,
-      hr-spacing: value),
+      divider-spacing: value),
     numbering: value,
   )
 )
@@ -133,7 +133,7 @@ Options:
   <dt><strong><code>cfg.styling.std-toc:</code></strong></dt>
   <dd>Use default <code>#outline</code> appearance (<em>boolean</em>).</dd>
   
-  <dt><strong><code>cfg.styling.hr-spacing:</code></strong></dt>
+  <dt><strong><code>cfg.styling.divider-spacing:</code></strong></dt>
   <dd>Set spacing before and after the horizontal rule (<em>length</em>).</dd>
 
   <dt><strong><code>cfg.numbering:</code></strong></dt>
@@ -162,7 +162,7 @@ Options:
 
 Modern typography and minimal visuals, without unnecessary visual clutter.
 ```typst
-#import "@preview/min-book:1.5.0": book, themes
+#import "@preview/min-book:1.5.1": book, themes
 #show: book.with(
   cfg: (
     theme: themes.elegance,
@@ -176,7 +176,7 @@ Modern typography and minimal visuals, without unnecessary visual clutter.
     styling: (
       reset: value,
       std-toc: value,
-      hr-spacing: value),
+      divider-spacing: value),
     part-toc: value,
     numbering: value,
   )
@@ -213,7 +213,7 @@ Options:
   <dt><strong><code>cfg.styling.std-toc:</code></strong></dt>
   <dd>Use default <code>#outline</code> appearance (<em>boolean</em>).</dd>
   
-  <dt><strong><code>cfg.styling.hr-spacing:</code></strong></dt>
+  <dt><strong><code>cfg.styling.divider-spacing:</code></strong></dt>
   <dd>Set spacing before and after the horizontal rule (<em>length</em>).</dd>
   
   <dt><strong><code>cfg.part-toc:</code></strong></dt>
@@ -258,7 +258,7 @@ book; your custom theme can provide all of these functions or inherit them from
 other themes through import. The currently supported functions are as follows:
 
 ```typst
-#import "@preview/min-book:1.5.0": themes
+#import "@preview/min-book:1.5.1": themes
 #import themes.styling: *  // inheritance
 
 #let styling(meta, cfg, body) = { }

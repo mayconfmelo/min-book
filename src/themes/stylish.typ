@@ -367,9 +367,9 @@
 }
 
 
-// Appearance of #horizontalrule (#hr) command
-#let horizontalrule(meta, cfg) = context {
-  let spacing = cfg.styling.at("hr-spacing", default: 1.5em)
+// Appearance of #divider command
+#let divider(meta, cfg) = context {
+  let spacing = cfg.styling.at("divider-spacing", default: 1.5em)
   let data
   
   if meta.cover == auto {

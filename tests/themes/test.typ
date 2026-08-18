@@ -1,5 +1,5 @@
 #import "@preview/transl:0.2.0": transl
-#import "/src/lib.typ": book, themes, horizontalrule
+#import "/src/lib.typ": book, themes
 
 #let args = (
   cfg: (
@@ -41,7 +41,7 @@
 
 #lorem(25)
 
-#horizontalrule()
+#divider()
 
 #lorem(25)
 

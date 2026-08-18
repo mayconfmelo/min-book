@@ -2,7 +2,6 @@
 
 #import "commands/notes.typ": note
 #import "commands/ambients.typ": appendices, annexes
-#import "commands/horizontalrule.typ": horizontalrule, hr
 #import "commands/blockquote.typ": blockquote
 #import "commands/draft.typ": comment, mark, event, scene
 #import "themes.typ"
@@ -10,7 +9,7 @@
 /** #v(1fr) #outline() #v(1.2fr) #pagebreak()
 = Quick Start
 ```typ
-#import "@preview/min-book:1.5.0": book
+#import "@preview/min-book:1.5.1": book
 #show: book.with(
   title: "Book Title",
   subtitle: "Book subtitle",
@@ -223,9 +222,9 @@ possible and encouraged.
     if part != none {it = cfg.theme.part(meta, cfg, it)}
     it
   }
-  show <horizontalrule:insert>: it => {
-    if dictionary(cfg.theme).keys().contains("horizontalrule") {
-      cfg.theme.horizontalrule(meta, cfg)
+  show divider: it => {
+    if dictionary(cfg.theme).keys().contains("divider") {
+      cfg.theme.divider(meta, cfg)
     }
     else {align(center, line(length: 80%))}
   }

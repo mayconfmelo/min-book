@@ -1,12 +1,13 @@
 [package]
 name = "min-book"
-version = "1.5.0"
-entrypoint = "src/lib.typ"
-authors = ["Maycon F. Melo <@mayconfmelo>"]
-license = "MIT-0"
+version = "1.5.1"
 description = "Simple and complete books without introducing new syntax"
+entrypoint = "src/lib.typ"
+license = "MIT-0"
+compiler = "0.15.1"
+authors = ["Maycon F. Melo <@mayconfmelo>"]
 categories = [ "layout", "book" ]
-keywords = [ "book", "document structuring" ]
+keywords = [ "book", "books", "document structuring" ]
 repository = "https://github.com/mayconfmelo/min-book"
 exclude = [
   "dev/",

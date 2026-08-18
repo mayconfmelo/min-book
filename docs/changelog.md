@@ -163,3 +163,10 @@ the help testing some features.
 - Added: Comment outline in draft mode
 - Added: Event timeline in draft mode
 - Added: List of scenes in draft mode
+
+
+### 1.5.1
+
+- Added: Support for `#divider` command
+- Updated: Set typst 0.15.1 as minimal version
+- Removed: `#horizontalrule` and `#hr` commands

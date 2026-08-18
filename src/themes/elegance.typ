@@ -376,22 +376,22 @@
 }
 
 
-#let horizontalrule(meta, cfg) = context {
+#let divider(meta, cfg) = context {
   let cfg = cfg
   
   cfg.styling = (
     stroke: luma(210),
-    hr-spacing: 1.5em,
+    divider-spacing: 1.5em,
   ) + cfg.at("styling", default: (:))
   
   set align(center)
   set line(stroke: text.fill.opacify(-90%))
   
-  v(cfg.styling.hr-spacing, weak: true)
+  v(cfg.styling.divider-spacing, weak: true)
   text(size: 5pt, {
     line(length: 60%)
     line(length: 70%)
     line(length: 60%)
   })
-  v(cfg.styling.hr-spacing, weak: true)
+  v(cfg.styling.divider-spacing, weak: true)
 }

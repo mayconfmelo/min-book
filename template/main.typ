@@ -1,4 +1,4 @@
-#import "@preview/min-book:1.5.0": book, appendices
+#import "@preview/min-book:1.5.1": book, appendices
 
 #set text(lang: "pt", region: "BR")
 
