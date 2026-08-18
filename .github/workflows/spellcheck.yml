@@ -29,12 +29,3 @@ jobs:
         uses: extractions/setup-just@v4
       - name: Run check
         run: just spell
-  misspell:
-    name: Misspell check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - name: Install misspell
-        run: wget -O - -q https://git.io/misspell | sh -s -- -b .
-      - name: Run check
-        run: ./misspell -error
