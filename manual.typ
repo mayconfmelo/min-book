@@ -8,7 +8,6 @@
     read("src/lib.typ") +
     read("src/commands/notes.typ") +
     read("src/commands/ambients.typ") +
-    read("src/commands/horizontalrule.typ") +
     read("src/commands/blockquote.typ") +
     read("src/commands/draft.typ")
 )
